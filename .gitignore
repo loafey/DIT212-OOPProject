@@ -4,10 +4,13 @@
 .settings
 
 # Intellij
-.idea/
+.idea
 *.iml
 *.iws
-*.code-workspace
+
+# VSCode
+.code-workspace
+.vscode
 
 # Mac
 .DS_Store
