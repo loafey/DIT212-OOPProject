@@ -1,16 +1,28 @@
 # Eclipse
 .classpath
 .project
-.settings/
- 
+.settings
+
 # Intellij
-.idea/
+.idea
 *.iml
 *.iws
- 
+
+# VSCode
+.code-workspace
+.vscode
+
 # Mac
 .DS_Store
- 
+
 # Maven
 log/
 target/
+
+# Compiled stuff #
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
