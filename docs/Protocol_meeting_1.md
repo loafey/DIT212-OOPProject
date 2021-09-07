@@ -1,4 +1,4 @@
-**~ Tisdag 7 september 2021**    
+**Tisdag 7 september 2021**    
 
 **Attendees**: Emmie, Gabriel, Samuel, Sebastian    
 **Absent**: Björn    
