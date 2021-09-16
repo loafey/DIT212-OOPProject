@@ -1,9 +1,6 @@
 package com.ESSBG.app.Model;
 
-import jdk.internal.loader.Resource;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class Card {
