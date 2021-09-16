@@ -64,17 +64,65 @@ public class Player {
     }
 
     /**
-     * Add a card to the hand
+     * Add a card to the hand if the player has enough resources.
+     * If the player has enough resources, update their resources and cards on hand
+     * Otherwise return false
      */
-
     public boolean addCard(Card card){
+       Map<String, Integer> balance = card.getBalance();
+
         // Kolla om det finns tillräckligt med resurser
         // Om inte, returna false
+       if (!hasSufficientResources(balance)){
+           return false;
+       }
+       else {
 
-        // Om tillräckligt med resurser, lägg till kortet på hand
-        // Uppdatera ev resurser som kortet medför
-        // Hur ska vi modellera att vi redan använt en resurs på ett kort????
-        return false;
+           // Om tillräckligt med resurser, lägg till kortet på hand
+           // Uppdatera ev resurser som kortet medför
+           makeTrade(balance);
+           cardList.add(card);
+           return true;
+       }
+    }
+
+    /** If the player has enough resources, exchange resources
+     * @param balance
+     */
+    private void makeTrade(Map<String, Integer> balance){
+        for (String key : balance.keySet()) {
+            Integer valueCard = balance.get(key);
+            Integer valueResource = resources.get(key);
+            resources.put(key, valueCard + valueResource);
+        }
+    }
+
+    private boolean hasSufficientResources(Map<String, Integer> balance){
+        for (String key : balance.keySet()) {
+            Integer valueCard = balance.get(key);
+
+            // If the value for a resource is negative, it requires resources from the player
+            if (valueCard < 0){
+                Integer valuePlayer = resources.get(key);
+
+                // If the player has insufficient resources, the card cannot be added to the player's hand
+                if (valueCard + valuePlayer < 0){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void useResource(String resource){
+        int newAmount = resources.get(resource) - 1;
+        resources.put(resource,newAmount);
+    }
+
+    private void addResource(String resource){
+        int newAmount = resources.get(resource) + 1;
+        resources.put(resource,newAmount);
     }
 
 }
