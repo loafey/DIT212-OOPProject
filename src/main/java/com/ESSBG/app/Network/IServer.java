@@ -4,13 +4,13 @@ import java.util.concurrent.*;
 import org.json.*;
 
 interface IServer {
-    void runServer();
+    public void runServer();
 
-    boolean stopServer();
+    public boolean initServer();
 
-    boolean sendData(int player, JSONObject json);
+    public boolean stopServer();
 
-    boolean initServer();
+    public boolean sendData(int player, JSONObject json);
 
-    ConcurrentLinkedQueue<JSONObject> getData();
+    public ConcurrentLinkedQueue<JSONObject> getData();
 }

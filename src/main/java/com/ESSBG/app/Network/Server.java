@@ -55,6 +55,9 @@ public class Server implements IServer, Constants {
 
     @Override
     public ConcurrentLinkedQueue<JSONObject> getData() {
+        if (msgQueue.isEmpty()) {
+            return null;
+        }
         return this.msgQueue;
     }
 
@@ -63,5 +66,4 @@ public class Server implements IServer, Constants {
         // TODO Auto-generated method stub
         return false;
     }
-
 }

@@ -6,8 +6,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.json.JSONObject;
 
-import java.io.*;
-
 public class AcceptSockets implements Runnable {
     private ServerSocket socket;
     private ArrayList<Socket> socketList;
@@ -32,11 +30,9 @@ public class AcceptSockets implements Runnable {
                 Thread t = new Thread(new SocketListener(client.getInputStream(), this.msgQueue));
                 threadList.add(t);
                 t.start();
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
