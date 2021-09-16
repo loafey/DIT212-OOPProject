@@ -1,13 +1,16 @@
 package com.ESSBG.app.Network;
 
+import org.json.*;
 import java.net.*;
 import java.util.ArrayList;
-import com.ESSBG.app.Network.AcceptSockets;
+import java.util.concurrent.*;
 
 import java.io.*;
 
 public class Server implements IServer, Constants {
-    private ArrayList<SocketThread> threadList = new ArrayList<SocketThread>();
+    private ArrayList<Thread> threadList = new ArrayList<Thread>();
+    private ArrayList<Socket> socketList = new ArrayList<Socket>();
+    private ConcurrentLinkedQueue<JSONObject> msgQueue = new ConcurrentLinkedQueue<JSONObject>();
     private Thread acceptSocketThread;
     private ServerSocket socket;
 
@@ -26,20 +29,33 @@ public class Server implements IServer, Constants {
      */
     @Override
     public void runServer() {
-        this.acceptSocketThread = new Thread(new AcceptSockets(this.socket, threadList));
+        this.acceptSocketThread = new Thread(
+                new AcceptSockets(this.socket, this.threadList, this.socketList, this.msgQueue));
         this.acceptSocketThread.start();
     }
 
+    // Index in threadlist is equal to the player in the game.
     @Override
-    public boolean sendData() {
-        // TODO Auto-generated method stub
+    public boolean sendData(int player, JSONObject jsonobj) {
+        // Check whether player values are correct. Naive send json atm.
+        if (0 < player || player > socketList.size()) {
+            return false;
+        }
+
+        // Send the data
+        try {
+            OutputStream currentSocket = socketList.get(player).getOutputStream();
+            currentSocket.write(jsonobj.toString().getBytes("utf-8"));
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
-    public boolean getData() {
-        // TODO Auto-generated method stub
-        return false;
+    public ConcurrentLinkedQueue<JSONObject> getData() {
+        return this.msgQueue;
     }
 
     @Override
@@ -47,9 +63,5 @@ public class Server implements IServer, Constants {
         // TODO Auto-generated method stub
         return false;
     }
-
-
-
-
 
 }
