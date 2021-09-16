@@ -44,8 +44,11 @@ public class Server implements IServer, Constants {
 
         // Send the data
         try {
-            OutputStream currentSocket = socketList.get(player).getOutputStream();
-            currentSocket.write(jsonobj.toString().getBytes("utf-8"));
+            byte[] b = jsonobj.toString().getBytes("utf-8");
+            int msgLen = b.length;
+            OutputStream client = socketList.get(player).getOutputStream();
+            client.write(intToByteArray(msgLen));
+            client.write(b);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,5 +68,10 @@ public class Server implements IServer, Constants {
     public boolean stopServer() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    private static byte[] intToByteArray(int a) {
+        return new byte[] { (byte) ((a >> 24) & 0xFF), (byte) ((a >> 16) & 0xFF), (byte) ((a >> 8) & 0xFF),
+                (byte) (a & 0xFF) };
     }
 }
