@@ -6,21 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
-    private List<Card> playedCards;
-    //private List<List<? extends IResource>> resources;
-    private int coinCounter;
+    private List<Card> cardList;
     private int warPoints;
+    private int peacePoints;
+    private final int startingAmountOfMoney = 3;
     private String name;
     private final Monument monument;
+
     private Map<String,Integer> resources = new HashMap<>();
+    //private List<List<? extends IResource>> resources;
 
 
 
-    public Player (String name, Monument monument, int startingAmountOfCoins){
+    public Player (String name, Monument monument){
         this.name = name;
         this.monument = monument;
-        playedCards = new ArrayList<>();
-        this.coinCounter =  startingAmountOfCoins;
+        cardList = new ArrayList<>();
+
 
         resources.put("Wood", 0);
         resources.put("Ore", 0);
@@ -29,6 +31,7 @@ public class Player {
         resources.put("Glass", 0);
         resources.put("Papyrus", 0);
         resources.put("Textiles", 0);
+        resources.put("Money", startingAmountOfMoney);
 
     }
 
@@ -40,16 +43,16 @@ public class Player {
         this.name = name;
     }
 
-    public List<Card> getPlayedCards() {
-        return playedCards;
+    public List<Card> getCardList() {
+        return cardList;
     }
 
-    public int getCoinCounter() {
-        return coinCounter;
+    public int getPeacePoints() {
+        return peacePoints;
     }
 
-    public void setCoinCounter(int coinCounter) {
-        this.coinCounter = coinCounter;
+    public void setPeacePoints(int peacePoints) {
+        this.peacePoints = peacePoints;
     }
 
     public int getWarPoints() {
@@ -60,8 +63,18 @@ public class Player {
         this.warPoints = warPoints;
     }
 
-    public void addResource(String resource){
-        resources.put(resource, resources.get(resource) + 1);
+    /**
+     * Add a card to the hand
+     */
+
+    public boolean addCard(Card card){
+        // Kolla om det finns tillräckligt med resurser
+        // Om inte, returna false
+
+        // Om tillräckligt med resurser, lägg till kortet på hand
+        // Uppdatera ev resurser som kortet medför
+        // Hur ska vi modellera att vi redan använt en resurs på ett kort????
+        return false;
     }
 
 }
