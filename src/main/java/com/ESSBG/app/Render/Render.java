@@ -29,13 +29,6 @@ public class Render extends Game {
     public void create() {
         batch = new SpriteBatch();
         mainFont = new BitmapFont();
-
-        for (int i = 0; i < 256; i+= 16){
-            final int x = i;
-            renderables.add((SpriteBatch batch, float widthScale, float heightScale) -> {
-                new BitmapFont().draw(batch, "" + x, x, x);
-            }); 
-        }
     }
 
     @Override
