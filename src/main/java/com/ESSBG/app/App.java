@@ -1,6 +1,6 @@
 package com.ESSBG.app;
 
-import com.badlogic.gdx.Game;
+import com.ESSBG.app.Render.Render;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
@@ -18,9 +18,6 @@ public class App
 //        config.useVsync(true);
         config.setTitle("Hello World!");
         config.setWindowedMode(800, 600);
-        new Lwjgl3Application(new Game() {
-            @Override
-            public void create() {}
-        }, config);
+        new Lwjgl3Application(new Render(800,600), config);
     }
 }
