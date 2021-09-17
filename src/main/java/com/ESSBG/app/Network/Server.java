@@ -8,8 +8,8 @@ import java.util.concurrent.*;
 import java.io.*;
 
 public class Server implements IServer, Constants {
-    private ArrayList<Thread> threadList = new ArrayList<Thread>();
-    private ArrayList<Socket> socketList = new ArrayList<Socket>();
+    private ConnectedUsers activeUsers = new ConnectedUsers(new Thread[Constants.MAXPLAYERS],
+            new Socket[Constants.MAXPLAYERS], Constants.MAXPLAYERS);
     private ConcurrentLinkedQueue<JSONObject> msgQueue = new ConcurrentLinkedQueue<JSONObject>();
     private Thread acceptSocketThread;
     private ServerSocket socket;
@@ -30,7 +30,7 @@ public class Server implements IServer, Constants {
     @Override
     public void runServer() {
         this.acceptSocketThread = new Thread(
-                new AcceptSockets(this.socket, this.threadList, this.socketList, this.msgQueue));
+                new AcceptSockets(this.socket, activeUsers, this.msgQueue));
         this.acceptSocketThread.start();
     }
 
