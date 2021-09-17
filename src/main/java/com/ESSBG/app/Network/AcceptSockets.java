@@ -8,15 +8,13 @@ import org.json.JSONObject;
 
 public class AcceptSockets implements Runnable {
     private ServerSocket socket;
-    private ArrayList<Socket> socketList;
-    private ArrayList<Thread> threadList;
+    private ConnectedUsers activeUsers;
     private ConcurrentLinkedQueue<JSONObject> msgQueue;
 
-    public AcceptSockets(ServerSocket socket, ArrayList<Thread> threadList, ArrayList<Socket> socketList,
+    protected AcceptSockets(ServerSocket socket, ConnectedUsers activeUsers,
             ConcurrentLinkedQueue<JSONObject> msgQueue) {
         this.socket = socket;
-        this.threadList = threadList;
-        this.socketList = socketList;
+        this.activeUsers = activeUsers;
         this.msgQueue = msgQueue;
     }
 
@@ -26,8 +24,9 @@ public class AcceptSockets implements Runnable {
             while (true) {
                 // Accept is a blocking method/function.
                 Socket client = socket.accept();
-                this.socketList.add(client);
+                if ()
                 Thread t = new Thread(new SocketListener(client.getInputStream(), this.msgQueue));
+                socketList.add(client);
                 threadList.add(t);
                 t.start();
             }
