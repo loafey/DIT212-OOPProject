@@ -1,10 +1,9 @@
-package com.ESSBG.app.Render.GameObjects;
-import com.ESSBG.app.Render.Renderable;
+package com.ESSBG.app.Render;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Card implements Renderable{
+class Card implements Renderable{
     private final Texture texture;
 
     private int x = 10;

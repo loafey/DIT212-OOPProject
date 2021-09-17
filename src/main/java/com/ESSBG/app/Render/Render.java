@@ -1,8 +1,6 @@
 package com.ESSBG.app.Render;
 
 
-import com.ESSBG.app.Render.GameObjects.Card;
-
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
