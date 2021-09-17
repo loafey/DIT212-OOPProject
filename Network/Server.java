@@ -3,14 +3,12 @@ package com.ESSBG.app.Network;
 import org.json.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.concurrent.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import java.io.*;
 
 public class Server implements IServer, Constants {
-    private ConnectedUsers activeUsers = new ConnectedUsers(new Thread[Constants.MAXPLAYERS],
-            new Socket[Constants.MAXPLAYERS], Constants.MAXPLAYERS);
-    private ConcurrentLinkedQueue<JSONObject> msgQueue = new ConcurrentLinkedQueue<JSONObject>();
+    private LinkedBlockingQueue<JSONObject> msgQueue = new LinkedBlockingQueue<JSONObject>();
     private Thread acceptSocketThread;
     private ServerSocket socket;
 
@@ -29,8 +27,7 @@ public class Server implements IServer, Constants {
      */
     @Override
     public void runServer() {
-        this.acceptSocketThread = new Thread(
-                new AcceptSockets(this.socket, activeUsers, this.msgQueue));
+        this.acceptSocketThread = new Thread(new SocketServer(this.socket, this.msgQueue));
         this.acceptSocketThread.start();
     }
 

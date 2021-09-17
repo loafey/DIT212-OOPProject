@@ -1,20 +1,20 @@
 package com.ESSBG.app.Network;
 
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.json.JSONObject;
 
-public class AcceptSockets implements Runnable {
+public class SocketServer implements Runnable {
     private ServerSocket socket;
-    private ConnectedUsers activeUsers;
-    private ConcurrentLinkedQueue<JSONObject> msgQueue;
+    private ConnectedUsers activeUsers = new ConnectedUsers(new ArrayList<Thread>(), new ArrayList<Socket>(),
+            Constants.MAXPLAYERS);
+    private LinkedBlockingQueue<JSONObject> msgQueue;
 
-    protected AcceptSockets(ServerSocket socket, ConnectedUsers activeUsers,
-            ConcurrentLinkedQueue<JSONObject> msgQueue) {
+    protected SocketServer(ServerSocket socket, LinkedBlockingQueue<JSONObject> msgQueue) {
         this.socket = socket;
-        this.activeUsers = activeUsers;
         this.msgQueue = msgQueue;
     }
 
@@ -24,10 +24,7 @@ public class AcceptSockets implements Runnable {
             while (true) {
                 // Accept is a blocking method/function.
                 Socket client = socket.accept();
-                if ()
                 Thread t = new Thread(new SocketListener(client.getInputStream(), this.msgQueue));
-                socketList.add(client);
-                threadList.add(t);
                 t.start();
             }
         } catch (Exception e) {
@@ -35,3 +32,4 @@ public class AcceptSockets implements Runnable {
         }
     }
 }
+

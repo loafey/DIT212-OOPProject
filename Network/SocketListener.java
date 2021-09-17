@@ -2,21 +2,39 @@ package com.ESSBG.app.Network;
 
 import java.io.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import com.badlogic.gdx.utils.Json;
 
 import org.json.*;
 
 public class SocketListener implements Runnable {
     private InputStream client;
-    private ConcurrentLinkedQueue<JSONObject> msgQueue;
+    private LinkedBlockingQueue<JSONObject> msgQueue;
 
-    public SocketListener(InputStream client, ConcurrentLinkedQueue<JSONObject> msgQueue) {
+    public SocketListener(InputStream client, LinkedBlockingQueue<JSONObject> msgQueue) {
         this.client = client;
         this.msgQueue = msgQueue;
+    }
+
+    private JSONObject recvAll() {
+        try {
+            int msgLen = byteArrayToInt(client.readNBytes(2));
+            byte[] buffer = new byte[4096];
+            client.read(buffer, 0, msgLen);
+            return new JSONObject(buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public void run() {
         try {
+            // First get initial data, should be an net action.
+            JSONObject js = recvAll();
+            if (js)
             while (true) {
                 int msgLen = byteArrayToInt(client.readNBytes(2));
                 byte[] buffer = new byte[4096];
