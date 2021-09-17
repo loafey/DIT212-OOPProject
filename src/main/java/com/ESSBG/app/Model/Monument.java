@@ -1,17 +1,19 @@
 package com.ESSBG.app.Model;
 
+import com.ESSBG.app.Model.Actions.IGameAction;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Monument {
 
     private final String name;
-    private final GameAction resource;
-    private final List<GameAction> monAction;
+    private final IGameAction resource;
+    private final List<IGameAction> monAction;
     private int monUnlock;
 
 
-    public Monument(String name, GameAction resource, List<GameAction> monAction) {
+    public Monument(String name, IGameAction resource, List<IGameAction> monAction) {
         this.name = name;
         this.resource = resource;
         this.monAction = monAction;
@@ -23,12 +25,12 @@ public class Monument {
         return name;
     }
 
-    public GameAction getResource() {
+    public IGameAction getResource() {
         return resource;
     }
 
     // shallow copy
-    public List<GameAction> getMonAction() {
+    public List<IGameAction> getMonAction() {
         return new ArrayList<>(monAction);
     }
 
