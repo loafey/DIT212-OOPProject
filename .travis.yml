@@ -1,1 +1,2 @@
 langauge: java
+script: mvn clean package
