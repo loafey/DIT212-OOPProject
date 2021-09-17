@@ -3,6 +3,7 @@ package com.ESSBG.app.Render;
 
 import java.util.ArrayList;
 
+import com.ESSBG.app.AssetFinder;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -36,7 +37,7 @@ public class Render extends Game {
         mainFont = new BitmapFont();
 
         assetManager = new AssetManager(new InternalFileHandleResolver());
-        assetManager.load("Assets/Textures/Cards/coin.png", Texture.class);
+        AssetFinder.findAssets(assetManager, "Assets/");
         assetManager.finishLoading();
 
         renderables.add(
