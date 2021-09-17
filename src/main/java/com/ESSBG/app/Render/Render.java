@@ -1,16 +1,23 @@
 package com.ESSBG.app.Render;
 
+
+import com.ESSBG.app.Render.GameObjects.Card;
+
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Render extends Game {
     private SpriteBatch batch;
     private BitmapFont mainFont;
+    private AssetManager assetManager;
 
     private float widthScale = 1;
     private float heightScale = 1;
@@ -29,6 +36,14 @@ public class Render extends Game {
     public void create() {
         batch = new SpriteBatch();
         mainFont = new BitmapFont();
+
+        assetManager = new AssetManager(new InternalFileHandleResolver());
+        assetManager.load("Assets/Textures/Cards/coin.png", Texture.class);
+        assetManager.finishLoading();
+
+        renderables.add(
+            new Card(assetManager,"Assets/Textures/Cards/coin.png")
+        );
     }
 
     @Override
