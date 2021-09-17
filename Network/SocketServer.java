@@ -3,15 +3,15 @@ package com.ESSBG.app.Network;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 import org.json.JSONObject;
 
 public class SocketServer implements Runnable {
     private ServerSocket socket;
-    private ConnectedUsers activeUsers = new ConnectedUsers(new ArrayList<Thread>(), new ArrayList<Socket>(),
-            Constants.MAXPLAYERS);
     private LinkedBlockingQueue<JSONObject> msgQueue;
+    private ArrayList<Thread> threadList = new ArrayList<Thread>();
+    private Lock lock = new ReentrantLock(true);
 
     protected SocketServer(ServerSocket socket, LinkedBlockingQueue<JSONObject> msgQueue) {
         this.socket = socket;
@@ -24,7 +24,7 @@ public class SocketServer implements Runnable {
             while (true) {
                 // Accept is a blocking method/function.
                 Socket client = socket.accept();
-                Thread t = new Thread(new SocketListener(client.getInputStream(), this.msgQueue));
+                Thread t = new Thread(new SocketListener(client.getInputStream(),this.lock, this.threadList, this.msgQueue));
                 t.start();
             }
         } catch (Exception e) {
