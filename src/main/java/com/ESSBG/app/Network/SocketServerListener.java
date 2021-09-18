@@ -8,16 +8,14 @@ import org.json.JSONObject;
 public class SocketServerListener extends SocketBaseListener {
 
     private ConcurrentHashMap<Integer, Socket> hashMap;
-    private JSONObject netAction;
     private int[] maxplayers;
+    private int id = this.hashCode();
 
     public SocketServerListener(Socket socket, Lock lock, ConcurrentHashMap<Integer, Socket> hashMap,
             LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayers) {
         super(socket, lock, msgQueue);
         this.hashMap = hashMap;
         this.maxplayers = maxplayers;
-        this.netAction = new JSONObject(Constants.netAction);
-        this.netAction.put("id", this.hashCode());
     }
 
     @Override
@@ -38,7 +36,7 @@ public class SocketServerListener extends SocketBaseListener {
         hashMap.put(this.hashCode(), socket);
         numberOfActiveThreads++;
         lock.unlock();
-        msgQueue.add(netAction.put("reason", "net").getJSONObject("data").put("action", true));
+        msgQueue.add(JSONFactory.getNetworkWithID(true, id));
 
         while (receiveDataPushToQueue()) {
         }
@@ -53,10 +51,10 @@ public class SocketServerListener extends SocketBaseListener {
             goodByeWorld();
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.
-            msgQueue.add(netAction.put("reason", "net").getJSONObject("data").put("action", false));
+            msgQueue.add(JSONFactory.getNetworkWithID(false, id));
             return false;
         }
-        msgQueue.add(netAction.put("reason", "game").put("data", recvData));
+        msgQueue.add(JSONFactory.getGameWithID(recvData, id));
         return true;
     }
 

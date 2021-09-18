@@ -6,11 +6,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.io.*;
 
-public class Server implements IServer {
+public class Server extends Base implements IServer {
     private ConcurrentHashMap<Integer, Socket> hashMap = new ConcurrentHashMap<Integer, Socket>();
     private LinkedBlockingQueue<JSONObject> msgQueue = new LinkedBlockingQueue<JSONObject>();
     private ServerSocket socket;
-    private int[] maxplayers = { Constants.MAXPLAYERS };
+    private volatile int[] maxplayers = { Constants.MAXPLAYERS };
 
     public boolean initServer() {
         try {
@@ -23,37 +23,21 @@ public class Server implements IServer {
     }
 
     /***
-     * Runs the server at specified port in constants.java.
+     * Runs the server at specified port in constants.java
      */
-    // @Override
+    @Override
     public void runServer() {
         (new Thread(new SocketServer(socket, hashMap, msgQueue, maxplayers))).start();
     }
 
-    // Index in threadlist is equal to the player in the game.
-    // @Override
-    public boolean sendData(int player, JSONObject jsonobj) throws Exception {
+    @Override
+    public boolean sendData(int id, JSONObject jsonobj) throws UnsupportedEncodingException, Exception {
+        Socket clientSocket = hashMap.get(id);
         // Check whether player values are correct.
-        if (hashMap.get(player) == null) {
-            // netAction.put("action", false);
-            // msgQueue.add(netAction.put("action", false));
-            throw new Exception("User should already be deleted from listener");
+        if (clientSocket == null) {
+            throw new Exception("User should already be deleted from server");
         }
-
-        // Send the data
-        byte[] b = jsonobj.toString().getBytes(Constants.encoding);
-        int msgLen = b.length;
-        for (Socket clientSocket : hashMap.values()) {
-            try {
-                OutputStream clientStream = clientSocket.getOutputStream();
-                clientStream.write(Converter.intToByteArray(msgLen));
-                clientStream.write(b);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        return true;
+        return naiveSendData(clientSocket, jsonobj);
     }
 
     @Override
@@ -68,15 +52,15 @@ public class Server implements IServer {
 
     @Override
     public void stopServer() {
-        try {
-            socket.close();
-        } catch (Exception e) {
-        }
         hashMap.values().forEach(socket -> {
             try {
                 socket.close();
             } catch (Exception e) {
             }
         });
+        try {
+            socket.close();
+        } catch (Exception e) {
+        }
     }
 }

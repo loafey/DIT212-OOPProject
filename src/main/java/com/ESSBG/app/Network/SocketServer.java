@@ -29,7 +29,8 @@ public class SocketServer implements Runnable {
     public void run() {
         try {
             while (true) {
-                // Accept is a blocking method/function.
+                // Accept is a blocking method/function. Wraps the socket in a thread and
+                // dispatches it.
                 Socket client = socket.accept();
                 Thread t = new Thread(new SocketServerListener(client, lock, hashMap, msgQueue, maxplayers));
                 t.start();

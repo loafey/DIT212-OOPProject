@@ -6,7 +6,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 
 import org.json.*;
-
+/**
+ * Baseclass to reduce copy paste, easier testing.
+ */
 public abstract class SocketBaseListener implements Runnable {
     protected Socket socket;
     protected LinkedBlockingQueue<JSONObject> msgQueue;

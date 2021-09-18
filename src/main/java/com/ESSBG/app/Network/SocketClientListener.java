@@ -8,8 +8,6 @@ import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
 public class SocketClientListener extends SocketBaseListener {
-    JSONObject netAction = new JSONObject(Constants.netAction);
-
     public SocketClientListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
         super(socket, lock, msgQueue);
     }
@@ -18,9 +16,9 @@ public class SocketClientListener extends SocketBaseListener {
     public void run() {
         try {
             // Write initial message to server.
-            if (!writeToSocket(netAction.getJSONObject("data").put("action", true).toString())) {
+            if (!writeToSocket(JSONFactory.getNetwork(true).toString())) {
                 // Tell client that connection failed.
-                msgQueue.add(netAction.getJSONObject("data").put("action", false));
+                msgQueue.add(JSONFactory.getNetwork(false));
                 disconnectSocket();
                 return;
             }
@@ -37,11 +35,11 @@ public class SocketClientListener extends SocketBaseListener {
         if (recvData == null) {
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.
-            msgQueue.add(netAction.getJSONObject("data").put("action", false));
+            msgQueue.add(JSONFactory.getNetwork(false));
             disconnectSocket();
             return false;
         }
-        msgQueue.add(netAction.put("reason", "game").put("data", recvData));
+        msgQueue.add(JSONFactory.getGame(recvData));
         return true;
     }
 

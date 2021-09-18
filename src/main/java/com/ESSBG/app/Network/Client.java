@@ -6,15 +6,15 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import java.io.*;
 
-public class Client implements IClient {
+public class Client extends Base implements IClient {
     private LinkedBlockingQueue<JSONObject> msgQueue = new LinkedBlockingQueue<JSONObject>();
     private Thread thread;
-    private Socket socket;
+    private Socket serverSocket;
     private Lock lock = new ReentrantLock(true);
 
     public boolean initClient() {
         try {
-            socket = new Socket(InetAddress.getByName(Constants.IP), Constants.PORT);
+            serverSocket = new Socket(InetAddress.getByName(Constants.IP), Constants.PORT);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -24,7 +24,7 @@ public class Client implements IClient {
 
     public void runClient() {
         try {
-            thread = new Thread(new SocketClientListener(socket, lock, msgQueue));
+            thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
             thread.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,30 +32,19 @@ public class Client implements IClient {
     }
 
     @Override
-    public boolean sendData(JSONObject jsonobj) {
-        // Send the data
-        try {
-            byte[] b = jsonobj.toString().getBytes(Constants.encoding);
-            int msgLen = b.length;
-            OutputStream server = socket.getOutputStream();
-            server.write(Converter.intToByteArray(msgLen));
-            server.write(b);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public boolean sendData(JSONObject jsonobj) throws UnsupportedEncodingException {
+        return naiveSendData(serverSocket, jsonobj);
     }
 
     @Override
-    public LinkedBlockingQueue<JSONObject> getData() {
+    public LinkedBlockingQueue<JSONObject> getMsgQueue() {
         return this.msgQueue;
     }
 
     @Override
     public void stopClient() {
         try {
-            socket.close();
+            serverSocket.close();
         } catch (Exception e) {
         }
     }
