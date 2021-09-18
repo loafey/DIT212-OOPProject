@@ -20,7 +20,7 @@ import java.io.*;
  * And then execute order of operation.
  *
  */
-interface IServer {
+public interface IServer {
     /**
      * Initializes the server.
      *

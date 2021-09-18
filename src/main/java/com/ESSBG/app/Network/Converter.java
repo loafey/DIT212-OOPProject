@@ -1,13 +1,25 @@
 package com.ESSBG.app.Network;
 
-public class Converter {
+final class Converter {
+    // Don't allow creating objects of this.
+    private Converter() {
+    }
 
     protected static int byteArrayToInt(byte[] b) {
-        return (b[3] & 0xFF | (b[2] & 0xFF) << 8 | (b[1] & 0xFF) << 16 | (b[0] & 0xFF) << 24);
+        int sum = 0;
+        for (int i = 0; i < b.length; i++) {
+            sum |= (b[b.length - i] & 0xFF) << (8 * i);
+        }
+        return sum;
     }
 
     protected static byte[] intToByteArray(int a) {
-        return new byte[] { (byte) ((a >> 24) & 0xFF), (byte) ((a >> 16) & 0xFF), (byte) ((a >> 8) & 0xFF),
-                (byte) (a & 0xFF) };
+        int numberOfBits = 64;
+        byte[] hexArray = new byte[64 / 8];
+        for (int i = 0; i < (numberOfBits / 8) + 1; i++) {
+            hexArray[i] = (byte) ((a >> numberOfBits) & 0xFF);
+            numberOfBits -= 8;
+        }
+        return hexArray;
     }
 }

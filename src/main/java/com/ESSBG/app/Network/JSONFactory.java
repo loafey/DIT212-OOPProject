@@ -6,13 +6,17 @@ import org.json.*;
  * To produce easy passable statements for the networking module These types are
  * to help where to route the data.
  */
-public class JSONFactory {
+final class JSONFactory {
+    // Don't allow creating obj of this.
+    private JSONFactory() {
+    }
+
     /**
      * @param bool Connect parameter: bool ? "I want to connect" : "I want to
      *             disconnect";
      * @return a network json object.
      */
-    protected static JSONObject getNetwork(boolean bool) {
+    public static JSONObject getNetwork(boolean bool) {
         JSONObject json = JSONTemplate();
         json.put("reason", "net");
         json.put("data", bool);
@@ -28,7 +32,7 @@ public class JSONFactory {
      *             is and who to reply to.
      * @return a network json object with id.
      */
-    protected static JSONObject getNetworkWithID(boolean bool, int id) {
+    public static JSONObject getNetworkWithID(boolean bool, int id) {
         JSONObject json = getNetwork(bool);
         json.put("id", id);
         return json;
@@ -38,7 +42,7 @@ public class JSONFactory {
      * @param data The datastructure the server and the client agreed on.
      * @return a network json object.
      */
-    protected static JSONObject getGame(JSONObject data) {
+    public static JSONObject getGame(JSONObject data) {
         JSONObject json = JSONTemplate();
         json.put("reason", "net");
         json.put("data", data);
@@ -51,7 +55,7 @@ public class JSONFactory {
      *             is and who to reply to.
      * @return a network json object with id.
      */
-    protected static JSONObject getGameWithID(JSONObject data, int id) {
+    public static JSONObject getGameWithID(JSONObject data, int id) {
         return getGame(data).put("id", id);
     }
 

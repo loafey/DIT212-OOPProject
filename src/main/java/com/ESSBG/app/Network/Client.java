@@ -12,6 +12,7 @@ public class Client extends Base implements IClient {
     private Socket serverSocket;
     private Lock lock = new ReentrantLock(true);
 
+    @Override
     public boolean initClient() {
         try {
             serverSocket = new Socket(InetAddress.getByName(Constants.IP), Constants.PORT);
@@ -22,6 +23,7 @@ public class Client extends Base implements IClient {
         return true;
     }
 
+    @Override
     public void runClient() {
         try {
             thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));

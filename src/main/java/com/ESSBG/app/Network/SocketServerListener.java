@@ -11,7 +11,7 @@ public class SocketServerListener extends SocketBaseListener {
     private int[] maxplayers;
     private int id = this.hashCode();
 
-    public SocketServerListener(Socket socket, Lock lock, ConcurrentHashMap<Integer, Socket> hashMap,
+    protected SocketServerListener(Socket socket, Lock lock, ConcurrentHashMap<Integer, Socket> hashMap,
             LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayers) {
         super(socket, lock, msgQueue);
         this.hashMap = hashMap;
@@ -47,7 +47,6 @@ public class SocketServerListener extends SocketBaseListener {
         // Disconnect or any networking error.
         if (recvData == null || (recvData.getString("reason").equals("net")
                 && !recvData.getJSONObject("data").getBoolean("action"))) {
-
             goodByeWorld();
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.

@@ -14,7 +14,7 @@ import org.json.*;
  * getMsgData gives you a BLOCKING Fifo-queue to enable a waiting thread to
  * receive a message instead of busy-waiting/polling.
  */
-interface IClient {
+public interface IClient {
     /**
      * Initializes the client.
      *

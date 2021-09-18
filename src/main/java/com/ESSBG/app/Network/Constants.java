@@ -3,10 +3,9 @@ package com.ESSBG.app.Network;
 
 public interface Constants {
 
-    String IP = "localhost";
-    int PORT = 8080;
-    int MAXPLAYERS = 7;
-    int BUFFER_SIZE = 4096;
-    String netAction = "{\"reason\":null,\"data\":{\"action\":null}}";
-    String encoding = "utf-8";
+    final String IP = "localhost";
+    final int PORT = 8080;
+    final int MAXPLAYERS = 7;
+    final int BUFFER_SIZE = 4096;
+    final String encoding = "utf-8";
 }
