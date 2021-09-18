@@ -41,7 +41,7 @@ public class SocketClientListener extends SocketBaseListener {
             disconnectSocket();
             return false;
         }
-        msgQueue.add(recvData);
+        msgQueue.add(netAction.put("reason", "game").put("data", recvData));
         return true;
     }
 

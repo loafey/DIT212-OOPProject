@@ -17,7 +17,7 @@ public class SocketServerListener extends SocketBaseListener {
         this.hashMap = hashMap;
         this.maxplayers = maxplayers;
         this.netAction = new JSONObject(Constants.netAction);
-        this.netAction.getJSONObject("data").put("id", this.hashCode());
+        this.netAction.put("id", this.hashCode());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SocketServerListener extends SocketBaseListener {
         hashMap.put(this.hashCode(), socket);
         numberOfActiveThreads++;
         lock.unlock();
-        msgQueue.add(netAction.getJSONObject("data").put("action", true));
+        msgQueue.add(netAction.put("reason", "net").getJSONObject("data").put("action", true));
 
         while (receiveDataPushToQueue()) {
         }
@@ -47,14 +47,16 @@ public class SocketServerListener extends SocketBaseListener {
     private boolean receiveDataPushToQueue() {
         JSONObject recvData = recvAll();
         // Disconnect or any networking error.
-        if (recvData == null) {
+        if (recvData == null || (recvData.getString("reason").equals("net")
+                && !recvData.getJSONObject("data").getBoolean("action"))) {
+
             goodByeWorld();
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.
-            msgQueue.add(netAction.getJSONObject("data").put("action", false));
+            msgQueue.add(netAction.put("reason", "net").getJSONObject("data").put("action", false));
             return false;
         }
-        msgQueue.add(recvData);
+        msgQueue.add(netAction.put("reason", "game").put("data", recvData));
         return true;
     }
 
@@ -74,7 +76,7 @@ public class SocketServerListener extends SocketBaseListener {
         if (js != null) {
             // Fails if client doesn't have correct connection handshake
             try {
-                if (js.get("reason").equals("net") && js.getJSONObject("data").get("action").equals("connect")) {
+                if (js.get("reason").equals("net") && js.getJSONObject("data").getBoolean("action")) {
                     return true;
                 }
             } catch (Exception e) {
