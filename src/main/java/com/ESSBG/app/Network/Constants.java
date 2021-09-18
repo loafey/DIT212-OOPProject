@@ -8,4 +8,5 @@ public interface Constants {
     final int MAXPLAYERS = 7;
     final int BUFFER_SIZE = 4096;
     final String encoding = "utf-8";
+    final int HEADERLEN = 4;
 }

@@ -7,19 +7,26 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.io.*;
 
 public class Server extends Base implements IServer {
-    private ConcurrentHashMap<Integer, Socket> hashMap = new ConcurrentHashMap<Integer, Socket>();
-    private LinkedBlockingQueue<JSONObject> msgQueue = new LinkedBlockingQueue<JSONObject>();
+    private ConcurrentHashMap<Integer, Socket> hashMap;
+    private LinkedBlockingQueue<JSONObject> msgQueue;
     private ServerSocket socket;
     private volatile int[] maxplayers = { Constants.MAXPLAYERS };
 
     public boolean initServer() {
         try {
-            this.socket = new ServerSocket(Constants.PORT);
+            msgQueue = new LinkedBlockingQueue<JSONObject>();
+            hashMap = new ConcurrentHashMap<Integer, Socket>();
+            socket = new ServerSocket(Constants.PORT);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    // Only for testing
+    protected boolean hasUserJoined(int id) {
+        return hashMap.containsKey(id);
     }
 
     /***
@@ -63,4 +70,5 @@ public class Server extends Base implements IServer {
         } catch (Exception e) {
         }
     }
+
 }

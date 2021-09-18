@@ -73,7 +73,7 @@ public class SocketServerListener extends SocketBaseListener {
         if (js != null) {
             // Fails if client doesn't have correct connection handshake
             try {
-                if (js.get("reason").equals("net") && js.getJSONObject("data").getBoolean("action")) {
+                if (js.getString("reason").equals("net") && js.getBoolean("data")) {
                     return true;
                 }
             } catch (Exception e) {

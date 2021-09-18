@@ -44,7 +44,7 @@ final class JSONFactory {
      */
     public static JSONObject getGame(JSONObject data) {
         JSONObject json = JSONTemplate();
-        json.put("reason", "net");
+        json.put("reason", "game");
         json.put("data", data);
         return json;
     }

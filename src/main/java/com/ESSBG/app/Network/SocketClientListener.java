@@ -53,6 +53,7 @@ public class SocketClientListener extends SocketBaseListener {
             // Assume everything went well.
             return true;
         } catch (Exception e) {
+            // TODO SocketException socket is closed;
         }
         return false;
     }

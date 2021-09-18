@@ -7,14 +7,14 @@ import java.util.concurrent.locks.*;
 import java.io.*;
 
 public class Client extends Base implements IClient {
-    private LinkedBlockingQueue<JSONObject> msgQueue = new LinkedBlockingQueue<JSONObject>();
-    private Thread thread;
+    private LinkedBlockingQueue<JSONObject> msgQueue;
     private Socket serverSocket;
     private Lock lock = new ReentrantLock(true);
 
     @Override
     public boolean initClient() {
         try {
+            msgQueue = new LinkedBlockingQueue<JSONObject>();
             serverSocket = new Socket(InetAddress.getByName(Constants.IP), Constants.PORT);
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,7 +26,8 @@ public class Client extends Base implements IClient {
     @Override
     public void runClient() {
         try {
-            thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
+            SocketClientListener a = new SocketClientListener(serverSocket, lock, msgQueue);
+            Thread thread = new Thread(a);
             thread.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +41,7 @@ public class Client extends Base implements IClient {
 
     @Override
     public LinkedBlockingQueue<JSONObject> getMsgQueue() {
-        return this.msgQueue;
+        return msgQueue;
     }
 
     @Override
