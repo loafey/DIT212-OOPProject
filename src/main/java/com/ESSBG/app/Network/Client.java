@@ -3,13 +3,14 @@ package com.ESSBG.app.Network;
 import org.json.*;
 import java.net.*;
 import java.util.concurrent.*;
-
+import java.util.concurrent.locks.*;
 import java.io.*;
 
 public class Client implements IClient {
-    private ConcurrentLinkedQueue<JSONObject> msgQueue = new ConcurrentLinkedQueue<JSONObject>();
+    private LinkedBlockingQueue<JSONObject> msgQueue = new LinkedBlockingQueue<JSONObject>();
     private Thread thread;
     private Socket socket;
+    private Lock lock = new ReentrantLock(true);
 
     public boolean initClient() {
         try {
@@ -23,21 +24,21 @@ public class Client implements IClient {
 
     public void runClient() {
         try {
-            thread = new Thread(new SocketListener(socket.getInputStream(), msgQueue));
+            thread = new Thread(new SocketClientListener(socket, lock, msgQueue));
             thread.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // @Override
+    @Override
     public boolean sendData(JSONObject jsonobj) {
         // Send the data
         try {
-            byte[] b = jsonobj.toString().getBytes("utf-8");
+            byte[] b = jsonobj.toString().getBytes(Constants.encoding);
             int msgLen = b.length;
             OutputStream server = socket.getOutputStream();
-            server.write(intToByteArray(msgLen));
+            server.write(Converter.intToByteArray(msgLen));
             server.write(b);
             return true;
         } catch (IOException e) {
@@ -46,22 +47,16 @@ public class Client implements IClient {
         return false;
     }
 
-    // @Override
-    public ConcurrentLinkedQueue<JSONObject> getData() {
-        if (msgQueue.isEmpty()) {
-            return null;
-        }
+    @Override
+    public LinkedBlockingQueue<JSONObject> getData() {
         return this.msgQueue;
     }
 
-    private static byte[] intToByteArray(int a) {
-        return new byte[] { (byte) ((a >> 24) & 0xFF), (byte) ((a >> 16) & 0xFF), (byte) ((a >> 8) & 0xFF),
-                (byte) (a & 0xFF) };
-    }
-
     @Override
-    public boolean stopClient() {
-        // TODO Auto-generated method stub
-        return false;
+    public void stopClient() {
+        try {
+            socket.close();
+        } catch (Exception e) {
+        }
     }
 }

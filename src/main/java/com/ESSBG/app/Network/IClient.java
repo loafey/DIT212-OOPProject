@@ -1,6 +1,6 @@
 package com.ESSBG.app.Network;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.*;
 import org.json.*;
 
 interface IClient {
@@ -8,9 +8,9 @@ interface IClient {
 
     public void runClient();
 
-    public boolean stopClient();
+    public void stopClient();
 
     public boolean sendData(JSONObject jsonobj);
 
-    public ConcurrentLinkedQueue<JSONObject> getData();
+    public LinkedBlockingQueue<JSONObject> getData();
 }
