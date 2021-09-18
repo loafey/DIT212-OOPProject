@@ -41,7 +41,7 @@ public class Server implements IServer {
         }
 
         // Send the data
-        byte[] b = jsonobj.toString().getBytes("utf-8");
+        byte[] b = jsonobj.toString().getBytes(Constants.encoding);
         int msgLen = b.length;
         for (Socket clientSocket : hashMap.values()) {
             try {
