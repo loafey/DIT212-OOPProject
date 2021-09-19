@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class NetworkTest {
     // Since we need to start thread(s) and then message eachother, we need to have
     // a small delay. 10ms was the lowest I(bjorn) could reach.
-    final int SLEEP_TIME = 50;
+    final int SLEEP_TIME = 150;
     IServer s;
     IClient c;
     LinkedBlockingQueue<JSONObject> serverMsgQueue;
@@ -131,6 +131,29 @@ public class NetworkTest {
         c.runClient();
         Thread.sleep(SLEEP_TIME);
         assertTrue(y == Constants.MAXPLAYERS - 1 && y == x.getNumberOfUsers());
+    }
+
+    @Test
+    public void twoConnectSendMessToOne() throws UnsupportedEncodingException, Exception {
+        Server x = (Server) s;
+        Client d = new Client();
+        d.initClient();
+        d.runClient();
+        Thread.sleep(SLEEP_TIME);
+
+        int s = clientMsgQueue.size();
+        int a = serverMsgQueue.take().getInt("id");
+        int b = serverMsgQueue.take().getInt("id");
+        x.sendData(a, new JSONObject());
+        Thread.sleep(SLEEP_TIME);
+
+        assertTrue(s + 1 == clientMsgQueue.size());
+        assertTrue(d.getMsgQueue().size() == 0);
+        x.sendData(b, new JSONObject());
+        Thread.sleep(SLEEP_TIME);
+
+        assertTrue(d.getMsgQueue().size() == 1);
+        assertTrue(s + 1 == clientMsgQueue.size());
     }
 
     @Test
