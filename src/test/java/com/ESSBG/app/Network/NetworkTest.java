@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class NetworkTest {
     // Since we need to start thread(s) and then message eachother, we need to have
     // a small delay. 10ms was the lowest I(bjorn) could reach.
-    final int SLEEP_TIME = 500;
+    final int SLEEP_TIME = 1000;
     IServer s;
     IClient c;
     LinkedBlockingQueue<JSONObject> serverMsgQueue;

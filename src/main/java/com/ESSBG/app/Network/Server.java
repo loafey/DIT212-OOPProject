@@ -44,7 +44,7 @@ public class Server extends Base implements IServer {
     }
 
     @Override
-    public boolean sendData(int id, JSONObject jsonobj) throws UnsupportedEncodingException, Exception {
+    public boolean sendData(int id, JSONObject jsonobj) throws Exception {
         if (socket == null || socket.isClosed()) {
             return false;
         }

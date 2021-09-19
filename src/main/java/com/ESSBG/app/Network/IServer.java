@@ -54,7 +54,7 @@ interface IServer {
      *         connection, rip.
      * @throws UnsupportedEncodingException
      */
-    boolean sendData(int id, JSONObject json) throws UnsupportedEncodingException;
+    boolean sendData(int id, JSONObject json) throws Exception;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message
