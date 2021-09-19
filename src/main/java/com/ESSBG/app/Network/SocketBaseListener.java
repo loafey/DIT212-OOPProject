@@ -26,7 +26,7 @@ public abstract class SocketBaseListener implements Runnable {
             InputStream stream = socket.getInputStream();
 
             // Get length of message
-            byte[] headerLenByte = new byte[4];
+            byte[] headerLenByte = new byte[Constants.HEADERLEN];
 
             // Wait for getting contacted. Disconnect => return.
             if (stream.read(headerLenByte, 0, 1) == -1) {
