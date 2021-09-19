@@ -13,7 +13,7 @@ import org.json.*;
  * getMsgData gives you a BLOCKING Fifo-queue to enable a waiting thread to
  * receive a message instead of busy-waiting/polling.
  */
-public interface IClient {
+interface IClient {
     /**
      * Starts the client and tries connects to server. Messages from the networking
      * module will be found in the msgQueue. <br>
@@ -23,12 +23,12 @@ public interface IClient {
      *
      * @return true if client started, else false. Connectionstatus in msgQueue
      */
-    public boolean runClient();
+    boolean runClient();
 
     /**
      * Closes the socket
      */
-    public void stopClient();
+    void stopClient();
 
     /**
      * Sends the agreed structure between server and client of the jsonobject.
@@ -39,7 +39,7 @@ public interface IClient {
      *         connection, rip.
      * @throws UnsupportedEncodingException
      */
-    public boolean sendData(JSONObject jsonobj) throws UnsupportedEncodingException;
+    boolean sendData(JSONObject jsonobj) throws UnsupportedEncodingException;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message
@@ -49,5 +49,5 @@ public interface IClient {
      *         {"reason":"net", "data": bool} <br>
      *         => bool ? "Connected or Want to connect" : "Disconnected"
      */
-    public LinkedBlockingQueue<JSONObject> getMsgQueue();
+    LinkedBlockingQueue<JSONObject> getMsgQueue();
 }

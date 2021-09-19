@@ -19,7 +19,7 @@ import java.io.*;
  * And then execute order of operation.
  *
  */
-public interface IServer {
+interface IServer {
     /**
      * Starts the server and spawns a helper class to serve the clients needs.
      * Messages from the networking module will be found in the msgQueue. <br>
@@ -29,32 +29,32 @@ public interface IServer {
      *
      * @return true if server started, else false
      */
-    public boolean runServer();
+    boolean runServer();
 
     /**
      * Changes maxplayers to the current players and thus disallows more players to
      * join. Also shuts down the helper accepting class so no more players can join
      * unless game is over and runserver() is invoked.
      */
-    public void startGame();
+    void startGame();
 
     /**
      * Closes all clients and then closes server.
      */
-    public void stopServer();
+    void stopServer();
 
     /**
      * Sends the agreed structure between server and client of the jsonobject.
      *
      * @param id      the receiver id to send the data.
      *
-     * @param jsonobj the agreed structure between server and client of the
+     * @param json the agreed structure between server and client of the
      *                jsonobject.
      * @return IF FALSE, something went very wrong with networking. Probably loss of
      *         connection, rip.
      * @throws UnsupportedEncodingException
      */
-    public boolean sendData(int id, JSONObject json) throws UnsupportedEncodingException, Exception;
+    boolean sendData(int id, JSONObject json) throws UnsupportedEncodingException;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message
@@ -64,5 +64,5 @@ public interface IServer {
      *         {"reason":"net", "id": int, "data": bool} <br>
      *         => bool ? "Connected or Want to connect" : "Disconnected"
      */
-    public LinkedBlockingQueue<JSONObject> getMsgQueue();
+    LinkedBlockingQueue<JSONObject> getMsgQueue();
 }
