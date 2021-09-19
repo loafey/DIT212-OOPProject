@@ -28,8 +28,9 @@ interface IServer {
      * Resets the domain before each run.
      *
      * @return true if server started, else false
+     * @throws IOException
      */
-    boolean runServer();
+    void runServer() throws IOException;
 
     /**
      * Changes maxplayers to the current players and thus disallows more players to
@@ -46,10 +47,9 @@ interface IServer {
     /**
      * Sends the agreed structure between server and client of the jsonobject.
      *
-     * @param id      the receiver id to send the data.
+     * @param id   the receiver id to send the data.
      *
-     * @param json the agreed structure between server and client of the
-     *                jsonobject.
+     * @param json the agreed structure between server and client of the jsonobject.
      * @return IF FALSE, something went very wrong with networking. Probably loss of
      *         connection, rip.
      * @throws UnsupportedEncodingException

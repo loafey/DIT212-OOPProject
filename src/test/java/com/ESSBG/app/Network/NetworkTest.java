@@ -17,7 +17,7 @@ public class NetworkTest {
     LinkedBlockingQueue<JSONObject> clientMsgQueue;
 
     @Before
-    public void setup() throws InterruptedException {
+    public void setup() throws InterruptedException, IOException {
         s = new Server();
         s.runServer();
         serverMsgQueue = s.getMsgQueue();
@@ -76,7 +76,7 @@ public class NetworkTest {
     }
 
     @Test
-    public void clientConnectMaxDisconnectAll() throws Exception {
+    public void clientConnectMaxDisconnectAll() throws IOException, InterruptedException {
         // Spawn extra n-1 for
         for (int i = 0; i < Constants.MAXPLAYERS; i++) {
             Client c = new Client();

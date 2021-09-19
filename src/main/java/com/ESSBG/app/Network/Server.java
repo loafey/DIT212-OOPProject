@@ -15,32 +15,27 @@ public class Server extends Base implements IServer {
 
     /***
      * Runs the server at specified port in constants.java
+     * @throws IOException
      */
     @Override
-    public boolean runServer() {
+    public void runServer() throws IOException {
+        // Shut down existing sockets
         try {
-            // Shut down existing sockets
-            try {
-                hashMap.values().forEach(sock -> {
-                    try {
-                        sock.close();
-                    } catch (Exception ignore) {
-                    }
-                });
-                socket.close();
-            } catch (Exception e) {
-            }
-            // Reset "world"
-            maxplayersAtIndexZero[0] = Constants.MAXPLAYERS;
-            msgQueue = new LinkedBlockingQueue<JSONObject>();
-            hashMap = new ConcurrentHashMap<Integer, Socket>();
-            socket = new ServerSocket(Constants.PORT);
-            (new Thread(new SocketServer(socket, hashMap, msgQueue, maxplayersAtIndexZero))).start();
-            return true;
+            hashMap.values().forEach(sock -> {
+                try {
+                    sock.close();
+                } catch (Exception ignore) {
+                }
+            });
+            socket.close();
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        return false;
+        // Reset "world"
+        maxplayersAtIndexZero[0] = Constants.MAXPLAYERS;
+        msgQueue = new LinkedBlockingQueue<JSONObject>();
+        hashMap = new ConcurrentHashMap<Integer, Socket>();
+        socket = new ServerSocket(Constants.PORT);
+        (new Thread(new SocketServer(socket, hashMap, msgQueue, maxplayersAtIndexZero))).start();
     }
 
     @Override
