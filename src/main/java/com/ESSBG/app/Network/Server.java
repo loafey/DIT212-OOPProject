@@ -59,6 +59,10 @@ public class Server extends Base implements IServer {
     @Override
     public void startGame() {
         maxplayersAtIndexZero[0] = hashMap.size();
+        try {
+            socket.close();
+        } catch (Exception e) {
+        }
     }
 
     @Override

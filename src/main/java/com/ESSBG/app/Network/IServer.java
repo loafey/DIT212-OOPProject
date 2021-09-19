@@ -33,7 +33,8 @@ public interface IServer {
 
     /**
      * Changes maxplayers to the current players and thus disallows more players to
-     * join.
+     * join. Also shuts down the helper accepting class so no more players can join
+     * unless game is over and runserver() is invoked.
      */
     public void startGame();
 

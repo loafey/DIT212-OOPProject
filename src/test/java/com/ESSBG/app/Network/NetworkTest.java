@@ -122,6 +122,7 @@ public class NetworkTest {
         x.startGame();
         Thread.sleep(SLEEP_TIME);
         Client c = new Client();
+        assertFalse(c.runClient());
         c.runClient();
         Thread.sleep(SLEEP_TIME);
         assertTrue(y == Constants.MAXPLAYERS - 1 && y == x.getNumberOfUsers());
