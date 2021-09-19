@@ -64,6 +64,8 @@ public interface IServer {
      *         instead of busy-waiting/polling. <br>
      *         Datashape: <br>
      *         {"reason":"game", "id": int, "data":{--Data_Parties_Agreed_On--}}<br>
+     *         {"reason":"net", "id": int, "data": bool} <br>
+     *         => bool ? "Connected or Want to connect" : "Disconnected"
      */
     public LinkedBlockingQueue<JSONObject> getMsgQueue();
 }

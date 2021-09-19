@@ -50,6 +50,8 @@ public interface IClient {
      *         instead of busy-waiting/polling.<br>
      *         Datashape: <br>
      *         {"reason":"game", "data":{--Data_Parties_Agreed_On--}}<br>
+     *         {"reason":"net", "data": bool} <br>
+     *         => bool ? "Connected or Want to connect" : "Disconnected"
      */
     public LinkedBlockingQueue<JSONObject> getMsgQueue();
 }
