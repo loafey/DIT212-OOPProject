@@ -23,23 +23,33 @@ public abstract class SocketBaseListener implements Runnable {
 
     protected JSONObject recvAll() {
         try {
-            byte[] headerLenByte = new byte[Constants.HEADERLEN];
-            byte[] buffer = new byte[Constants.BUFFER_SIZE];
             InputStream stream = socket.getInputStream();
 
             // Get length of message
-            stream.read(headerLenByte, 0, Constants.HEADERLEN);
+            byte[] headerLenByte = new byte[4];
+
+            // Wait for getting contacted. Disconnect => return.
+            if (stream.read(headerLenByte, 0, 1) == -1) {
+                return null;
+            }
+
+            // If contact has been made, set timeout for the rest of msg.
+            // For example bad actor, or very slow net.
+            socket.setSoTimeout(500);
+            stream.readNBytes(headerLenByte, 1, Constants.HEADERLEN - 1);
+
+            // Get lengt of messages => Number of "chars".
             int msgLen = Converter.byteArrayToInt(headerLenByte);
             if (msgLen == 0) {
                 return null;
             }
-            // Read the message and then pick the data we want.
-            stream.read(buffer, 0, msgLen);
-            byte[] reduced = new byte[msgLen];
-            for (int i = 0; i < msgLen; i++) {
-                reduced[i] = buffer[i];
-            }
-            return new JSONObject(new String(reduced));
+            // Read the message.
+            String msg = new String(stream.readNBytes(msgLen));
+            // IF message has been read correctly. Let socket have infinite timeout.
+            socket.setSoTimeout(0);
+            return new JSONObject(msg);
+        } catch (SocketException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             // Don't care, if server kicks the player etc...
             // Also how dare them to send me invalid data?!
