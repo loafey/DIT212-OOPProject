@@ -27,8 +27,7 @@ public class Client extends Base implements IClient {
             thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
             thread.start();
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore_since_we_cant_reconnect_to_user_anyways) {
         }
         return false;
     }
