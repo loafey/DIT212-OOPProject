@@ -27,9 +27,10 @@ public class NetworkTest {
     }
 
     @After
-    public void shutdown() {
+    public void shutdown() throws InterruptedException {
         s.stopServer();
         c.stopClient();
+        Thread.sleep(1000);
     }
 
     @Test
