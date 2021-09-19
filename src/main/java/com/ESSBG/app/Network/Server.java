@@ -11,30 +11,43 @@ public class Server extends Base implements IServer {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private ServerSocket socket;
     // This is to use first index as a remote controller of socketlistener.
-    private volatile int[] maxplayers = { Constants.MAXPLAYERS };
-
-    public boolean initServer() {
-        try {
-            msgQueue = new LinkedBlockingQueue<JSONObject>();
-            hashMap = new ConcurrentHashMap<Integer, Socket>();
-            socket = new ServerSocket(Constants.PORT);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+    private volatile int[] maxplayersAtIndexZero = { Constants.MAXPLAYERS };
 
     /***
      * Runs the server at specified port in constants.java
      */
     @Override
-    public void runServer() {
-        (new Thread(new SocketServer(socket, hashMap, msgQueue, maxplayers))).start();
+    public boolean runServer() {
+        try {
+            // Shut down existing sockets
+            try {
+                hashMap.values().forEach(sock -> {
+                    try {
+                        sock.close();
+                    } catch (Exception ignore) {
+                    }
+                });
+                socket.close();
+            } catch (Exception e) {
+            }
+            // Reset "world"
+            maxplayersAtIndexZero[0] = Constants.MAXPLAYERS;
+            msgQueue = new LinkedBlockingQueue<JSONObject>();
+            hashMap = new ConcurrentHashMap<Integer, Socket>();
+            socket = new ServerSocket(Constants.PORT);
+            (new Thread(new SocketServer(socket, hashMap, msgQueue, maxplayersAtIndexZero))).start();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public boolean sendData(int id, JSONObject jsonobj) throws UnsupportedEncodingException, Exception {
+        if (socket == null || socket.isClosed()) {
+            return false;
+        }
         Socket clientSocket = hashMap.get(id);
         // Check whether player values are correct.
         if (clientSocket == null) {
@@ -45,7 +58,7 @@ public class Server extends Base implements IServer {
 
     @Override
     public void startGame() {
-        maxplayers[0] = hashMap.size();
+        maxplayersAtIndexZero[0] = hashMap.size();
     }
 
     @Override

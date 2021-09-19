@@ -10,33 +10,34 @@ public class Client extends Base implements IClient {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private Socket serverSocket;
     private Thread thread;
-    private Lock lock = new ReentrantLock(true);
+    private Lock lock;
 
     @Override
-    public boolean initClient() {
+    public boolean runClient() {
         try {
+            // Shutdown existing stuff
+            try {
+                serverSocket.close();
+            } catch (Exception e) {
+            }
+            // Recreate the world
+            lock = new ReentrantLock(true);
             msgQueue = new LinkedBlockingQueue<JSONObject>();
             serverSocket = new Socket(InetAddress.getByName(Constants.IP), Constants.PORT);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void runClient() {
-        try {
-            SocketClientListener a = new SocketClientListener(serverSocket, lock, msgQueue);
-            thread = new Thread(a);
+            thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
             thread.start();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
     public boolean sendData(JSONObject jsonobj) throws UnsupportedEncodingException {
+        if (serverSocket == null || serverSocket.isClosed()) {
+            return false;
+        }
         return naiveSendData(serverSocket, jsonobj);
     }
 

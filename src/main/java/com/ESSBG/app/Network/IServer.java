@@ -6,9 +6,8 @@ import java.io.*;
 
 /**
  * Order of Operation:<br>
- * 1: IServer s = new Server();<br>
- * 2: s.initServer();<br>
- * 3: c.runServer();<br>
+ * 1: IServer s = new Server(); <br>
+ * 2: c.runServer(); <br>
  *
  * After server has been run, you should be able to use sendData to send data to
  * id. getMsgData gives you a BLOCKING Fifo-queue to enable a waiting thread to
@@ -22,18 +21,15 @@ import java.io.*;
  */
 public interface IServer {
     /**
-     * Initializes the server.
-     *
-     * @return true if initialization was successful, otherwise false. Try again.
-     */
-    public boolean initServer();
-
-    /**
      * Starts the server and spawns a helper class to serve the clients needs.
      * Messages from the networking module will be found in the msgQueue. <br>
      * Reason: net
+     *
+     * Resets the domain before each run.
+     *
+     * @return true if server started, else false
      */
-    public void runServer();
+    public boolean runServer();
 
     /**
      * Changes maxplayers to the current players and thus disallows more players to

@@ -5,10 +5,9 @@ import java.util.concurrent.*;
 import org.json.*;
 
 /**
- * Order of Operation:<br>
- * 1: IClient c = new Client();<br>
- * 2: c.initClient();<br>
- * 3: c.runClient();<br>
+ * Order of Operation: <br>
+ * 1: IClient c = new Client(); <br>
+ * 2: c.runClient(); <br>
  *
  * After client has been run, you should be able to use sendData to send data.
  * getMsgData gives you a BLOCKING Fifo-queue to enable a waiting thread to
@@ -16,20 +15,15 @@ import org.json.*;
  */
 public interface IClient {
     /**
-     * Initializes the client.
-     *
-     * @return true if initialization was successful, otherwise false.
-     */
-    public boolean initClient();
-
-    /**
      * Starts the client and tries connects to server. Messages from the networking
      * module will be found in the msgQueue. <br>
-     * IMPORTANT: HAS TO BE RUN ASAP after initClient() otherwise it might timeout!
-     *
      * Reason: net
+     *
+     * Resets the domain before each run.
+     *
+     * @return true if client started, else false. Connectionstatus in msgQueue
      */
-    public void runClient();
+    public boolean runClient();
 
     /**
      * Closes the socket

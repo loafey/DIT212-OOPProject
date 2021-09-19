@@ -14,14 +14,14 @@ public class SocketServer implements Runnable {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private ConcurrentHashMap<Integer, Socket> hashMap;
     private ServerSocket socket;
-    private int[] maxplayers;
+    private volatile int[] maxplayersAtIndexZero;
     private Lock lock = new ReentrantLock(true);
 
     protected SocketServer(ServerSocket socket, ConcurrentHashMap<Integer, Socket> hashMap,
-            LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayers) {
+            LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayersAtIndexZero) {
         this.socket = socket;
         this.hashMap = hashMap;
-        this.maxplayers = maxplayers;
+        this.maxplayersAtIndexZero = maxplayersAtIndexZero;
         this.msgQueue = msgQueue;
     }
 
@@ -33,7 +33,7 @@ public class SocketServer implements Runnable {
                 // dispatches it.
                 Socket client = socket.accept();
                 client.setSoTimeout(4*1000);
-                Thread t = new Thread(new SocketServerListener(client, lock, hashMap, msgQueue, maxplayers));
+                Thread t = new Thread(new SocketServerListener(client, lock, hashMap, msgQueue, maxplayersAtIndexZero));
                 t.start();
             }
         } catch (IOException dont_care) {

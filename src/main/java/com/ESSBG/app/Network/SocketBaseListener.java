@@ -49,7 +49,7 @@ public abstract class SocketBaseListener implements Runnable {
             socket.setSoTimeout(0);
             return new JSONObject(msg);
         } catch (SocketException e) {
-            e.printStackTrace();
+            // Don't care
         } catch (IOException e) {
             // Don't care, if server kicks the player etc...
             // Also how dare them to send me invalid data?!

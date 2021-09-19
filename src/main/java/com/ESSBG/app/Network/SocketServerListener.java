@@ -7,14 +7,14 @@ import org.json.JSONObject;
 
 public class SocketServerListener extends SocketBaseListener {
     private ConcurrentHashMap<Integer, Socket> hashMap;
-    private int[] maxplayers;
+    private volatile int[] maxplayersAtIndexZero;
     private int id = this.hashCode();
 
     protected SocketServerListener(Socket socket, Lock lock, ConcurrentHashMap<Integer, Socket> hashMap,
-            LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayers) {
+            LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayersAtIndexZero) {
         super(socket, lock, msgQueue);
         this.hashMap = hashMap;
-        this.maxplayers = maxplayers;
+        this.maxplayersAtIndexZero = maxplayersAtIndexZero;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class SocketServerListener extends SocketBaseListener {
 
         // Check max sockets. If size is equal to max => Stop execute and kill the conn.
         lock.lock();
-        if (numberOfActiveThreads >= maxplayers[0]) {
+        if (numberOfActiveThreads >= maxplayersAtIndexZero[0]) {
             disconnectSocket();
             lock.unlock();
             // Let thread die without anyone knowing through the hashmap.

@@ -19,11 +19,9 @@ public class NetworkTest {
     @Before
     public void setup() throws InterruptedException {
         s = new Server();
-        s.initServer();
         s.runServer();
         serverMsgQueue = s.getMsgQueue();
         c = new Client();
-        c.initClient();
         c.runClient();
         clientMsgQueue = c.getMsgQueue();
     }
@@ -82,7 +80,6 @@ public class NetworkTest {
         // Spawn extra n-1 for
         for (int i = 0; i < Constants.MAXPLAYERS; i++) {
             Client c = new Client();
-            c.initClient();
             c.runClient();
         }
 
@@ -118,7 +115,6 @@ public class NetworkTest {
         Server x = (Server) s;
         for (int i = 0; i < Constants.MAXPLAYERS - 2; i++) {
             Client c = new Client();
-            c.initClient();
             c.runClient();
         }
         Thread.sleep(SLEEP_TIME);
@@ -126,7 +122,6 @@ public class NetworkTest {
         x.startGame();
         Thread.sleep(SLEEP_TIME);
         Client c = new Client();
-        c.initClient();
         c.runClient();
         Thread.sleep(SLEEP_TIME);
         assertTrue(y == Constants.MAXPLAYERS - 1 && y == x.getNumberOfUsers());
@@ -136,7 +131,6 @@ public class NetworkTest {
     public void twoConnectSendMessToOne() throws UnsupportedEncodingException, Exception {
         Server x = (Server) s;
         Client d = new Client();
-        d.initClient();
         d.runClient();
         Thread.sleep(SLEEP_TIME);
 
