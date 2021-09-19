@@ -1,8 +1,6 @@
 package com.ESSBG.app.Network;
 
-
 public interface Constants {
-
     final String IP = "localhost";
     final int PORT = 8080;
     final int MAXPLAYERS = 7;

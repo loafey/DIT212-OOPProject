@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
-
 import org.json.JSONObject;
 
 public class SocketClientListener extends SocketBaseListener {
@@ -52,8 +51,7 @@ public class SocketClientListener extends SocketBaseListener {
             stream.write(s.getBytes());
             // Assume everything went well.
             return true;
-        } catch (Exception e) {
-            // TODO SocketException socket is closed;
+        } catch (Exception dont_care) {
         }
         return false;
     }

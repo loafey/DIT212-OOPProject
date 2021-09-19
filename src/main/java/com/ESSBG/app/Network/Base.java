@@ -21,6 +21,5 @@ abstract class Base {
             return false;
         }
         return true;
-
     }
 }

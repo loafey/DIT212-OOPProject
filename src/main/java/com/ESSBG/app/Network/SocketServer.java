@@ -35,7 +35,7 @@ public class SocketServer implements Runnable {
                 Thread t = new Thread(new SocketServerListener(client, lock, hashMap, msgQueue, maxplayers));
                 t.start();
             }
-        } catch (IOException e) { // Ignore ioexception
+        } catch (IOException dont_care) {
         } catch (Exception e) {
             e.printStackTrace();
         }

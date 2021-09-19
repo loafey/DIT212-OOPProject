@@ -6,7 +6,6 @@ import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
 public class SocketServerListener extends SocketBaseListener {
-
     private ConcurrentHashMap<Integer, Socket> hashMap;
     private int[] maxplayers;
     private int id = this.hashCode();
