@@ -1,10 +1,9 @@
 package com.ESSBG.app.Network;
 
-import org.junit.Before;
 import org.json.*;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.*;
 import java.io.*;
+import java.util.*;
 import java.util.concurrent.*;
 import static org.junit.Assert.*;
 
@@ -76,6 +75,62 @@ public class NetworkTest {
             fail();
         }
         assertTrue(b);
+    }
+
+    @Test
+    public void clientConnectMaxDisconnectAll() throws Exception {
+        // Spawn extra n-1 for
+        for (int i = 0; i < Constants.MAXPLAYERS; i++) {
+            Client c = new Client();
+            c.initClient();
+            c.runClient();
+        }
+
+        // Give it some chance for message to arrive, minimum value 10ms me(bjorn).
+        Thread.sleep(SLEEP_TIME);
+        Integer[] idList = new Integer[Constants.MAXPLAYERS];
+        System.out.print(serverMsgQueue.size());
+        if (serverMsgQueue.size() == Constants.MAXPLAYERS) {
+            Server x = (Server) s;
+            for (int i = 0; i < Constants.MAXPLAYERS; i++) {
+                idList[i] = serverMsgQueue.take().getInt("id");
+                assertTrue(((Server) s).hasUserJoined(idList[i]));
+            }
+            Set<Integer> p = new HashSet<Integer>(Arrays.asList(idList));
+            assertTrue(p.size() == Constants.MAXPLAYERS);
+            assertTrue(x.getNumberOfUsers() == Constants.MAXPLAYERS);
+            for (int i = 0; i < Constants.MAXPLAYERS; i++) {
+                x.disconnectUserSocket(idList[i]);
+            }
+            Thread.sleep(SLEEP_TIME);
+            assertTrue(x.getNumberOfUsers() == 0);
+            assertTrue(serverMsgQueue.size() == Constants.MAXPLAYERS);
+            for (int i = 0; i < Constants.MAXPLAYERS; i++) {
+                assertTrue(p.contains(serverMsgQueue.take().getInt("id")));
+                assertFalse(x.hasUserJoined(idList[i]));
+            }
+            return;
+        }
+        fail();
+    }
+
+    @Test
+    public void connectAllButOneStartGameAndAddLast() throws InterruptedException {
+        Server x = (Server) s;
+        for (int i = 0; i < Constants.MAXPLAYERS - 2; i++) {
+            Client c = new Client();
+            c.initClient();
+            c.runClient();
+        }
+        Thread.sleep(SLEEP_TIME);
+        int y = x.getNumberOfUsers();
+        x.startGame();
+        Thread.sleep(SLEEP_TIME);
+        Client c = new Client();
+        c.initClient();
+        c.runClient();
+        Thread.sleep(SLEEP_TIME);
+        assertTrue(y == Constants.MAXPLAYERS - 1 && y == x.getNumberOfUsers());
     }
 
     @Test

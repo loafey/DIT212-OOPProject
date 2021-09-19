@@ -13,7 +13,7 @@ public abstract class SocketBaseListener implements Runnable {
     protected Socket socket;
     protected LinkedBlockingQueue<JSONObject> msgQueue;
     protected Lock lock;
-    protected int numberOfActiveThreads = 0;
+    protected static volatile int numberOfActiveThreads = 0;
 
     protected SocketBaseListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
         this.socket = socket;

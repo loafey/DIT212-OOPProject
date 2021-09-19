@@ -10,6 +10,7 @@ public class Server extends Base implements IServer {
     private ConcurrentHashMap<Integer, Socket> hashMap;
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private ServerSocket socket;
+    // This is to use first index as a remote controller of socketlistener.
     private volatile int[] maxplayers = { Constants.MAXPLAYERS };
 
     public boolean initServer() {
@@ -71,4 +72,12 @@ public class Server extends Base implements IServer {
         return hashMap.containsKey(id);
     }
 
+    // Only for testing or not. Disconnects the user.
+    protected void disconnectUserSocket(int id) throws IOException {
+        hashMap.get(id).close();
+    }
+
+    protected int getNumberOfUsers() {
+        return hashMap.size();
+    }
 }
