@@ -1,7 +1,7 @@
 package com.ESSBG.app.Network;
 
 final class Converter {
-    private static int numberOfBits = 32;
+    private final static int numberOfBits = 32;
 
     // Don't allow creating objects of this.
     private Converter() {

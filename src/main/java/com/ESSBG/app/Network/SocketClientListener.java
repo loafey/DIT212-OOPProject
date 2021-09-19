@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
 public class SocketClientListener extends SocketBaseListener {
-    public SocketClientListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
+    protected SocketClientListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
         super(socket, lock, msgQueue);
     }
 

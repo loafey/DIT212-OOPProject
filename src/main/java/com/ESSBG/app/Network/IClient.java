@@ -36,8 +36,6 @@ public interface IClient {
 
     /**
      * Sends the agreed structure between server and client of the jsonobject.
-     * STRONGLY RECOMMENDED TO USE JSONFactory.getGame(<Your data here>) as your
-     * JSONObject to send to the receiver.
      *
      * @param jsonobj the agreed structure between server and client of the
      *                jsonobject.
@@ -49,7 +47,9 @@ public interface IClient {
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message
-     *         instead of busy-waiting/polling.
+     *         instead of busy-waiting/polling.<br>
+     *         Datashape: <br>
+     *         {"reason":"game", "data":{--Data_Parties_Agreed_On--}}<br>
      */
     public LinkedBlockingQueue<JSONObject> getMsgQueue();
 }

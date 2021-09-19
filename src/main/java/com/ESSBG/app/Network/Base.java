@@ -12,10 +12,9 @@ abstract class Base {
      */
     protected boolean naiveSendData(Socket clientSocket, JSONObject jsonobj) throws UnsupportedEncodingException {
         byte[] b = jsonobj.toString().getBytes(Constants.encoding);
-        int msgLen = b.length;
         try {
             OutputStream clientStream = clientSocket.getOutputStream();
-            clientStream.write(Converter.intToByteArray(msgLen));
+            clientStream.write(Converter.intToByteArray(b.length));
             clientStream.write(b);
         } catch (IOException e) {
             // for example if a client has disconnected without telling us.

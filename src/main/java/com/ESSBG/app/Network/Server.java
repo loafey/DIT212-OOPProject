@@ -24,11 +24,6 @@ public class Server extends Base implements IServer {
         return true;
     }
 
-    // Only for testing
-    protected boolean hasUserJoined(int id) {
-        return hashMap.containsKey(id);
-    }
-
     /***
      * Runs the server at specified port in constants.java
      */
@@ -69,6 +64,11 @@ public class Server extends Base implements IServer {
             socket.close();
         } catch (Exception e) {
         }
+    }
+
+    // Only for testing
+    protected boolean hasUserJoined(int id) {
+        return hashMap.containsKey(id);
     }
 
 }

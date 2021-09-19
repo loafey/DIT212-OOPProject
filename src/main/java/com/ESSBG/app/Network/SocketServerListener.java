@@ -45,8 +45,7 @@ public class SocketServerListener extends SocketBaseListener {
     private boolean receiveDataPushToQueue() {
         JSONObject recvData = recvAll();
         // Disconnect or any networking error.
-        if (recvData == null || (recvData.getString("reason").equals("net")
-                && !recvData.getJSONObject("data").getBoolean("action"))) {
+        if (recvData == null) {
             goodByeWorld();
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.

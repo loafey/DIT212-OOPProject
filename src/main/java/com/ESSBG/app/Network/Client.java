@@ -9,6 +9,7 @@ import java.io.*;
 public class Client extends Base implements IClient {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private Socket serverSocket;
+    private Thread thread;
     private Lock lock = new ReentrantLock(true);
 
     @Override
@@ -27,7 +28,7 @@ public class Client extends Base implements IClient {
     public void runClient() {
         try {
             SocketClientListener a = new SocketClientListener(serverSocket, lock, msgQueue);
-            Thread thread = new Thread(a);
+            thread = new Thread(a);
             thread.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,5 +51,10 @@ public class Client extends Base implements IClient {
             serverSocket.close();
         } catch (Exception e) {
         }
+    }
+
+    // Only for testing!
+    protected boolean isListenerRunning() {
+        return thread.isAlive();
     }
 }

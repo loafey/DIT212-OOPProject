@@ -16,7 +16,7 @@ final class JSONFactory {
      *             disconnect";
      * @return a network json object.
      */
-    public static JSONObject getNetwork(boolean bool) {
+    protected static JSONObject getNetwork(boolean bool) {
         JSONObject json = JSONTemplate();
         json.put("reason", "net");
         json.put("data", bool);
@@ -32,7 +32,7 @@ final class JSONFactory {
      *             is and who to reply to.
      * @return a network json object with id.
      */
-    public static JSONObject getNetworkWithID(boolean bool, int id) {
+    protected static JSONObject getNetworkWithID(boolean bool, int id) {
         JSONObject json = getNetwork(bool);
         json.put("id", id);
         return json;
@@ -42,7 +42,7 @@ final class JSONFactory {
      * @param data The datastructure the server and the client agreed on.
      * @return a network json object.
      */
-    public static JSONObject getGame(JSONObject data) {
+    protected static JSONObject getGame(JSONObject data) {
         JSONObject json = JSONTemplate();
         json.put("reason", "game");
         json.put("data", data);
@@ -55,7 +55,7 @@ final class JSONFactory {
      *             is and who to reply to.
      * @return a network json object with id.
      */
-    public static JSONObject getGameWithID(JSONObject data, int id) {
+    protected static JSONObject getGameWithID(JSONObject data, int id) {
         return getGame(data).put("id", id);
     }
 

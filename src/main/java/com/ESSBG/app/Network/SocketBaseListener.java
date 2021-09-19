@@ -43,6 +43,7 @@ public abstract class SocketBaseListener implements Runnable {
             return new JSONObject(new String(reduced));
         } catch (IOException e) {
             // Don't care, if server kicks the player etc...
+            // Also how dare them to send me invalid data?!
         }
         return null;
     }
