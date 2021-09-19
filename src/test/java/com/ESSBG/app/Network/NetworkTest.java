@@ -69,10 +69,10 @@ public class NetworkTest {
             JSONObject js = serverMsgQueue.take();
             int i = js.getInt("id");
             b = ((Server) s).hasUserJoined(i);
+            assertTrue(b);
         } else {
             fail();
         }
-        assertTrue(b);
     }
 
     @Test
