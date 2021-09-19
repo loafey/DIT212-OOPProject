@@ -25,6 +25,8 @@ public interface IClient {
     /**
      * Starts the client and tries connects to server. Messages from the networking
      * module will be found in the msgQueue. <br>
+     * IMPORTANT: HAS TO BE RUN ASAP after initClient() otherwise it might timeout!
+     *
      * Reason: net
      */
     public void runClient();

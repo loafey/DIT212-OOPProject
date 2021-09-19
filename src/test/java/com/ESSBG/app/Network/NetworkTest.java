@@ -89,7 +89,6 @@ public class NetworkTest {
         // Give it some chance for message to arrive, minimum value 10ms me(bjorn).
         Thread.sleep(SLEEP_TIME);
         Integer[] idList = new Integer[Constants.MAXPLAYERS];
-        System.out.print(serverMsgQueue.size());
         if (serverMsgQueue.size() == Constants.MAXPLAYERS) {
             Server x = (Server) s;
             for (int i = 0; i < Constants.MAXPLAYERS; i++) {
