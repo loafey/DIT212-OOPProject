@@ -6,7 +6,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import java.io.*;
 
-public class Client extends Base implements IClient {
+public class
+Client extends Base implements IClient {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private Socket serverSocket;
     private Thread thread;

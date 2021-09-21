@@ -6,16 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
-    private List<Card> cardList;
+    private List<AbstractCard> cardList;
+    private HashMap<String, Integer> resources;
     private int warPoints;
     private int peacePoints;
     private final int startingAmountOfMoney = 3;
     private String name;
     private final Monument monument;
     private int warTokens;
-
-    private Map<String,Integer> resources = new HashMap<>();
-    //private List<List<? extends IResource>> resources;
 
 
 
@@ -44,7 +42,7 @@ public class Player {
         this.name = name;
     }
 
-    public List<Card> getCardList() {
+    public List<AbstractCard> getCardList() {
         return cardList;
     }
 
@@ -69,8 +67,8 @@ public class Player {
      * If the player has enough resources, update their resources and cards on hand
      * Otherwise return false
      */
-    public boolean addCard(Card card){
-       Map<String, Integer> balance = card.getBalance();
+    public boolean addCard(AbstractCard card){
+       Map<String, Integer> balance = card.getCost();
 
         // Kolla om det finns tillräckligt med resurser
         // Om inte, returna false
@@ -122,7 +120,7 @@ public class Player {
 
     private void addResource(String resource){
         int newAmount = resources.get(resource) + 1;
-        resources.put(resource,newAmount);
+    resources.put(resource,newAmount);
     }
 
     private void warToken (int value){
