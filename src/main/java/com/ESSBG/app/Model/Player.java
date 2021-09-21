@@ -14,7 +14,8 @@ public class Player {
     private String name;
     private final Monument monument;
     private int warTokens;
-
+    private Player leftPlayer;
+    private Player rightPlayer;
 
 
     public Player (String name, Monument monument){
@@ -32,6 +33,22 @@ public class Player {
         resources.put("Textiles", 0);
         resources.put("Money", startingAmountOfMoney);
 
+    }
+
+    public Player getLeftPlayer() {
+        return leftPlayer;
+    }
+
+    public Player getRightPlayer() {
+        return rightPlayer;
+    }
+
+    public void setLeftPlayer(Player p) {
+        leftPlayer = p;
+    }
+
+    public void setRightPlayer(Player p) {
+        rightPlayer = p;
     }
 
     public String getName() {
