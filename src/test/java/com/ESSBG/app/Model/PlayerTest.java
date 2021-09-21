@@ -1,8 +1,6 @@
 package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Actions.IGameAction;
-import com.ESSBG.app.Model.Actions.ResourceAction;
-import com.ESSBG.app.Model.Actions.ResourceEnum;
 import org.junit.Before;
 import org.junit.Test;
 

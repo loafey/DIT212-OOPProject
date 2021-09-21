@@ -3,17 +3,17 @@ package com.ESSBG.app.Model;
 import java.util.List;
 
 public class Trashcan {
-    List<Card> cards;
+    List<AbstractCard> cards;
 
-    public List<Card> getCards() {
+    public List<AbstractCard> getCards() {
         return cards;
     }
 
-    public Card takeCard(int i){
+    public AbstractCard takeCard(int i){
         return cards.remove(i);
     }
 
-    public void addCard(Card card){
+    public void addCard(AbstractCard card){
         cards.add(card);
     }
 }
