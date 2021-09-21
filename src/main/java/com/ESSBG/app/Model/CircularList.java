@@ -27,6 +27,7 @@ public class CircularList <T>{
         return list.size();
     }
 
+
     public T getNext(T t){
         int i = list.indexOf(t);
 

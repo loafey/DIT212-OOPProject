@@ -12,6 +12,7 @@ public class Player {
     private final int startingAmountOfMoney = 3;
     private String name;
     private final Monument monument;
+    private int warTokens;
 
     private Map<String,Integer> resources = new HashMap<>();
     //private List<List<? extends IResource>> resources;
@@ -111,7 +112,6 @@ public class Player {
                 }
             }
         }
-
         return true;
     }
 
@@ -123,6 +123,10 @@ public class Player {
     private void addResource(String resource){
         int newAmount = resources.get(resource) + 1;
         resources.put(resource,newAmount);
+    }
+
+    private void warToken (int value){
+        warPoints+=value;
     }
 
 }
