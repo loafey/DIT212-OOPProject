@@ -1,13 +1,13 @@
 package com.ESSBG.app.Model;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractCard {
 
-    HashMap<String, Integer> cost;
+    Map<String, Integer> cost;
     ColorEnum color;
 
-    public AbstractCard(HashMap<String, Integer> cost, ColorEnum color) {
+    public AbstractCard(Map<String, Integer> cost, ColorEnum color) {
         this.cost = cost;
         this.color = color;
     }
@@ -16,7 +16,7 @@ public abstract class AbstractCard {
         return color;
     }
 
-    public HashMap<String, Integer> getCost() {
+    public Map<String, Integer> getCost() {
         return cost;
     }
 }

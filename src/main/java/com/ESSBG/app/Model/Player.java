@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Player {
     private List<AbstractCard> cardList;
-    private HashMap<String, Integer> resources;
+    private Map<String, Integer> resources;
     private int warPoints;
     private int peacePoints;
     private final int startingAmountOfMoney = 3;
@@ -22,7 +22,7 @@ public class Player {
         this.monument = monument;
         cardList = new ArrayList<>();
 
-
+        resources = new HashMap<>();
         resources.put("Wood", 0);
         resources.put("Ore", 0);
         resources.put("Clay", 0);
