@@ -12,12 +12,12 @@ public class CircularListTest {
 
     @Before
     public void start(){
-         fruits = new CircularList<>();
+        fruits = new CircularList<>();
 
-         fruits.add("Apple");
-         fruits.add("Banana");
-         fruits.add("Cranberry");
-         fruits.add("Dragon fruit");
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Cranberry");
+        fruits.add("Dragon fruit");
     }
 
     @Test
