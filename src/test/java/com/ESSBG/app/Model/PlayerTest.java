@@ -1,6 +1,5 @@
 package com.ESSBG.app.Model;
 
-import com.ESSBG.app.Model.Actions.IGameAction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,12 +16,15 @@ public class PlayerTest {
 
     @Before
     public void setup() {
-        IGameAction a = new ResourceAction(ResourceEnum.Brick, 1);
-        List<IGameAction> l = new ArrayList<>();
-        l.add(new ResourceAction(ResourceEnum.Brick, 1));
-        l.add(new ResourceAction(ResourceEnum.Brick, 1));
-        l.add(new ResourceAction(ResourceEnum.Brick, 1));
-        Monument mon = new Monument("test", a, l);
+        ResourceCard rCard0 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
+        ResourceCard rCard1 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
+        ResourceCard rCard2 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
+        ResourceCard rCard3 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
+        List<AbstractCard> monCardList = new ArrayList<>();
+        monCardList.add(rCard1);
+        monCardList.add(rCard2);
+        monCardList.add(rCard3);
+        Monument mon = new Monument("test", rCard0, monCardList);
         player = new Player("testPlayer", mon);
     }
 
@@ -39,14 +41,14 @@ public class PlayerTest {
 
     @Test
     public void testGetEmptyCardList() {
-        assertArrayEquals(new Card[]{}, player.getCardList().toArray());
+        assertArrayEquals(new ResourceCard[]{}, player.getCardList().toArray());
     }
 
     // TODO add a test for addCard that reach makeTrade for-loop
     @Test
     public void testAddCard() {
         Map<String, Integer> map = new HashMap<>();
-        Card card = new Card(map, ColorEnum.GREEN, new ResourceAction(ResourceEnum.Brick, 1));
+        ResourceCard card = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
         player.addCard(card);
         assertTrue(player.addCard(card));
     }
@@ -55,18 +57,26 @@ public class PlayerTest {
     public void testAddCardWithNotEnoughBalance() {
         Map<String, Integer> map = new HashMap<>();
         map.put("Wood", -10);
-        Card card = new Card(map, ColorEnum.GREEN, new ResourceAction(ResourceEnum.Brick, 1));
+        ResourceCard card = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
         player.addCard(card);
         assertFalse(player.addCard(card));
     }
 
     @Test
+    public void testAddCardWithEnoughBalance() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Wood", 5);
+        ResourceCard card = new ResourceCard(map, ColorEnum.BROWN, "test", 1);
+        assertTrue(player.addCard(card));
+    }
+
+    @Test
     public void testGetCardListWithCards() {
         Map<String, Integer> map = new HashMap<>();
-        Card card1 = new Card(map, ColorEnum.GREEN, new ResourceAction(ResourceEnum.Brick, 1));
-        Card card2 = new Card(map, ColorEnum.GREEN, new ResourceAction(ResourceEnum.Brick, 1));
-        Card card3 = new Card(map, ColorEnum.GREEN, new ResourceAction(ResourceEnum.Brick, 1));
-        List<Card> l = new ArrayList<>();
+        ResourceCard card1 = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
+        ResourceCard card2 = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
+        ResourceCard card3 = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
+        List<AbstractCard> l = new ArrayList<>();
         l.add(card1);
         l.add(card2);
         l.add(card3);
