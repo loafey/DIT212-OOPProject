@@ -68,21 +68,21 @@ public class Player {
      * Otherwise return false
      */
     public boolean addCard(AbstractCard card){
-       Map<String, Integer> balance = card.getCost();
+        Map<String, Integer> balance = card.getCost();
 
         // Kolla om det finns tillräckligt med resurser
         // Om inte, returna false
-       if (!hasSufficientResources(balance)){
-           return false;
-       }
-       else {
+        if (!hasSufficientResources(balance)){
+            return false;
+        }
+        else {
 
-           // Om tillräckligt med resurser, lägg till kortet på hand
-           // Uppdatera ev resurser som kortet medför
-           makeTrade(balance);
-           cardList.add(card);
-           return true;
-       }
+            // Om tillräckligt med resurser, lägg till kortet på hand
+            // Uppdatera ev resurser som kortet medför
+            makeTrade(balance);
+            cardList.add(card);
+            return true;
+        }
     }
 
     /** If the player has enough resources, exchange resources
@@ -120,7 +120,7 @@ public class Player {
 
     private void addResource(String resource){
         int newAmount = resources.get(resource) + 1;
-    resources.put(resource,newAmount);
+        resources.put(resource,newAmount);
     }
 
     public void addWarToken (int value){
