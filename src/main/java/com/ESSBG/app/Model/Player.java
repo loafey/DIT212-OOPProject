@@ -125,7 +125,7 @@ public class Player {
         resources.put(resource,newAmount);
     }
 
-    private void warToken (int value){
+    public void addWarToken (int value){
         warPoints+=value;
     }
 
