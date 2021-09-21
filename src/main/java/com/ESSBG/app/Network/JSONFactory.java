@@ -32,7 +32,7 @@ final class JSONFactory {
      *             is and who to reply to.
      * @return a network json object with id.
      */
-    protected static JSONObject getNetworkWithID(boolean bool, int id) {
+    protected static JSONObject getNetworkWithID(int id, boolean bool) {
         JSONObject json = getNetwork(bool);
         json.put("id", id);
         return json;
@@ -55,7 +55,7 @@ final class JSONFactory {
      *             is and who to reply to.
      * @return a network json object with id.
      */
-    protected static JSONObject getGameWithID(JSONObject data, int id) {
+    protected static JSONObject getGameWithID(int id, JSONObject data) {
         return getGame(data).put("id", id);
     }
 

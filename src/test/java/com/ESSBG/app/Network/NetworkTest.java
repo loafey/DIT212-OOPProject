@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class NetworkTest {
     // Since we need to start thread(s) and then message eachother, we need to have
     // a small delay. 10ms was the lowest I(bjorn) could reach.
-    final int SLEEP_TIME = 1000;
+    final int SLEEP_TIME = 500;
     IServer s;
     IClient c;
     LinkedBlockingQueue<JSONObject> serverMsgQueue;
@@ -24,13 +24,14 @@ public class NetworkTest {
         c = new Client();
         c.runClient();
         clientMsgQueue = c.getMsgQueue();
+        clientMsgQueue.take();
     }
 
     @After
     public void shutdown() throws InterruptedException {
         s.stopServer();
         c.stopClient();
-        Thread.sleep(1000);
+        Thread.sleep(500);
     }
 
     @Test
@@ -130,29 +131,29 @@ public class NetworkTest {
     }
 
     @Test
-    public void twoConnectSendMessToOne() throws UnsupportedEncodingException, Exception {
-        Server x = (Server) s;
+    public void twoConnectSendMessToOne() throws Exception{
+        Server server = (Server) s;
+        Thread.sleep(200);
         Client d = new Client();
         d.runClient();
         Thread.sleep(SLEEP_TIME);
 
         int s = clientMsgQueue.size();
-        int a = serverMsgQueue.take().getInt("id");
-        int b = serverMsgQueue.take().getInt("id");
-        x.sendData(a, new JSONObject());
+        int c_id = serverMsgQueue.take().getInt("id");
+        int b_id = serverMsgQueue.take().getInt("id");
+        server.sendData(c_id, new JSONObject());
         Thread.sleep(SLEEP_TIME);
 
         assertTrue(s + 1 == clientMsgQueue.size());
-        assertTrue(d.getMsgQueue().size() == 0);
-        x.sendData(b, new JSONObject());
-        Thread.sleep(SLEEP_TIME);
-
         assertTrue(d.getMsgQueue().size() == 1);
+        server.sendData(b_id, new JSONObject());
+        Thread.sleep(SLEEP_TIME);
+        assertTrue(d.getMsgQueue().size() == 2);
         assertTrue(s + 1 == clientMsgQueue.size());
     }
 
     @Test
-    public void serverTestSendMessage() throws UnsupportedEncodingException, Exception {
+    public void serverTestSendMessage() throws Exception {
         int id = 0;
         // Give it some chance for message to arrive, minimum value 10ms me(bjorn).
         Thread.sleep(SLEEP_TIME);

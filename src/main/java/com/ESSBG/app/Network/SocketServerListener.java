@@ -1,6 +1,7 @@
 package com.ESSBG.app.Network;
 
 import java.net.*;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ public class SocketServerListener extends SocketBaseListener {
 
     @Override
     public void run() {
+        // Check if user has correct handshake procedure.
         if (!connectHandshake()) {
             disconnectSocket();
             return;
@@ -35,7 +37,7 @@ public class SocketServerListener extends SocketBaseListener {
         hashMap.put(this.hashCode(), socket);
         numberOfActiveThreads++;
         lock.unlock();
-        msgQueue.add(JSONFactory.getNetworkWithID(true, id));
+        msgQueue.add(JSONFactory.getNetworkWithID(id, true));
 
         while (receiveDataPushToQueue()) {
         }
@@ -48,10 +50,10 @@ public class SocketServerListener extends SocketBaseListener {
             goodByeWorld();
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.
-            msgQueue.add(JSONFactory.getNetworkWithID(false, id));
+            msgQueue.add(JSONFactory.getNetworkWithID(id, false));
             return false;
         }
-        msgQueue.add(JSONFactory.getGameWithID(recvData, id));
+        msgQueue.add(JSONFactory.getGameWithID(id, recvData));
         return true;
     }
 
@@ -74,8 +76,8 @@ public class SocketServerListener extends SocketBaseListener {
                 if (js.getString("reason").equals("net") && js.getBoolean("data")) {
                     return true;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignore_but_warn_that_user_failed_handshake) {
+                System.out.println("> User failed handshake. Probably wrong datastructure.");
             }
         }
         return false;

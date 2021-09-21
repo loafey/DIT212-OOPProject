@@ -6,8 +6,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import java.io.*;
 
-public class
-Client extends Base implements IClient {
+public class Client extends Base implements IClient {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private Socket serverSocket;
     private Thread thread;
@@ -19,7 +18,8 @@ Client extends Base implements IClient {
             // Shutdown existing stuff
             try {
                 serverSocket.close();
-            } catch (Exception e) {
+                Thread.sleep(20);
+            } catch (Exception ignore_since_we_forcefully_close_socket) {
             }
             // Recreate the world
             lock = new ReentrantLock(true);
@@ -28,17 +28,22 @@ Client extends Base implements IClient {
             thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
             thread.start();
             return true;
-        } catch (Exception ignore_since_we_cant_reconnect_to_user_anyways) {
+        } catch (Exception ignore_since_we_cant_reconnect_to_server_anyways) {
         }
         return false;
     }
 
     @Override
-    public boolean sendData(JSONObject jsonobj) throws UnsupportedEncodingException {
+    public boolean sendData(JSONObject jsonobj) {
         if (serverSocket == null || serverSocket.isClosed()) {
             return false;
         }
-        return naiveSendData(serverSocket, jsonobj);
+        try {
+            super.sendData(serverSocket, jsonobj);
+            return true;
+        } catch (IOException ignore_since_false_is_the_same) {
+        }
+        return false;
     }
 
     @Override

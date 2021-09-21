@@ -1,6 +1,7 @@
 package com.ESSBG.app.Network;
 
 import java.util.concurrent.*;
+import java.util.*;
 import org.json.*;
 import java.io.*;
 
@@ -27,8 +28,7 @@ interface IServer {
      *
      * Resets the domain before each run.
      *
-     * @return true if server started, else false
-     * @throws IOException
+     * @throws IOException if Port is taken, change port.
      */
     void runServer() throws IOException;
 
@@ -52,9 +52,13 @@ interface IServer {
      * @param json the agreed structure between server and client of the jsonobject.
      * @return IF FALSE, something went very wrong with networking. Probably loss of
      *         connection, rip.
-     * @throws UnsupportedEncodingException
+     * @throws IOException            if a socket accidentally disconnected. Threat
+     *                                this as player disconnected, delete. Server
+     *                                will know.
+     * @throws NoSuchElementException Player disconnected from the server, you
+     *                                should've known it by now. Fix!
      */
-    boolean sendData(int id, JSONObject json) throws Exception;
+    boolean sendData(int id, JSONObject json) throws IOException, NoSuchElementException;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message

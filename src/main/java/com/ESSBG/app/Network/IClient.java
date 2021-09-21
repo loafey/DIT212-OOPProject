@@ -1,5 +1,6 @@
 package com.ESSBG.app.Network;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.*;
 import org.json.*;
@@ -37,9 +38,8 @@ interface IClient {
      *                jsonobject.
      * @return IF FALSE, something went very wrong with networking. Probably loss of
      *         connection, rip.
-     * @throws UnsupportedEncodingException
      */
-    boolean sendData(JSONObject jsonobj) throws UnsupportedEncodingException;
+    boolean sendData(JSONObject jsonobj) throws IOException;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message

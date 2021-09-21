@@ -36,9 +36,8 @@ public class SocketServer implements Runnable {
                 Thread t = new Thread(new SocketServerListener(client, lock, hashMap, msgQueue, maxplayersAtIndexZero));
                 t.start();
             }
-        } catch (IOException dont_care) {
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore_since_we_dont_care_about_sleepy_threads) {
+            // Also ignore that we close the socket.
         }
     }
 }

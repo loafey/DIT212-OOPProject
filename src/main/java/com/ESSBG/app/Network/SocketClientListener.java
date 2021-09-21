@@ -15,16 +15,17 @@ public class SocketClientListener extends SocketBaseListener {
     public void run() {
         try {
             // Write initial message to server.
-            if (!writeToSocket(JSONFactory.getNetwork(true).toString())) {
+            if (!connectHandshake(JSONFactory.getNetwork(true).toString())) {
                 // Tell client that connection failed.
                 msgQueue.add(JSONFactory.getNetwork(false));
                 disconnectSocket();
                 return;
             }
+            // Tell listener that connection was successful.
+            msgQueue.add(JSONFactory.getNetwork(true));
             while (receiveDataPushToQueue()) {
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore_since_any_inception_here_is_a_disconnect) {
         }
     }
 
@@ -42,7 +43,7 @@ public class SocketClientListener extends SocketBaseListener {
         return true;
     }
 
-    private boolean writeToSocket(String s) {
+    private boolean connectHandshake(String s) {
         try {
             OutputStream stream = socket.getOutputStream();
             // Send length of message
