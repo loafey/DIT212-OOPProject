@@ -9,6 +9,12 @@ public class Game {
     List<List<AbstractCard>> periodCards;
 
 
+    public void updatePlayerNeighbors() {
+        for (Player player : players) {
+            player.setLeftPlayer(players.getPrevious(player));
+            player.setRightPlayer(players.getNext(player));
+        }
+    }
 
     // Use this method to give war tokens after each age
     private void giveWarTokens(int age){
@@ -47,5 +53,4 @@ public class Game {
             }
         }
     }
-
 }
