@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Game {
     CircularList<Player> players = new CircularList<>();
-    List<Card> cardDeck;
+    List<AbstractCard> cardDeck;
     Trashcan trash;
-    List<List<Card>> periodCards;
+    List<List<AbstractCard>> periodCards;
 
 
 
