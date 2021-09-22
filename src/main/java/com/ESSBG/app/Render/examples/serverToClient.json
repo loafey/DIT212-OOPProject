@@ -1,0 +1,48 @@
+{
+    "playerId": 0,
+    "handCards": [
+        {
+            "color": "brown",
+            "cost": [
+                {"tree": 5},
+                {"stone": 1}
+            ],
+            "resource": {"type": "tree", "amount": 3}
+        }, 
+        {
+            "color": "brown",
+            "cost": [
+                {"tree": 5},
+                {"stone": 1}
+            ],
+            "action": {"type": "sale", "types": ["wood", "silk"], "direction": ["left"]}
+        }
+    ],
+    "placedCards": [
+        {
+            "color": "blue",
+            "cost": [
+                {"wood": 1}
+            ],
+            "resource": {"type": "silk", "amount": 1}
+        }
+    ],
+    "resources": {
+        "coins": 125,
+        "war": 12
+    },
+    "monument": {
+        "cards": [
+            {"resource": {"type": "silk", "amount": 1}},
+            {"resource": {"type": "war", "amount": 3}},
+            {"resource": {"type": "wood", "amount": 75}}
+        ],
+        "unlocked": 1
+    },
+    "leftNeighbour": {
+        "resources": []
+    },
+    "rightNeighbour": {
+        "resources": []
+    }
+}

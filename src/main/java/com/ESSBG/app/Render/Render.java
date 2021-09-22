@@ -76,5 +76,5 @@ public class Render extends Game {
         batch.dispose();
         mainFont.dispose();
     }
-
+    
 }
