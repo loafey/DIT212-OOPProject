@@ -2,7 +2,12 @@
     "msgNum": 0,
     "handCards": [
         {
-            "color": "brown",
+            "color": {
+                "r": 250,
+                "g": 21,
+                "b": 124,
+                "a": 1.0
+            },
             "cost": [
                 {"tree": 5},
                 {"stone": 1}
@@ -10,7 +15,12 @@
             "resource": {"type": "tree", "amount": 3}
         }, 
         {
-            "color": "brown",
+            "color": {
+                "r": 213,
+                "g": 21,
+                "b": 124,
+                "a": 1.0
+            },
             "cost": [
                 {"tree": 5},
                 {"stone": 1}
@@ -20,7 +30,12 @@
     ],
     "placedCards": [
         {
-            "color": "blue",
+            "color": {
+                "r": 21,
+                "g": 213,
+                "b": 124,
+                "a": 1.0
+            },
             "cost": [
                 {"wood": 1}
             ],

@@ -11,6 +11,9 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import org.json.JSONObject;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class Render extends Game {
@@ -23,12 +26,17 @@ public class Render extends Game {
     private float originalWidth;
     private float originalHeight; 
 
-    private ArrayList<Renderable> renderables = new ArrayList<>();
+    private ArrayList<Renderable> currentScene = new ArrayList<>();
+    private RenderablePlayer rPlayer = new RenderablePlayer();
 
     public Render(int width, int height) {
         super();
         originalWidth = width;
         originalHeight = height;
+    }
+
+    public void update(JSONObject data){
+        rPlayer.updatePlayer(data, assetManager);
     }
 
     @Override
@@ -39,17 +47,18 @@ public class Render extends Game {
         assetManager = new AssetManager(new InternalFileHandleResolver());
         AssetFinder.findAssets(assetManager, "Assets/");
         assetManager.finishLoading();
+        currentScene.add(rPlayer);
 
-        renderables.add(
-            new Card(assetManager,"Assets/Textures/Cards/coin.png")
-        );
+        // If I have pushed this it was by mistake!
+        // -- oggleboa
+        JSONObject j = new JSONObject("{\"msgNum\":0,\"handCards\":[{\"color\":{\"r\":0,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":213,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"action\":{\"type\":\"sale\",\"types\":[\"wood\",\"silk\"],\"direction\":[\"left\"]}}],\"placedCards\":[{\"color\":{\"r\":21,\"g\":213,\"b\":124,\"a\":1},\"cost\":[{\"wood\":1}],\"resource\":{\"type\":\"silk\",\"amount\":1}}],\"resources\":{\"coins\":125,\"war\":12},\"monument\":{\"cards\":[{\"resource\":{\"type\":\"silk\",\"amount\":1}},{\"resource\":{\"type\":\"war\",\"amount\":3}},{\"resource\":{\"type\":\"wood\",\"amount\":75}}],\"unlocked\":1},\"leftNeighbour\":{\"resources\":[]},\"rightNeighbour\":{\"resources\":[]}}");
+        update(j);
     }
 
     @Override
     public void resize(int width, int height) {      
         widthScale = originalWidth / width;
         heightScale = originalHeight / height;
-        System.out.println(widthScale + " " + heightScale);  
     }
 
     @Override
@@ -57,8 +66,8 @@ public class Render extends Game {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        for(int i = 0; i < renderables.size(); i ++) {
-            renderables.get(i).render(batch, widthScale, heightScale);
+        for(Renderable r : currentScene) {
+            r.render(batch, mainFont, widthScale, heightScale);
         }
         batch.end();
     }
