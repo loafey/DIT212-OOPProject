@@ -1,23 +1,18 @@
 package com.ESSBG.app.Model;
 
+import java.util.List;
 import java.util.Map;
 
 public class ResourceCard extends AbstractCard {
 
-    private String type;
-    private int amount;
+    private List<String> type;
 
-    public ResourceCard(Map<String, Integer> cost, ColorEnum color, String type, int amount) {
+    public ResourceCard(Map<String, Integer> cost, ColorEnum color, List<String> type) {
         super(cost, color);
         this.type = type;
-        this.amount = amount;
     }
 
-    public String getType() {
+    public List<String> getType() {
         return type;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 }

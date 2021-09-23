@@ -18,12 +18,14 @@ public class GameTest {
     public void setup() {
         game = new Game();
         testPlayers = new ArrayList<>();
+        List<String> types = new ArrayList<>();
+        types.add("Wood");
         int amountTestPLayers = 3;
         for (int i = 0; i <amountTestPLayers; i++) {
-            ResourceCard rCard0 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
-            ResourceCard rCard1 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
-            ResourceCard rCard2 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
-            ResourceCard rCard3 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
+            ResourceCard rCard0 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
+            ResourceCard rCard1 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
+            ResourceCard rCard2 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
+            ResourceCard rCard3 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
             List<AbstractCard> monCardList = new ArrayList<>();
             monCardList.add(rCard1);
             monCardList.add(rCard2);

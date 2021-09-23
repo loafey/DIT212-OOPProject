@@ -10,6 +10,7 @@ public class Player {
     private Map<String, Integer> resources;
     private int warPoints;
     private int peacePoints;
+    private int coins;
     private final int startingAmountOfMoney = 3;
     private String name;
     private final Monument monument;
@@ -22,7 +23,6 @@ public class Player {
         this.name = name;
         this.monument = monument;
         cardList = new ArrayList<>();
-
         resources = new HashMap<>();
         resources.put("Wood", 0);
         resources.put("Ore", 0);
@@ -144,4 +144,11 @@ public class Player {
         warPoints+=value;
     }
 
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public int getCoins(){
+        return this.coins;
+    }
 }

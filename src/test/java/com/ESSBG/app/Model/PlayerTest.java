@@ -16,10 +16,13 @@ public class PlayerTest {
 
     @Before
     public void setup() {
-        ResourceCard rCard0 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
-        ResourceCard rCard1 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
-        ResourceCard rCard2 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
-        ResourceCard rCard3 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, "dunno", 1);
+        List<String> types = new ArrayList<String>();
+        types.add("Wood");
+
+        ResourceCard rCard0 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
+        ResourceCard rCard1 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
+        ResourceCard rCard2 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
+        ResourceCard rCard3 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
         List<AbstractCard> monCardList = new ArrayList<>();
         monCardList.add(rCard1);
         monCardList.add(rCard2);
@@ -48,7 +51,9 @@ public class PlayerTest {
     @Test
     public void testAddCard() {
         Map<String, Integer> map = new HashMap<>();
-        ResourceCard card = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
+        List<String> types = new ArrayList<>();
+        types.add("Wood");
+        ResourceCard card = new ResourceCard(map, ColorEnum.GREEN, types);
         player.addCard(card);
         assertTrue(player.addCard(card));
     }
@@ -56,8 +61,10 @@ public class PlayerTest {
     @Test
     public void testAddCardWithNotEnoughBalance() {
         Map<String, Integer> map = new HashMap<>();
+        List<String> types = new ArrayList<>();
+        types.add("Wood");
         map.put("Wood", -10);
-        ResourceCard card = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
+        ResourceCard card = new ResourceCard(map, ColorEnum.GREEN, types);
         player.addCard(card);
         assertFalse(player.addCard(card));
     }
@@ -65,17 +72,21 @@ public class PlayerTest {
     @Test
     public void testAddCardWithEnoughBalance() {
         Map<String, Integer> map = new HashMap<>();
+        List<String> types = new ArrayList<>();
+        types.add("Wood");
         map.put("Wood", 5);
-        ResourceCard card = new ResourceCard(map, ColorEnum.BROWN, "test", 1);
+        ResourceCard card = new ResourceCard(map, ColorEnum.BROWN, types);
         assertTrue(player.addCard(card));
     }
 
     @Test
     public void testGetCardListWithCards() {
         Map<String, Integer> map = new HashMap<>();
-        ResourceCard card1 = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
-        ResourceCard card2 = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
-        ResourceCard card3 = new ResourceCard(map, ColorEnum.GREEN, "test", 1);
+        List<String> types = new ArrayList<>();
+        types.add("Wood");
+        ResourceCard card1 = new ResourceCard(map, ColorEnum.GREEN, types);
+        ResourceCard card2 = new ResourceCard(map, ColorEnum.GREEN, types);
+        ResourceCard card3 = new ResourceCard(map, ColorEnum.GREEN, types);
         List<AbstractCard> l = new ArrayList<>();
         l.add(card1);
         l.add(card2);
