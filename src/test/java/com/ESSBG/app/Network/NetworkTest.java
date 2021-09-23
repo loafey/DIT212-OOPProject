@@ -37,28 +37,28 @@ public class NetworkTest {
     @Test
     public void testConverterZero() {
         int v = 0;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
     @Test
     public void testConverterMax() {
         int v = Integer.MAX_VALUE;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
     @Test
     public void testConverterHalfMax() {
         int v = Integer.MAX_VALUE / 2;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
     @Test
     public void testConverterTen() {
         int v = 10;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 

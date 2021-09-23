@@ -1,7 +1,6 @@
 package com.ESSBG.app.Network;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.concurrent.*;
 import org.json.*;
 

@@ -42,6 +42,8 @@ public class Client extends Base implements IClient {
             super.sendData(serverSocket, jsonobj);
             return true;
         } catch (IOException ignore_since_false_is_the_same) {
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
         return false;
     }

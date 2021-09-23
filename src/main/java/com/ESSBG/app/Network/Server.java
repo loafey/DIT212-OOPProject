@@ -39,7 +39,12 @@ public class Server extends Base implements IServer {
         if (clientSocket == null) {
             throw new NoSuchElementException("> User is disconnected.");
         }
-        super.sendData(clientSocket, jsonobj);
+        try {
+            super.sendData(clientSocket, jsonobj);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
 

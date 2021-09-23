@@ -47,11 +47,14 @@ public class SocketClientListener extends SocketBaseListener {
         try {
             OutputStream stream = socket.getOutputStream();
             // Send length of message
-            stream.write(Converter.intToByteArray(s.length()));
+            stream.write(Converter.intToByteArray(4, s.length()));
             // Send rest of the message. Just like painting an owl...
             stream.write(s.getBytes());
             // Assume everything went well.
             return true;
+        } catch (IllegalArgumentException e) {
+            // IF we accidentally sent a bad message
+            e.printStackTrace();
         } catch (Exception dont_care) {
         }
         return false;
