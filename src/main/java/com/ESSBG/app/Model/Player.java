@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Player {
+    private int id;
     private List<AbstractCard> cardList;
     private Map<String, Integer> resources;
     private int warPoints;
@@ -18,8 +19,8 @@ public class Player {
     private Player leftPlayer;
     private Player rightPlayer;
 
-
-    public Player (String name, Monument monument){
+    public Player(int id, String name, Monument monument) {
+        this.id = id;
         this.name = name;
         this.monument = monument;
         cardList = new ArrayList<>();
@@ -33,6 +34,15 @@ public class Player {
         resources.put("Textiles", 0);
         resources.put("Money", startingAmountOfMoney);
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return ((int) o) == this.id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Player getLeftPlayer() {
@@ -80,19 +90,18 @@ public class Player {
     }
 
     /**
-     * Add a card to the hand if the player has enough resources.
-     * If the player has enough resources, update their resources and cards on hand
-     * Otherwise return false
+     * Add a card to the hand if the player has enough resources. If the player has
+     * enough resources, update their resources and cards on hand Otherwise return
+     * false
      */
-    public boolean addCard(AbstractCard card){
+    public boolean addCard(AbstractCard card) {
         Map<String, Integer> balance = card.getCost();
 
         // Kolla om det finns tillräckligt med resurser
         // Om inte, returna false
-        if (!hasSufficientResources(balance)){
+        if (!hasSufficientResources(balance)) {
             return false;
-        }
-        else {
+        } else {
 
             // Om tillräckligt med resurser, lägg till kortet på hand
             // Uppdatera ev resurser som kortet medför
@@ -102,10 +111,12 @@ public class Player {
         }
     }
 
-    /** If the player has enough resources, exchange resources
+    /**
+     * If the player has enough resources, exchange resources
+     * 
      * @param balance
      */
-    private void makeTrade(Map<String, Integer> balance){
+    private void makeTrade(Map<String, Integer> balance) {
         for (String key : balance.keySet()) {
             Integer valueCard = balance.get(key);
             Integer valueResource = resources.get(key);
@@ -113,16 +124,18 @@ public class Player {
         }
     }
 
-    private boolean hasSufficientResources(Map<String, Integer> balance){
+    private boolean hasSufficientResources(Map<String, Integer> balance) {
         for (String key : balance.keySet()) {
             Integer valueCard = balance.get(key);
 
-            // If the value for a resource is negative, it requires resources from the player
-            if (valueCard < 0){
+            // If the value for a resource is negative, it requires resources from the
+            // player
+            if (valueCard < 0) {
                 Integer valuePlayer = resources.get(key);
 
-                // If the player has insufficient resources, the card cannot be added to the player's hand
-                if (valueCard + valuePlayer < 0){
+                // If the player has insufficient resources, the card cannot be added to the
+                // player's hand
+                if (valueCard + valuePlayer < 0) {
                     return false;
                 }
             }
@@ -130,25 +143,25 @@ public class Player {
         return true;
     }
 
-    private void useResource(String resource){
+    private void useResource(String resource) {
         int newAmount = resources.get(resource) - 1;
-        resources.put(resource,newAmount);
+        resources.put(resource, newAmount);
     }
 
-    private void addResource(String resource){
+    private void addResource(String resource) {
         int newAmount = resources.get(resource) + 1;
-        resources.put(resource,newAmount);
+        resources.put(resource, newAmount);
     }
 
-    public void addWarToken (int value){
-        warPoints+=value;
+    public void addWarToken(int value) {
+        warPoints += value;
     }
 
     public void setCoins(int coins) {
         this.coins = coins;
     }
 
-    public int getCoins(){
+    public int getCoins() {
         return this.coins;
     }
 }

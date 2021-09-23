@@ -20,7 +20,7 @@ import java.io.*;
  * And then execute order of operation.
  *
  */
-interface IServer {
+public interface IServer {
     /**
      * Starts the server and spawns a helper class to serve the clients needs.
      * Messages from the networking module will be found in the msgQueue. <br>
