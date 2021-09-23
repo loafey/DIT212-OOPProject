@@ -21,7 +21,8 @@ public class AssetFinder {
             if (correctFolders.containsKey(x.getName())) {
                 try {
                     Files.walk(x.toPath()).filter(Files::isRegularFile).forEach((p) -> {
-                        am.load(p.toString(), correctFolders.get(x.getName()));
+                        if (p.getFileName().toString().charAt(0) != '.')
+                            am.load(p.toString(), correctFolders.get(x.getName()));
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
