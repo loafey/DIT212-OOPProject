@@ -1,5 +1,6 @@
 package com.ESSBG.app.Render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,7 +25,10 @@ public class RenderablePlayer implements Renderable {
         var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         var rightNeighbourJson = data.getJSONObject("rightNeighbour");
 
-        int cardX = 0;
+        int cardX = ((Gdx.graphics.getWidth() / 2) - (84 / 2)) - (handCardsJson.length() / 2) * 84;
+        int l = handCardsJson.length();
+        float rotation = (l * l) - l;
+        float height = 0;
         for(var i : handCardsJson){
             var k = (JSONObject)i;
             JSONObject colorString = k.getJSONObject("color");
@@ -44,9 +48,12 @@ public class RenderablePlayer implements Renderable {
                     am, "Assets/Textures/Cards/CardBase.png", 
                     cardText,
                     new Color(colorString.getInt("r"),colorString.getInt("g"),colorString.getInt("b"),colorString.getInt("a")),
-                    cardX, 0)
+                    cardX, height, rotation)
             );
-            cardX += 90;
+            cardX += 84;
+            rotation -= handCardsJson.length() * 2;
+            System.out.println(height);
+            //height += Math.sin((Math.PI/ 2.0) * ((cardX - 84) / 168)) * 32;
         }
     }
 

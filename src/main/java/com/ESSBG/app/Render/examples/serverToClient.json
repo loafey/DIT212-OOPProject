@@ -16,6 +16,58 @@
         }, 
         {
             "color": {
+                "r": 250,
+                "g": 21,
+                "b": 124,
+                "a": 1.0
+            },
+            "cost": [
+                {"tree": 5},
+                {"stone": 1}
+            ],
+            "resource": {"type": "tree", "amount": 3}
+        }, 
+        {
+            "color": {
+                "r": 250,
+                "g": 21,
+                "b": 124,
+                "a": 1.0
+            },
+            "cost": [
+                {"tree": 5},
+                {"stone": 1}
+            ],
+            "resource": {"type": "tree", "amount": 3}
+        }, 
+        {
+            "color": {
+                "r": 250,
+                "g": 21,
+                "b": 124,
+                "a": 1.0
+            },
+            "cost": [
+                {"tree": 5},
+                {"stone": 1}
+            ],
+            "resource": {"type": "tree", "amount": 3}
+        }, 
+        {
+            "color": {
+                "r": 250,
+                "g": 21,
+                "b": 124,
+                "a": 1.0
+            },
+            "cost": [
+                {"tree": 5},
+                {"stone": 1}
+            ],
+            "resource": {"type": "tree", "amount": 3}
+        }, 
+        {
+            "color": {
                 "r": 213,
                 "g": 21,
                 "b": 124,
