@@ -72,6 +72,10 @@ public class GameNetMessageListener implements Runnable {
                         // We have to check whether player has enough resources
                         // to upgrade monument or buy card.
                         if (action.equals("monument") || action.equals("place")) {
+                            AbstractCard selectedCard = player.getCardList().get(cardIndex);
+                            Player leftNeighbor = players.getPrevious(player);
+                            Player rightNeighbor = players.getNext(player);
+                            // Check if player can buy this card.
                             // TODO check if user is allowed for these routines.
                             return;
                         }
