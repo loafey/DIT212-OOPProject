@@ -21,7 +21,7 @@ public class Player {
 
     public Player(int id, String name, Monument monument) {
         this.id = id;
-        this.name = name;
+        this.name = String.valueOf(id);
         this.monument = monument;
         cardList = new ArrayList<>();
         resources = new HashMap<>();

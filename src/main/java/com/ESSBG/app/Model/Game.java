@@ -23,7 +23,7 @@ public class Game {
 
         // Start Lobby, wait for people to join.
         IServer server = new Server();
-        ConcurrentCircularList<Integer> joinedUsers = new ConcurrentCircularList<>(new ReentrantLock(true));
+        ConcurrentHashMap<Integer, Player> joinedUsers = new ConcurrentHashMap<>();
         ConcurrentHashMap<Integer, Boolean> confirmedStart = new ConcurrentHashMap<>();
         try {
             server.runServer();
@@ -31,7 +31,7 @@ public class Game {
             e.printStackTrace();
         }
         // Start messageListener
-        (new Thread(new GameNetMessageListener(server.getMsgQueue(), joinedUsers, players, confirmedStart))).start();
+        (new Thread(new GameNetMessageListener(server, joinedUsers, players, confirmedStart))).start();
 
         // while(true) {
         // try {

@@ -41,4 +41,11 @@ public class ConcurrentCircularList<T> extends CircularList<T> {
         return true;
     }
 
+    @Override
+    public T get(int i) {
+        lock.lock();
+        T e = super.get(i);
+        lock.unlock();
+        return e;
+    }
 }
