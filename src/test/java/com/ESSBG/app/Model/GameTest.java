@@ -31,7 +31,7 @@ public class GameTest {
             monCardList.add(rCard2);
             monCardList.add(rCard3);
             Monument mon = new Monument("test", rCard0, monCardList);
-            testPlayers.add(new Player(0, "testPlayer", mon));
+            testPlayers.add(new Player(i, "testPlayer", mon));
         }
     }
 

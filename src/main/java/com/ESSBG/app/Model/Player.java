@@ -38,7 +38,9 @@ public class Player {
 
     @Override
     public boolean equals(Object o) {
-        return ((int) o) == this.id;
+        if (o == null) return false;
+        Player p = (Player) o;
+        return p.getId() == this.id;
     }
 
     public int getId() {
