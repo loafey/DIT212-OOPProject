@@ -43,5 +43,9 @@ public class GameTest {
         game.updatePlayerNeighbors();
         assertEquals(game.players.get(0).getLeftPlayer(), testPlayers.get(2));
         assertEquals(game.players.get(0).getRightPlayer(), testPlayers.get(1));
+        assertEquals(game.players.get(1).getLeftPlayer(), testPlayers.get(0));
+        assertEquals(game.players.get(1).getRightPlayer(), testPlayers.get(2));
+        assertEquals(game.players.get(2).getLeftPlayer(), testPlayers.get(1));
+        assertEquals(game.players.get(2).getRightPlayer(), testPlayers.get(0));
     }
 }
