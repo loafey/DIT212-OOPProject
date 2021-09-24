@@ -39,7 +39,7 @@ public class CardTest {
 
         Monument monument = new Monument("Monaden", resourceCard, monCardList);
 
-        player = new Player(0, "testPlayer", monument);
+        player = new Player(0, monument);
     }
 
     @Test

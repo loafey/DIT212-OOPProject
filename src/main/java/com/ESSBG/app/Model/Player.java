@@ -19,7 +19,7 @@ public class Player {
     private Player leftPlayer;
     private Player rightPlayer;
 
-    public Player(int id, String name, Monument monument) {
+    public Player(int id, Monument monument) {
         this.id = id;
         this.name = String.valueOf(id);
         this.monument = monument;

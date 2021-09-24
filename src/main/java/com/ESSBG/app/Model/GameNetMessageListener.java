@@ -39,7 +39,7 @@ public class GameNetMessageListener implements Runnable {
                 if (reason == "net") {
                     // Connection. True = Connect, False = Disconnect.
                     if (js.getBoolean("data")) {
-                        Player newPlayer = new Player(id, "foo", null);
+                        Player newPlayer = new Player(id, null);
                         joinedUsers.put(id, newPlayer);
                         confirmedStart.put(id, false);
                         players.add(newPlayer);

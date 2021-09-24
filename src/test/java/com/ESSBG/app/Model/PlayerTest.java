@@ -28,11 +28,12 @@ public class PlayerTest {
         monCardList.add(rCard2);
         monCardList.add(rCard3);
         Monument mon = new Monument("test", rCard0, monCardList);
-        player = new Player(0, "testPlayer", mon);
+        player = new Player(0, mon);
     }
 
     @Test
     public void testTestGetName() {
+        player.setName("testPlayer");
         assertEquals("testPlayer", player.getName());
     }
 
