@@ -1,11 +1,9 @@
 package com.ESSBG.app.Model;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert.*;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.*;
 
 public class CircularListTest {
     private CircularList<String> fruits;
@@ -41,11 +39,10 @@ public class CircularListTest {
         assertEquals("Apple", fruits.getNext("Dragon fruit"));
 
         try {
-            assertEquals("Blablabla", fruits.getNext("Pear"));
+            fruits.getNext("Pear");
+            fail("Expected IllegalArgumentException when trying to getNext of an element that don't exist.");
         }
-        catch (IllegalArgumentException e){
-            System.out.println("That fruit is not in the list");
-        }
+        catch (IllegalArgumentException ignored){}
     }
 
     @Test
