@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Network.*;
 
 public class Game {
     ConcurrentCircularList<Player> players = new ConcurrentCircularList<>(new ReentrantLock(true));
-    List<AbstractCard> cardDeck;
+    List<Card> cardDeck;
     Trashcan trash;
-    List<List<AbstractCard>> periodCards;
+    List<List<Card>> periodCards;
 
     // TODO NAME
     public void not_finished_run() {

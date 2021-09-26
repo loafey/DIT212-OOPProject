@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.concurrent.*;
 import java.util.*;
 
+import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Network.*;
 import org.json.*;
 
@@ -82,7 +83,7 @@ public class GameNetMessageListener implements Runnable {
                         // We have to check whether player has enough resources
                         // to upgrade monument or buy card.
                         if (action.equals("monument") || action.equals("place")) {
-                            AbstractCard selectedCard = player.getCardList().get(cardIndex);
+                            Card selectedCard = player.getCardList().get(cardIndex);
                             Player leftNeighbor = players.getPrevious(player);
                             Player rightNeighbor = players.getNext(player);
 
