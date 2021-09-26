@@ -75,8 +75,12 @@ public class DrawableBoard {
 
     private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation) {
         JSONObject colorString = cardData.getJSONObject("color");
-        Color color = new Color(colorString.getFloat("r"), colorString.getFloat("g"), colorString.getFloat("b"),
-                colorString.getFloat("a"));
+        Color color = new Color(
+            colorString.getFloat("r"),
+            colorString.getFloat("g"),
+            colorString.getFloat("b"),
+            colorString.getFloat("a")
+        );
 
         String cardText = "";
         try {

@@ -20,6 +20,7 @@ public class GameScene implements Screen {
     private Table sceneTable;
     private Table handCardContainer;
     private Table placedCardContainer;
+    private Table monument;
 
     private Table playerTable;
 
@@ -37,11 +38,13 @@ public class GameScene implements Screen {
     public void show() {
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
+        skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
+
         sceneTable = new Table();
         handCardContainer = new Table();
         placedCardContainer = new Table();
         playerTable = new Table();
-        skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
+        monument = new DrawableMonument(skin);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -55,6 +58,9 @@ public class GameScene implements Screen {
         playerTable.bottom();
 
         sceneTable.add(playerTable);
+        sceneTable.row();
+
+        sceneTable.add(monument).width(480).height(160);
         sceneTable.bottom();
 
         stage.addActor(sceneTable);
