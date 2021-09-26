@@ -1,6 +1,5 @@
 package com.ESSBG.app.Render;
 
-import com.ESSBG.app.AssetFinder;
 import com.ESSBG.app.Render.GameScene.GameScene;
 import com.ESSBG.app.Render.StartMenu.StartMenu;
 import com.badlogic.gdx.Game;
