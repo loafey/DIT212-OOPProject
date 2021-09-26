@@ -1,5 +1,7 @@
 package com.ESSBG.app.Model;
 
+import com.ESSBG.app.Model.Action.IAction;
+import com.ESSBG.app.Model.Action.ResourceAction;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -18,19 +20,11 @@ public class GameTest {
     public void setup() {
         game = new Game();
         testPlayers = new ArrayList<>();
-        List<String> types = new ArrayList<>();
-        types.add("Wood");
+        List<IAction> monAction = new ArrayList<>();
+        monAction.add(new ResourceAction(List.of(Resource.WOOD)));
         int amountTestPLayers = 3;
         for (int i = 0; i <amountTestPLayers; i++) {
-            ResourceCard rCard0 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
-            ResourceCard rCard1 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
-            ResourceCard rCard2 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
-            ResourceCard rCard3 = new ResourceCard(new HashMap<String, Integer>(), ColorEnum.BROWN, types);
-            List<AbstractCard> monCardList = new ArrayList<>();
-            monCardList.add(rCard1);
-            monCardList.add(rCard2);
-            monCardList.add(rCard3);
-            Monument mon = new Monument("test", rCard0, monCardList);
+            Monument mon = new Monument("Monaden", List.of(Resource.ORE), monAction);
             testPlayers.add(new Player(i, mon));
         }
     }

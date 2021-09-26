@@ -1,21 +1,18 @@
 package com.ESSBG.app.Model;
 
 import java.io.IOException;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Network.*;
-import org.json.*;
 
 public class Game {
     ConcurrentCircularList<Player> players = new ConcurrentCircularList<>(new ReentrantLock(true));
-    List<AbstractCard> cardDeck;
+    List<Card> cardDeck;
     Trashcan trash;
-    List<List<AbstractCard>> periodCards;
+    List<List<Card>> periodCards;
 
     // TODO NAME
     public void not_finished_run() {

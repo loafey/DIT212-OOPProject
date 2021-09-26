@@ -12,7 +12,7 @@ public class MainGame extends Game {
     public void create() {
         Screen renderer = new GameScene(this);
         Screen startMenu = new StartMenu(this);
-        setScreen(startMenu);
+        setScreen(startMenu);   
     }
 
     @Override

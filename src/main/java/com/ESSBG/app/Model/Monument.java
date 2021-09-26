@@ -1,19 +1,21 @@
 package com.ESSBG.app.Model;
 
+import com.ESSBG.app.Model.Action.IAction;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Monument {
+public class Monument implements IBuyable {
 
     private final String name;
-    private final ResourceCard resource;
-    private final List<AbstractCard> monAction;
+    private final List<Resource> generate;
+    private final List<IAction> monAction;
     private int monUnlock;
 
 
-    public Monument(String name, ResourceCard resource, List<AbstractCard> monAction) {
+    public Monument(String name, List<Resource> generate, List<IAction> monAction) {
         this.name = name;
-        this.resource = resource;
+        this.generate = generate;
         this.monAction = monAction;
         monUnlock = 0;
     }
@@ -23,16 +25,21 @@ public class Monument {
         return name;
     }
 
-    public ResourceCard getResource() {
-        return resource;
+    public List<Resource> getGenerate() {
+        return generate;
     }
 
     // shallow copy
-    public List<AbstractCard> getMonAction() {
+    public List<IAction> getMonAction() {
         return new ArrayList<>(monAction);
     }
 
     public int getMonUnlock() {
         return monUnlock;
+    }
+
+    @Override
+    public List<Resource> getCost() {
+        return null;
     }
 }

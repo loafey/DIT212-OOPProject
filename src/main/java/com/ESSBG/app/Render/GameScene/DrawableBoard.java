@@ -1,64 +1,89 @@
 package com.ESSBG.app.Render.GameScene;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import java.io.Console;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+// TODO REMOVE ALL MAGIC NUMBERS
 
 public class DrawableBoard {
     private int coins;
     private int warPoints;
 
-    public void updateBoard(JSONObject data, Skin skin, Table handTable) {
-        var handCardsJson = data.getJSONArray("handCards");
-        var placedCardsJson = data.getJSONArray("placedCards");
+    public void updateBoard(JSONObject data, Skin skin, Table handTable, Table placedCards) {
+        updateHand(skin, handTable, data.getJSONArray("handCards"));
+        updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         var resourcesJson = data.getJSONObject("resources");
         var monumentJson = data.getJSONObject("monument");
         var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         var rightNeighbourJson = data.getJSONObject("rightNeighbour");
-
-        for (var i : handCardsJson) {
-            var k = (JSONObject) i;
-            JSONObject colorString = k.getJSONObject("color");
-            System.out.println(colorString);
-
-            String cardText = "";
-            try {
-                var resource = k.getJSONObject("resource");
-                cardText += resource.getString("type") + " " + resource.getInt("amount");
-            } catch (JSONException e) {
-            }
-            try {
-                var action = k.getJSONObject("action");
-                cardText += "action";
-            } catch (JSONException e) {
-            }
-
-            handTable.add(GenerateCard(skin, cardText, -5f)).width(84).height(128);
-        }
     }
 
-    private Button GenerateCard(Skin skin, String title, Float rotation) {
-        Button card = new DrawableCard(skin, rotation);
-        card.add(new Label(title, skin));
+    private void updatePlacedCards(Skin skin, Table placedCardsTable, JSONArray cards) {
+        placedCardsTable.clear();
+        HashMap<Color, ArrayList<Button>> sortedCards = new HashMap<>();
+        cards.forEach(cardData -> {
+            Button card = GenerateCard(skin, (JSONObject) cardData, 0f);
+            Color color = card.getColor();
+
+            if (sortedCards.containsKey(color)) {
+                sortedCards.get(color).add(card);
+            } else {
+                ArrayList<Button> list = new ArrayList<>();
+                list.add(card);
+                sortedCards.put(color, list);
+            }
+        });
+
+        sortedCards.forEach((color, list) -> {
+            Table newTable = new Table();
+            list.forEach(card -> {
+                newTable.add(card);
+                newTable.row();
+            });
+            placedCardsTable.add(newTable);
+        });
+    }
+
+    private void updateHand(Skin skin, Table handTable, JSONArray handCards) {
+        handTable.clear();
+        handCards.forEach(card -> {
+            handTable.add(GenerateCard(skin, (JSONObject) card, -5f)).width(84).height(128);
+        });
+    }
+
+    private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation) {
+        JSONObject colorString = cardData.getJSONObject("color");
+        Color color = new Color(
+            colorString.getFloat("r"),
+            colorString.getFloat("g"),
+            colorString.getFloat("b"),
+            colorString.getFloat("a")
+        );
+
+        String cardText = "";
+        try {
+            var resource = cardData.getJSONObject("resource");
+            cardText += resource.getString("type") + " " + resource.getInt("amount");
+        } catch (JSONException e) {
+        }
+        try {
+            var action = cardData.getJSONObject("action");
+            cardText += "action";
+        } catch (JSONException e) {
+        }
+
+        Button card = new DrawableCard(skin, rotation, color);
+        card.add(new Label(cardText, skin));
         return card;
     }
 }

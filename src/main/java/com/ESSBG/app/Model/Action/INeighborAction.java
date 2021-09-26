@@ -4,7 +4,7 @@ import com.ESSBG.app.Model.Resource;
 
 import java.util.List;
 
-public interface INeighboraction {
+public interface INeighborAction extends IAction {
 
     boolean rightNeighbor();
     boolean leftNeighbor();

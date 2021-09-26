@@ -95,7 +95,7 @@ public class StartMenu implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         stage.act(delta);
         stage.draw();
@@ -147,7 +147,8 @@ public class StartMenu implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                System.out.println("Quit!!!!!");
+                System.out.println("Exiting Application");
+                Gdx.app.exit();
             }
         });
     }

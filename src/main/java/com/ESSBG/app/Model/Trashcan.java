@@ -1,19 +1,21 @@
 package com.ESSBG.app.Model;
 
+import com.ESSBG.app.Model.Cards.Card;
+
 import java.util.List;
 
 public class Trashcan {
-    List<AbstractCard> cards;
+    List<Card> cards;
 
-    public List<AbstractCard> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
-    public AbstractCard takeCard(int i){
+    public Card takeCard(int i){
         return cards.remove(i);
     }
 
-    public void addCard(AbstractCard card){
+    public void addCard(Card card){
         cards.add(card);
     }
 }
