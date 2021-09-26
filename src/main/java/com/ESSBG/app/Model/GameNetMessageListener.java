@@ -2,15 +2,11 @@ package com.ESSBG.app.Model;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.*;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import com.ESSBG.app.Network.*;
 import org.json.*;
-import org.lwjgl.system.windows.MSG;
 
 /**
  * For the game to be able to read messages from the networking interface
@@ -39,7 +35,6 @@ public class GameNetMessageListener implements Runnable {
                 JSONObject js = msgQueue.take();
                 String reason = js.getString("reason");
                 int id = js.getInt("id");
-                JSONObject reply = null;
                 if (reason == "net") {
                     // Connection. True = Connect, False = Disconnect.
                     if (js.getBoolean("data")) {
@@ -57,20 +52,17 @@ public class GameNetMessageListener implements Runnable {
                     Player player = joinedUsers.get(id);
                     JSONObject data = js.getJSONObject("data");
                     int msgNum = data.getInt("msgNum");
-                    reply = new JSONObject().put("msgNum", msgNum);
                     if (confirmedStart.get(id)) {
-                        reply.put("accepted", false).put("msg", "Already locked in round.");
-                        server.sendData(id, reply);
+                        server.sendData(id, replyMaker(msgNum, false, "Already locked in round."));
                         continue;
                     }
                     // Change name routine
                     if (data.has("name")) {
                         if (playerNameChange(id, data.getString("name"))) {
-                            server.sendData(id, reply.put("accepted", true));
+                            server.sendData(id, replyMaker(msgNum, true));
                             continue;
                         } else {
-                            reply.put("accepted", false).put("msg", "Name already taken.");
-                            server.sendData(id, reply);
+                            server.sendData(id, replyMaker(msgNum, false, "Name already taken."));
                             continue;
                         }
                     }
@@ -82,7 +74,7 @@ public class GameNetMessageListener implements Runnable {
 
                         // Check if index is allowed.
                         if (0 < cardIndex || cardIndex >= player.getCardList().size()) {
-                            server.sendData(id, reply.put("accepted", false).put("msg", "Select a valid card!"));
+                            server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
                             continue;
                         }
 
@@ -99,10 +91,10 @@ public class GameNetMessageListener implements Runnable {
                             // Check if player can buy this card.
 
                             if (!ok_buy_card) {
-                                server.sendData(id, reply.put("accepted", false));
+                                server.sendData(id, replyMaker(msgNum, false, "Not enough resources!"));
                                 continue;
                             }
-                            server.sendData(id, reply.put("accepted", true));
+                            server.sendData(id, replyMaker(msgNum, true));
 
                             // Confirm user to this round.
                             confirmedStart.put(id, true);
@@ -118,6 +110,22 @@ public class GameNetMessageListener implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     *
+     * @param id
+     * @param reply
+     * @param message
+     * @return JSONObject with OPTIONAL[message]. Mostly to return why the false
+     *         value occurred.
+     */
+    private JSONObject replyMaker(int msgNum, boolean reply, String message) {
+        return new JSONObject().put("msgNum", msgNum).put("reply", reply).put("msg", message);
+    }
+
+    private JSONObject replyMaker(int msgNum, boolean reply) {
+        return new JSONObject().put("msgNum", msgNum).put("reply", reply);
     }
 
     private boolean playerNameChange(int id, String name) {
