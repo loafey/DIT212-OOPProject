@@ -1,4 +1,4 @@
-package com.ESSBG.app.Render;
+package com.ESSBG.app.Render.GameScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -17,7 +17,7 @@ public class RenderablePlayer implements Renderable {
     private int coins;
     private int warPoints;
 
-    public void updatePlayer(JSONObject data, AssetManager am){
+    public void updatePlayer(JSONObject data, AssetManager am) {
         var handCardsJson = data.getJSONArray("handCards");
         var placedCardsJson = data.getJSONArray("placedCards");
         var resourcesJson = data.getJSONObject("resources");
@@ -29,8 +29,8 @@ public class RenderablePlayer implements Renderable {
         int l = handCardsJson.length();
         float rotation = (l * l) - l;
         float height = 0;
-        for(var i : handCardsJson){
-            var k = (JSONObject)i;
+        for (var i : handCardsJson) {
+            var k = (JSONObject) i;
             JSONObject colorString = k.getJSONObject("color");
             System.out.println(colorString);
 
@@ -38,30 +38,29 @@ public class RenderablePlayer implements Renderable {
             try {
                 var resource = k.getJSONObject("resource");
                 cardText += resource.getString("type") + " " + resource.getInt("amount");
-            } catch (JSONException e) {}
+            } catch (JSONException e) {
+            }
             try {
                 var action = k.getJSONObject("action");
                 cardText += action;
-            } catch (JSONException e) {}
-            handCards.add(
-                new RenderableCard(
-                    am, "Assets/Textures/Cards/CardBase.png", 
-                    cardText,
-                    new Color(colorString.getInt("r"),colorString.getInt("g"),colorString.getInt("b"),colorString.getInt("a")),
-                    cardX, height, rotation)
-            );
+            } catch (JSONException e) {
+            }
+            handCards.add(new RenderableCard(
+                    am, "Assets/Textures/Cards/CardBase.png", cardText, new Color(colorString.getInt("r"),
+                            colorString.getInt("g"), colorString.getInt("b"), colorString.getInt("a")),
+                    cardX, height, rotation));
             cardX += 84;
             rotation -= handCardsJson.length() * 2;
             System.out.println(height);
-            //height += Math.sin((Math.PI/ 2.0) * ((cardX - 84) / 168)) * 32;
+            // height += Math.sin((Math.PI/ 2.0) * ((cardX - 84) / 168)) * 32;
         }
     }
 
     @Override
-    public void render(SpriteBatch batch,BitmapFont font, float widthScale, float heightScale) {
+    public void render(SpriteBatch batch, BitmapFont font, float widthScale, float heightScale) {
         for (RenderableCard i : handCards) {
             i.render(batch, font, widthScale, heightScale);
         }
     }
-    
+
 }

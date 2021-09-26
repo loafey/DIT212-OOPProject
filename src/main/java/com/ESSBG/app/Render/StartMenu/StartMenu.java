@@ -1,6 +1,6 @@
 package com.ESSBG.app.Render.StartMenu;
 
-import com.ESSBG.app.Render.Render;
+import com.ESSBG.app.Render.GameScene.GameScene;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -39,16 +39,21 @@ public class StartMenu implements Screen {
     private void addToTableRowPadTop(Actor actor, float topPadding) {
         addToTableRow(actor, topPadding, 0, 0, 0);
     }
+
     private void addToTableRowPadRight(Actor actor, float rightPadding) {
         addToTableRow(actor, 0, rightPadding, 0, 0);
     }
+
     private void addToTableRowPadLeft(Actor actor, float leftPadding) {
         addToTableRow(actor, 0, 0, leftPadding, 0);
     }
+
     private void addToTableRowPadBottom(Actor actor, float bottomPadding) {
         addToTableRow(actor, 0, 0, 0, bottomPadding);
     }
-    private void addToTableRow(Actor actor, float topPadding, float rightPadding, float leftPadding, float bottomPadding) {
+
+    private void addToTableRow(Actor actor, float topPadding, float rightPadding, float leftPadding,
+            float bottomPadding) {
         table.row();
         Cell<Actor> cell = table.add(actor);
         cell.padTop(topPadding);
@@ -70,7 +75,6 @@ public class StartMenu implements Screen {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = skin.getFont("title");
         Label titleName = new Label("7 Wonders", labelStyle);
-
 
         // Button setup
         setupButtons();
@@ -127,7 +131,7 @@ public class StartMenu implements Screen {
                 super.touchUp(event, x, y, pointer, button);
                 System.out.println("Should swap to some kind of lobby");
                 System.out.println(stage.getWidth());
-                game.setScreen(new Render(stage.getWidth(), stage.getHeight(), game));
+                game.setScreen(new GameScene(stage.getWidth(), stage.getHeight(), game));
             }
         });
 
