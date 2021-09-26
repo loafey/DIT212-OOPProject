@@ -20,14 +20,14 @@ public class GameScene implements Screen {
     private Table sceneTable;
     private Table handCardContainer;
 
-    private GameState rPlayer = new GameState();
+    private DrawableBoard rPlayer = new DrawableBoard();
 
     public GameScene(Game game) {
         this.game = game;
     }
 
     public void update(JSONObject data) {
-        rPlayer.updatePlayer(data, skin, handCardContainer);
+        rPlayer.updateBoard(data, skin, handCardContainer);
     }
 
     @Override
