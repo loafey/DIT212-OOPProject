@@ -118,6 +118,9 @@
         <resources>
             <resource>
                 <directory>.</directory>
+                <includes>
+                    <include>Assets/**</include>
+                </includes>
             </resource>
         </resources>
         <plugins>
