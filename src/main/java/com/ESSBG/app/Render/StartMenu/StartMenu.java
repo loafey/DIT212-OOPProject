@@ -131,7 +131,7 @@ public class StartMenu implements Screen {
                 super.touchUp(event, x, y, pointer, button);
                 System.out.println("Should swap to some kind of lobby");
                 System.out.println(stage.getWidth());
-                game.setScreen(new GameScene(stage.getWidth(), stage.getHeight(), game));
+                game.setScreen(new GameScene(game));
             }
         });
 

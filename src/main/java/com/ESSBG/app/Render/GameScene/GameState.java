@@ -5,19 +5,29 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import java.io.Console;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RenderablePlayer implements Renderable {
-    private ArrayList<RenderableCard> handCards = new ArrayList<>();
-    private ArrayList<RenderableCard> placedCards = new ArrayList<>();
-
+public class GameState {
     private int coins;
     private int warPoints;
 
-    public void updatePlayer(JSONObject data, AssetManager am) {
+    public void updatePlayer(JSONObject data, Skin skin, Table handTable) {
         var handCardsJson = data.getJSONArray("handCards");
         var placedCardsJson = data.getJSONArray("placedCards");
         var resourcesJson = data.getJSONObject("resources");
@@ -25,10 +35,6 @@ public class RenderablePlayer implements Renderable {
         var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         var rightNeighbourJson = data.getJSONObject("rightNeighbour");
 
-        int cardX = ((Gdx.graphics.getWidth() / 2) - (84 / 2)) - (handCardsJson.length() / 2) * 84;
-        int l = handCardsJson.length();
-        float rotation = (l * l) - l;
-        float height = 0;
         for (var i : handCardsJson) {
             var k = (JSONObject) i;
             JSONObject colorString = k.getJSONObject("color");
@@ -42,25 +48,17 @@ public class RenderablePlayer implements Renderable {
             }
             try {
                 var action = k.getJSONObject("action");
-                cardText += action;
+                cardText += "action";
             } catch (JSONException e) {
             }
-            handCards.add(new RenderableCard(
-                    am, "Assets/Textures/Cards/CardBase.png", cardText, new Color(colorString.getInt("r"),
-                            colorString.getInt("g"), colorString.getInt("b"), colorString.getInt("a")),
-                    cardX, height, rotation));
-            cardX += 84;
-            rotation -= handCardsJson.length() * 2;
-            System.out.println(height);
-            // height += Math.sin((Math.PI/ 2.0) * ((cardX - 84) / 168)) * 32;
+
+            handTable.add(GenerateCard(skin, cardText, -5f)).width(84).height(128);
         }
     }
 
-    @Override
-    public void render(SpriteBatch batch, BitmapFont font, float widthScale, float heightScale) {
-        for (RenderableCard i : handCards) {
-            i.render(batch, font, widthScale, heightScale);
-        }
+    private Button GenerateCard(Skin skin, String title, Float rotation) {
+        Button card = new DrawableCard(skin, rotation);
+        card.add(new Label(title, skin));
+        return card;
     }
-
 }

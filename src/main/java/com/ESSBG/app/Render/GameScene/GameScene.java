@@ -1,54 +1,51 @@
 package com.ESSBG.app.Render.GameScene;
 
-import java.util.ArrayList;
-
-import com.ESSBG.app.AssetFinder;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.*;
 
 import org.json.JSONObject;
 
-import com.badlogic.gdx.graphics.Texture;
-
 public class GameScene implements Screen {
-    private SpriteBatch batch;
-    private BitmapFont mainFont;
-    private AssetManager assetManager;
     private Game game;
+    private Stage stage;
+    private Skin skin;
+    private Table sceneTable;
+    private Table handCardContainer;
 
-    private float widthScale = 1;
-    private float heightScale = 1;
-    private float originalWidth;
-    private float originalHeight;
+    private DrawableBoard rPlayer = new DrawableBoard();
 
-    private ArrayList<Renderable> currentScene = new ArrayList<>();
-    private RenderablePlayer rPlayer = new RenderablePlayer();
-
-    public GameScene(float width, float height, Game game) {
+    public GameScene(Game game) {
         this.game = game;
-        originalWidth = width;
-        originalHeight = height;
     }
 
     public void update(JSONObject data) {
-        rPlayer.updatePlayer(data, assetManager);
+        rPlayer.updateBoard(data, skin, handCardContainer);
     }
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        mainFont = new BitmapFont();
+        Viewport vp = new ScreenViewport();
+        stage = new Stage(vp);
+        sceneTable = new Table();
+        handCardContainer = new Table();
+        skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
 
-        assetManager = new AssetManager(new InternalFileHandleResolver());
-        AssetFinder.findAssets(assetManager, "Assets/");
-        assetManager.finishLoading();
-        currentScene.add(rPlayer);
+        Gdx.input.setInputProcessor(stage);
+
+        sceneTable.setDebug(true);
+        sceneTable.setFillParent(true);
+        sceneTable.add(handCardContainer);
+        sceneTable.bottom();
+
+        stage.addActor(sceneTable);
 
         // If I have pushed this it was by mistake!
         // -- oggleboa
@@ -59,19 +56,16 @@ public class GameScene implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        widthScale = originalWidth / width;
-        heightScale = originalHeight / height;
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        for (Renderable r : currentScene) {
-            r.render(batch, mainFont, widthScale, heightScale);
-        }
-        batch.end();
+
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
@@ -84,8 +78,7 @@ public class GameScene implements Screen {
 
     @Override
     public void hide() {
-        batch.dispose();
-        mainFont.dispose();
+        stage.dispose();
     }
 
     @Override

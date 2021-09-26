@@ -10,7 +10,7 @@ public class MainGame extends Game {
 
     @Override
     public void create() {
-        Screen renderer = new GameScene(800, 600, this);
+        Screen renderer = new GameScene(this);
         Screen startMenu = new StartMenu(this);
         setScreen(startMenu);
     }
