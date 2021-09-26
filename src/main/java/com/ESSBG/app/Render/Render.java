@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.ESSBG.app.AssetFinder;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,10 +17,11 @@ import org.json.JSONObject;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Render extends Game {
+public class Render implements Screen {
     private SpriteBatch batch;
     private BitmapFont mainFont;
     private AssetManager assetManager;
+    private Game game;
 
     private float widthScale = 1;
     private float heightScale = 1;
@@ -29,8 +31,8 @@ public class Render extends Game {
     private ArrayList<Renderable> currentScene = new ArrayList<>();
     private RenderablePlayer rPlayer = new RenderablePlayer();
 
-    public Render(int width, int height) {
-        super();
+    public Render(float width, float height, Game game) {
+        this.game = game;
         originalWidth = width;
         originalHeight = height;
     }
@@ -40,7 +42,7 @@ public class Render extends Game {
     }
 
     @Override
-    public void create() {
+    public void show() {
         batch = new SpriteBatch();
         mainFont = new BitmapFont();
 
@@ -62,7 +64,7 @@ public class Render extends Game {
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -81,9 +83,14 @@ public class Render extends Game {
     }
 
     @Override
-    public void dispose() {
+    public void hide() {
         batch.dispose();
         mainFont.dispose();
     }
-    
+
+    @Override
+    public void dispose() {
+
+    }
+
 }
