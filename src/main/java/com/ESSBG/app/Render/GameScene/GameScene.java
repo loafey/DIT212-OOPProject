@@ -19,6 +19,9 @@ public class GameScene implements Screen {
     private Skin skin;
     private Table sceneTable;
     private Table handCardContainer;
+    private Table placedCardContainer;
+
+    private Table playerTable;
 
     private DrawableBoard rPlayer = new DrawableBoard();
 
@@ -27,7 +30,7 @@ public class GameScene implements Screen {
     }
 
     public void update(JSONObject data) {
-        rPlayer.updateBoard(data, skin, handCardContainer);
+        rPlayer.updateBoard(data, skin, handCardContainer, placedCardContainer);
     }
 
     @Override
@@ -36,13 +39,22 @@ public class GameScene implements Screen {
         stage = new Stage(vp);
         sceneTable = new Table();
         handCardContainer = new Table();
+        placedCardContainer = new Table();
+        playerTable = new Table();
         skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
 
         Gdx.input.setInputProcessor(stage);
 
         sceneTable.setDebug(true);
         sceneTable.setFillParent(true);
-        sceneTable.add(handCardContainer);
+
+        playerTable.setDebug(true);
+        playerTable.add(placedCardContainer);
+        playerTable.row();
+        playerTable.add(handCardContainer);
+        playerTable.bottom();
+
+        sceneTable.add(playerTable);
         sceneTable.bottom();
 
         stage.addActor(sceneTable);
@@ -50,7 +62,7 @@ public class GameScene implements Screen {
         // If I have pushed this it was by mistake!
         // -- oggleboa
         JSONObject j = new JSONObject(
-                "{\"msgNum\":0,\"handCards\":[{\"color\":{\"r\":250,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":250,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":250,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":250,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":250,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":213,\"g\":21,\"b\":124,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"action\":{\"type\":\"sale\",\"types\":[\"wood\",\"silk\"],\"direction\":[\"left\"]}}],\"placedCards\":[{\"color\":{\"r\":21,\"g\":213,\"b\":124,\"a\":1},\"cost\":[{\"wood\":1}],\"resource\":{\"type\":\"silk\",\"amount\":1}}],\"resources\":{\"coins\":125,\"war\":12},\"monument\":{\"cards\":[{\"resource\":{\"type\":\"silk\",\"amount\":1}},{\"resource\":{\"type\":\"war\",\"amount\":3}},{\"resource\":{\"type\":\"wood\",\"amount\":75}}],\"unlocked\":1},\"leftNeighbour\":{\"resources\":[]},\"rightNeighbour\":{\"resources\":[]}}");
+                "{\"msgNum\":0,\"handCards\":[{\"color\":{\"r\":0.4,\"g\":0.6,\"b\":0.2,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":0.4,\"g\":0.6,\"b\":0.2,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":0.4,\"g\":0.6,\"b\":0.2,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":0.4,\"g\":0.6,\"b\":0.2,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":0.4,\"g\":0.6,\"b\":0.2,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"resource\":{\"type\":\"tree\",\"amount\":3}},{\"color\":{\"r\":0.4,\"g\":0.6,\"b\":0.2,\"a\":1},\"cost\":[{\"tree\":5},{\"stone\":1}],\"action\":{\"type\":\"sale\",\"types\":[\"wood\",\"silk\"],\"direction\":[\"left\"]}}],\"placedCards\":[{\"color\":{\"r\":0.51,\"g\":0.82,\"b\":0.75,\"a\":1},\"cost\":[{\"wood\":1},{\"wood\":1}],\"resource\":{\"type\":\"silk\",\"amount\":44}},{\"color\":{\"r\":0.51,\"g\":0.82,\"b\":0.75,\"a\":1},\"cost\":[{\"wood\":2}],\"resource\":{\"type\":\"silk\",\"amount\":68}},{\"color\":{\"r\":0.16,\"g\":0.59,\"b\":0.84,\"a\":1},\"cost\":[{\"wood\":3},{\"wood\":3},{\"wood\":1}],\"resource\":{\"type\":\"silk\",\"amount\":27}},{\"color\":{\"r\":0.16,\"g\":0.59,\"b\":0.84,\"a\":1},\"cost\":[{\"wood\":1},{\"wood\":2}],\"resource\":{\"type\":\"silk\",\"amount\":95}}],\"resources\":{\"coins\":125,\"war\":12},\"monument\":{\"cards\":[{\"resource\":{\"type\":\"silk\",\"amount\":1}},{\"resource\":{\"type\":\"war\",\"amount\":3}},{\"resource\":{\"type\":\"wood\",\"amount\":75}}],\"unlocked\":1},\"leftNeighbour\":{\"resources\":[]},\"rightNeighbour\":{\"resources\":[]}}");
         update(j);
     }
 

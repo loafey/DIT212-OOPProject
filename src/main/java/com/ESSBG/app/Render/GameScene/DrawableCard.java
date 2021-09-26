@@ -1,6 +1,7 @@
 package com.ESSBG.app.Render.GameScene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -18,7 +19,7 @@ public class DrawableCard extends Button {
     private float rotationGoal;
     private float rotationCurrent;
 
-    public DrawableCard(Skin skin, float rotation) {
+    public DrawableCard(Skin skin, float rotation, Color color) {
         super(skin);
 
         super.setTransform(true);
@@ -26,6 +27,8 @@ public class DrawableCard extends Button {
         rotationOriginal = rotation;
         rotationGoal = rotation;
         rotationCurrent = rotation;
+
+        setColor(color);
 
         super.addListener(new ClickListener() {
             @Override
