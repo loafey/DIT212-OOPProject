@@ -8,5 +8,6 @@ public enum Resource {
     PAPYRUS,
     STONE,
     TEXTILE,
-    WOOD
+    WOOD,
+    POINT
 }

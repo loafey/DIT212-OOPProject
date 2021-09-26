@@ -4,6 +4,6 @@ import com.ESSBG.app.Model.Resource;
 
 import java.util.List;
 
-public interface IEitherAction extends IAction {
+public interface IResourceAction extends IAction {
 
 }
