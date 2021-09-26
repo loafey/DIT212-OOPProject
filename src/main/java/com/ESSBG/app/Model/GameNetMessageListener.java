@@ -1,10 +1,13 @@
 package com.ESSBG.app.Model;
 
+import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import com.ESSBG.app.Network.*;
 import org.json.*;
 import org.lwjgl.system.windows.MSG;
@@ -75,15 +78,24 @@ public class GameNetMessageListener implements Runnable {
                             AbstractCard selectedCard = player.getCardList().get(cardIndex);
                             Player leftNeighbor = players.getPrevious(player);
                             Player rightNeighbor = players.getNext(player);
+
+                            // TODO remove placeholder for real method
+                            boolean ok_buy_card = true;
                             // Check if player can buy this card.
-                            // TODO check if user is allowed for these routines.
+
+                            if (ok_buy_card) {
+                                server.sendData(id, new JSONObject().put("accepted", true));
+                            } else {
+                                server.sendData(id, new JSONObject().put("accepted", false));
+                            }
+                            // Delete players resources
                             return;
                         }
                     }
 
                     return;
                 }
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | NoSuchElementException | JSONException | IOException e) {
                 e.printStackTrace();
             }
         }
