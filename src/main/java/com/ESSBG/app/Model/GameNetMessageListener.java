@@ -84,9 +84,11 @@ public class GameNetMessageListener implements Runnable {
                             // Check if player can buy this card.
 
                             if (ok_buy_card) {
-                                server.sendData(id, new JSONObject().put("accepted", true));
+                                server.sendData(id,
+                                        new JSONObject().put("msgNum", data.getInt("msgNum")).put("accepted", true));
                             } else {
-                                server.sendData(id, new JSONObject().put("accepted", false));
+                                server.sendData(id,
+                                        new JSONObject().put("msgNum", data.getInt("msgNum")).put("accepted", false));
                             }
                             // Delete players resources
                             return;
