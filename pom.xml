@@ -115,6 +115,11 @@
             </plugins>
         </pluginManagement>
         <!-- Build an executable JAR -->
+        <resources>
+            <resource>
+                <directory>.</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
