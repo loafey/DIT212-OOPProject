@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RenderablePlayer {
+public class GameState {
     private int coins;
     private int warPoints;
 

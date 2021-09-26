@@ -20,7 +20,7 @@ public class GameScene implements Screen {
     private Table sceneTable;
     private Table handCardContainer;
 
-    private RenderablePlayer rPlayer = new RenderablePlayer();
+    private GameState rPlayer = new GameState();
 
     public GameScene(Game game) {
         this.game = game;
