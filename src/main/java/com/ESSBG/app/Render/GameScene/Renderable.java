@@ -1,8 +1,8 @@
-package com.ESSBG.app.Render;
+package com.ESSBG.app.Render.GameScene;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public interface Renderable {
-    void render(SpriteBatch batch,BitmapFont font, float widthScale, float heightScale);
+    void render(SpriteBatch batch, BitmapFont font, float widthScale, float heightScale);
 }
