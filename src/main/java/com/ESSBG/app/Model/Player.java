@@ -1,6 +1,7 @@
 package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Cards.Card;
+import com.ESSBG.app.Model.Monuments.Monument;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,6 +111,7 @@ public class Player {
         this.guaranteedResources = guaranteedResources;
     }
 
+
     public PlayerState getState() {
         return state;
     }
@@ -135,5 +137,19 @@ public class Player {
 
     public int getCoins() {
         return this.coins;
+    }
+
+    public Monument getMonument(){
+        return monument;
+    }
+
+    public boolean discard (Card card){
+        for (Card c : cardList){
+            if (c.equals(card)){
+                cardList.remove(card);
+                return true;
+            }
+        }
+        return false;
     }
 }
