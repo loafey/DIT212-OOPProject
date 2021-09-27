@@ -89,4 +89,9 @@ public class Server extends Base implements IServer {
     protected int getNumberOfUsers() {
         return hashMap.size();
     }
+
+    @Override
+    public boolean isSocketClosed() {
+        return socket.isClosed();
+    }
 }
