@@ -29,83 +29,113 @@ public class GameNetMessageListener implements Runnable {
         this.msgQueue = server.getMsgQueue();
     }
 
+    private void networkRoutine(int id, JSONObject js) {
+        // Connection. True = Connect, False = Disconnect.
+        if (js.getBoolean("data")) {
+            Player newPlayer = new Player(id);
+            joinedUsers.put(id, newPlayer);
+            confirmedStart.put(id, false);
+            players.add(newPlayer);
+        } else {
+            // Any connection error should remove.
+            joinedUsers.remove(id);
+            confirmedStart.remove(id);
+            players.remove(id);
+        }
+    }
+
+    private void nameChangeRoutine(int id, int msgNum, String name) throws NoSuchElementException, IOException {
+        if (playerNameChange(id, name)) {
+            server.sendData(id, replyMaker(msgNum, true));
+        } else {
+            server.sendData(id, replyMaker(msgNum, false, "Name already taken."));
+        }
+    }
+
+    private boolean hasAlreadyConfirmedStart(int id, int msgNum) throws NoSuchElementException, IOException {
+        if (confirmedStart.get(id)) {
+            server.sendData(id, replyMaker(msgNum, false, "Already locked in round."));
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void run() {
         while (true) {
             try {
                 JSONObject js = msgQueue.take();
-                String reason = js.getString("reason");
                 int id = js.getInt("id");
-                if (reason == "net") {
-                    // Connection. True = Connect, False = Disconnect.
-                    if (js.getBoolean("data")) {
-                        Player newPlayer = new Player(id, null);
-                        joinedUsers.put(id, newPlayer);
-                        confirmedStart.put(id, false);
-                        players.add(newPlayer);
-                    } else {
-                        // Any connection error should remove.
-                        joinedUsers.remove(id);
-                        confirmedStart.remove(id);
-                        players.remove(id);
-                    }
-                } else if (reason == "game") {
-                    Player player = joinedUsers.get(id);
-                    JSONObject data = js.getJSONObject("data");
-                    int msgNum = data.getInt("msgNum");
-                    if (confirmedStart.get(id)) {
-                        server.sendData(id, replyMaker(msgNum, false, "Already locked in round."));
+
+                switch (js.getString("reason")) {
+                    case "net":
+                        networkRoutine(id, js);
                         continue;
-                    }
-                    // Change name routine
-                    if (data.has("name")) {
-                        if (playerNameChange(id, data.getString("name"))) {
-                            server.sendData(id, replyMaker(msgNum, true));
-                            continue;
-                        } else {
-                            server.sendData(id, replyMaker(msgNum, false, "Name already taken."));
-                            continue;
-                        }
-                    }
+                    case "game":
+                        Player player = joinedUsers.get(id);
+                        JSONObject data = js.getJSONObject("data");
+                        int msgNum = data.getInt("msgNum");
 
-                    if (data.has("card")) {
-                        JSONObject cardData = data.getJSONObject("card");
-                        int cardIndex = cardData.getInt("cardIndex");
-                        String action = cardData.getString("action");
-
-                        // Check if index is allowed.
-                        if (0 < cardIndex || cardIndex >= player.getCardList().size()) {
-                            server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
+                        // Change name routine
+                        if (data.has("name")) {
+                            nameChangeRoutine(id, msgNum, data.getString("name"));
                             continue;
                         }
 
-                        // throw, place, monument
-                        // We have to check whether player has enough resources
-                        // to upgrade monument or buy card.
-                        if (action.equals("monument") || action.equals("place")) {
-                            Card selectedCard = player.getCardList().get(cardIndex);
-                            Player leftNeighbor = players.getPrevious(player);
-                            Player rightNeighbor = players.getNext(player);
+                        if (hasAlreadyConfirmedStart(id, msgNum)) {
+                            continue;
+                        }
 
-                            // TODO remove placeholder for real method
-                            boolean ok_buy_card = true;
-                            // Check if player can buy this card.
+                        if (data.has("card")) {
+                            JSONObject cardData = data.getJSONObject("card");
+                            int cardIndex = cardData.getInt("cardIndex");
+                            String action = cardData.getString("action");
+                            List<Card> cardList = player.getCardList();
 
-                            if (!ok_buy_card) {
-                                server.sendData(id, replyMaker(msgNum, false, "Not enough resources!"));
+                            // Check if index is allowed.
+                            if (0 < cardIndex || cardIndex >= player.getCardList().size()) {
+                                server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
+                                confirmedStart.put(id, true);
                                 continue;
                             }
-                            server.sendData(id, replyMaker(msgNum, true));
 
-                            // Confirm user to this round.
-                            confirmedStart.put(id, true);
+                            // discard, place, monument
+                            // We have to check whether player has enough resources
+                            // to upgrade monument or buy card.
+                            if (action.equals("discard")) {
+                                // 2 Coins, and for each yellow 1 coin..
+                                Card card = cardList.remove(cardIndex);
+                                int nickelBack = 2;
+                                for (Card c : cardList) {
+                                    if (c.getColor() == ColorEnum.YELLOW) {
+                                        nickelBack++;
+                                    }
+                                }
+                                server.sendData(id, replyMaker(msgNum, true));
+                                continue;
+                            }
 
-                            // Delete players resources
-                            return;
+                            if (action.equals("monument") || action.equals("place")) {
+                                Card selectedCard = player.getCardList().get(cardIndex);
+                                Player leftNeighbor = players.getPrevious(player);
+                                Player rightNeighbor = players.getNext(player);
+
+                                // TODO remove placeholder for real method
+                                boolean ok_buy_card = true;
+                                // Check if player can buy this card.
+
+                                if (!ok_buy_card) {
+                                    server.sendData(id, replyMaker(msgNum, false, "Not enough resources!"));
+                                    continue;
+                                }
+                                server.sendData(id, replyMaker(msgNum, true));
+
+                                // Confirm user to this round.
+                                confirmedStart.put(id, true);
+
+                                // Delete players resources
+                            }
                         }
-                    }
-
-                    return;
                 }
             } catch (InterruptedException | NoSuchElementException | JSONException | IOException e) {
                 e.printStackTrace();
