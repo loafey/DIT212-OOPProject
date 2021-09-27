@@ -28,7 +28,7 @@ public class GameScene implements Screen {
     }
 
     public void update(JSONObject data) {
-        rPlayer.updateBoard(data, skin, handCardContainer, placedCardContainer);
+        rPlayer.updateBoard(data, skin, handCardContainer, placedCardContainer, monument);
     }
 
     @Override

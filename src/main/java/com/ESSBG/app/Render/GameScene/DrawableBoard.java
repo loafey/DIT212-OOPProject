@@ -19,13 +19,20 @@ public class DrawableBoard {
     private int coins;
     private int warPoints;
 
-    public void updateBoard(JSONObject data, Skin skin, Table handTable, Table placedCards) {
+    public void updateBoard(JSONObject data, Skin skin, Table handTable, Table placedCards, Table monument) {
         updateHand(skin, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
-        var resourcesJson = data.getJSONObject("resources");
+        updateResources(skin, monument, data.getJSONObject("resources"));
         var monumentJson = data.getJSONObject("monument");
         var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         var rightNeighbourJson = data.getJSONObject("rightNeighbour");
+    }
+
+    private void updateResources(Skin skin, Table monument, JSONObject data) {
+        monument.row();
+        monument.add(new Label("Coins: " + data.getInt("coins"), skin));
+        monument.row();
+        monument.add(new Label("War: " + data.getInt("war"), skin));
     }
 
     private void updatePlacedCards(Skin skin, Table placedCardsTable, JSONArray cards) {
