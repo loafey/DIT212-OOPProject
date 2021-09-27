@@ -21,6 +21,13 @@ import java.io.*;
  *
  */
 public interface IServer {
+
+    /**
+     * Checks if socket is closed.
+     * @return
+     */
+    boolean isSocketClosed();
+
     /**
      * Starts the server and spawns a helper class to serve the clients needs.
      * Messages from the networking module will be found in the msgQueue. <br>

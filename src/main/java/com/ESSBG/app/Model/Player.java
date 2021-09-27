@@ -131,6 +131,14 @@ public class Player {
         warPoints += value;
     }
 
+    public void addCoins(int coins) {
+        this.coins += coins;
+    }
+
+    public void removeCoins(int coins) {
+        this.coins -= coins;
+    }
+
     public void setCoins(int coins) {
         this.coins = coins;
     }
