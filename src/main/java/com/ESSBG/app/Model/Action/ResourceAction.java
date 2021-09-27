@@ -6,18 +6,16 @@ import com.ESSBG.app.Model.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceAction implements IResourceAction {
+public class ResourceAction implements IResource {
 
-    private List<Resource> resources;
+    private final List<Resource> resources;
 
     public ResourceAction(List<Resource> resources) {
         this.resources = resources;
     }
 
     @Override
-    public void doAction(Player p) {
-        List<Resource> addResources = p.getGuaranteedResources();
-        addResources.addAll(resources);
-        p.setGuaranteedResources(addResources);
+    public List<Resource> getResources() {
+        return new ArrayList<>(resources);
     }
 }

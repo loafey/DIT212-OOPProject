@@ -1,6 +1,6 @@
 package com.ESSBG.app.Model;
 
-import com.ESSBG.app.Model.Action.IAction;
+import com.ESSBG.app.Model.Action.IResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,11 @@ public class Monument implements IBuyable {
 
     private final String name;
     private final List<Resource> generate;
-    private final List<IAction> monAction;
+    private final List<IResource> monAction; //placeholder, need to find a way to generalise all actions
     private int monUnlock;
 
 
-    public Monument(String name, List<Resource> generate, List<IAction> monAction) {
+    public Monument(String name, List<Resource> generate, List<IResource> monAction) {
         this.name = name;
         this.generate = generate;
         this.monAction = monAction;
@@ -30,7 +30,7 @@ public class Monument implements IBuyable {
     }
 
     // shallow copy
-    public List<IAction> getMonAction() {
+    public List<IResource> getMonAction() {
         return new ArrayList<>(monAction);
     }
 

@@ -1,45 +1,34 @@
 package com.ESSBG.app.Model.Action;
 
-import com.ESSBG.app.Model.Player;
 import com.ESSBG.app.Model.Resource;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ReduceNeighborResources implements INeighborAction {
+public class ReduceNeighborResources implements INeighborReduction<Resource> {
 
-    private final List<Resource> resources;
-    private final boolean leftNeighbor;
-    private final boolean rightNeighbor;
+    private final int reduceTo;
+    private final List<Resource> leftNeighbor;
+    private final List<Resource> rightNeighbor;
 
-    public ReduceNeighborResources(List<Resource> resources, boolean leftNeighbor, boolean rightNeighbor) {
-        this.resources = resources;
+    public ReduceNeighborResources(int reduceTo, List<Resource> leftNeighbor, List<Resource> rightNeighbor) {
+        this.reduceTo = reduceTo;
         this.leftNeighbor = leftNeighbor;
         this.rightNeighbor = rightNeighbor;
     }
 
     @Override
-    public boolean rightNeighbor() {
-        return this.rightNeighbor;
+    public List<Resource> getLeftNeighbor() {
+        return new ArrayList<>(leftNeighbor);
     }
 
     @Override
-    public boolean leftNeighbor() {
-        return this.leftNeighbor;
+    public int reduceTo() {
+        return reduceTo;
     }
 
     @Override
-    public List<Resource> resources() {
-        return resources;
-    }
-
-    @Override
-    public void doAction(Player p) {
-        HashMap<Resource, Player> reductions = p.getReductions();
-        for (Resource r : resources) {
-            if (leftNeighbor) reductions.put(r, p.getLeftPlayer());
-            if (rightNeighbor) reductions.put(r, p.getRightPlayer());
-        }
-        p.setReductions(reductions);
+    public List<Resource> getRightNeighbor() {
+        return new ArrayList<>(rightNeighbor);
     }
 }

@@ -1,14 +1,13 @@
 package com.ESSBG.app.Model;
 
-import com.ESSBG.app.Model.Action.IAction;
+import com.ESSBG.app.Model.Action.IEitherAction;
+import com.ESSBG.app.Model.Action.IResource;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +19,7 @@ public class PlayerTest {
     public void setup() {
         List <Resource> generation = new ArrayList<>();
         generation.add(Resource.WOOD);
-        List<IAction> monAction = new ArrayList<>();
+        List<IResource> monAction = new ArrayList<>();
         monAction.add(new ResourceAction(List.of(Resource.ORE)));
         Monument mon = new Monument("Monaden", generation, monAction);
         player = new Player(0, mon);

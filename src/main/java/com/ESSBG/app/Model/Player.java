@@ -5,7 +5,7 @@ import com.ESSBG.app.Model.Cards.Card;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class Player {
     private int id;
@@ -22,6 +22,8 @@ public class Player {
     private Player leftPlayer;
     private Player rightPlayer;
     private HashMap<Resource, Player> reductions;
+
+    private PlayerState state;
 
 
     public Player(int id, Monument monument) {
@@ -106,6 +108,10 @@ public class Player {
 
     public void setGuaranteedResources(List<Resource> guaranteedResources) {
         this.guaranteedResources = guaranteedResources;
+    }
+
+    public PlayerState getState() {
+        return state;
     }
 
     public void setEitherResources(List<Resource> eitherResources) {

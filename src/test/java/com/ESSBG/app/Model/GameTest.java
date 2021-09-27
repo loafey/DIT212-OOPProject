@@ -1,13 +1,12 @@
 package com.ESSBG.app.Model;
 
-import com.ESSBG.app.Model.Action.IAction;
+import com.ESSBG.app.Model.Action.IResource;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ public class GameTest {
     public void setup() {
         game = new Game();
         testPlayers = new ArrayList<>();
-        List<IAction> monAction = new ArrayList<>();
+        List<IResource> monAction = new ArrayList<>();
         monAction.add(new ResourceAction(List.of(Resource.WOOD)));
         int amountTestPLayers = 3;
         for (int i = 0; i <amountTestPLayers; i++) {

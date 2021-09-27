@@ -4,6 +4,8 @@ import com.ESSBG.app.Model.Resource;
 
 import java.util.List;
 
-public interface IEitherAction extends IAction {
+public interface IEitherAction<T> {
+
+    List<T> getEithers();
 
 }

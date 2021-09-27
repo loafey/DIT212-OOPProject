@@ -1,6 +1,6 @@
 package com.ESSBG.app.Model;
 
-public enum Resource {
+public enum Resource  {
     CLAY,
     GLASS,
     ORE,
