@@ -32,26 +32,19 @@ public class Alexandria extends Monument{
     }
 
     @Override
-    public List<Resource> resourcesToBuildStage1() {
-        List<Resource> list = new ArrayList<>();
-        list.add(Resource.STONE);
-        list.add(Resource.STONE);
-        return list;
+    protected void initResourcesToBuildStage1() {
+        resourcesToBuildStage1 = super.initializeResources(Resource.STONE, 2);
     }
 
     @Override
-    public List<Resource> resourcesToBuildStage2() {
-        List<Resource> list = new ArrayList<>();
-        list.add(Resource.WOOD);
-        list.add(Resource.WOOD);
-        return list;
+    protected void initResourcesToBuildStage2() {
+        resourcesToBuildStage2 = super.initializeResources(Resource.WOOD, 2);
     }
 
     @Override
-    public List<Resource> resourcesToBuildStage3() {
-        List<Resource> list = new ArrayList<>();
-        list.add(Resource.GLASS);
-        list.add(Resource.GLASS);
-        return list;
+    protected void initResourcesToBuildStage3() {
+        resourcesToBuildStage3 = super.initializeResources(Resource.GLASS, 2);
     }
+
+
 }

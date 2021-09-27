@@ -14,6 +14,9 @@ public abstract class Monument implements IMonument {
     protected final Player player;
     private final Resource startingResource; /** The starting resource given to the player (top left corner on monument)*/
     private int stageBuilt = 0; /** How many stages that have been built yet on the monument*/
+    protected List<Resource> resourcesToBuildStage1;
+    protected List<Resource> resourcesToBuildStage2;
+    protected List<Resource> resourcesToBuildStage3;
 
 
     //private final List<IResource> monAction; //placeholder, need to find a way to generalise all actions
@@ -24,7 +27,14 @@ public abstract class Monument implements IMonument {
         this.name = name;
         this.player = player;
         this.startingResource = startingResource;
+        init();
+    }
+
+    private void init(){
         givePlayerStartingResource();
+        initResourcesToBuildStage1();
+        initResourcesToBuildStage2();
+        initResourcesToBuildStage3();
     }
 
     /**
@@ -62,9 +72,33 @@ public abstract class Monument implements IMonument {
     // Ska ändra så det är mer generellt
     public abstract void stage2Reward();
 
-    public abstract List<Resource> resourcesToBuildStage1();
+    public List<Resource> resourcesToBuildAStage(Resource resource, int numberOfUnits){
+        List<Resource> list = new ArrayList<>();
+        for (int i=0; i<numberOfUnits; i++){
+            list.add(resource);
+        }
+        return list;
+    }
 
-    public abstract List<Resource> resourcesToBuildStage2();
+    /**
+     * To be used in subclasses to initalize all stage's requirements for building
+     * @param resource The resource required to build a certain stage
+     * @param amount How many units required of the resource
+     * @return
+     */
 
-    public abstract List<Resource> resourcesToBuildStage3();
+    protected List<Resource> initializeResources(Resource resource, int amount){
+        List<Resource> list = new ArrayList<>();
+        for (int i=0; i<amount; i++){
+            list.add(resource);
+        }
+        return list;
+    }
+
+
+    protected abstract void initResourcesToBuildStage1();
+    protected abstract void initResourcesToBuildStage2();
+    protected abstract void initResourcesToBuildStage3();
+
+
 }
