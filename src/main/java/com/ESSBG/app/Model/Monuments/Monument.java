@@ -41,4 +41,10 @@ public abstract class Monument implements IMonument {
 
     // Ska ändra så det är mer generellt
     public abstract EitherResource level2Reward();
+
+    public abstract List<Resource> resourcesToBuildStage1();
+
+    public abstract List<Resource> resourcesToBuildStage2();
+
+    public abstract List<Resource> resourcesToBuildStage3();
 }
