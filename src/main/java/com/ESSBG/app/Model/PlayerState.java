@@ -2,23 +2,24 @@ package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Cards.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerState {
 
     private List<Card> playedCards;
-    private List<Resource> guaranteedResources;
-    private List<Resource> eitherResources;
-    private List<Resource> leftPlayerReductions;
-    private List<Resource> rightPlayerReductions;
+    private List<ResourceEnum> guaranteedResources;
+    private List<ArrayList<ResourceEnum>> eitherResources;
+    private List<ResourceEnum> leftPlayerReductions;
+    private List<ResourceEnum> rightPlayerReductions;
     int coins;
     private int warTokens;
     private int winPoints;
     private int losePoints;
-    private final Player leftPlayer;
-    private final Player rightPlayer;
+    private Player leftPlayer;
+    private Player rightPlayer;
 
-    public PlayerState(List<Card> playedCards, List<Resource> guaranteedResources, List<Resource> eitherResources, List<Resource> leftPlayerReductions, List<Resource> rightPlayerReductions, int coins, int warTokens, int winPoints, int losePoints, Player leftPlayer, Player rightPlayer) {
+    public PlayerState(List<Card> playedCards, List<ResourceEnum> guaranteedResources, List<ArrayList<ResourceEnum>> eitherResources, List<ResourceEnum> leftPlayerReductions, List<ResourceEnum> rightPlayerReductions, int coins, int warTokens, int winPoints, int losePoints) {
         this.playedCards = playedCards;
         this.guaranteedResources = guaranteedResources;
         this.eitherResources = eitherResources;
@@ -28,8 +29,6 @@ public class PlayerState {
         this.warTokens = warTokens;
         this.winPoints = winPoints;
         this.losePoints = losePoints;
-        this.leftPlayer = leftPlayer;
-        this.rightPlayer = rightPlayer;
     }
 
     public PlayerState(PlayerState state){
@@ -50,19 +49,19 @@ public class PlayerState {
         return playedCards;
     }
 
-    public List<Resource> getGuaranteedResources() {
+    public List<ResourceEnum> getGuaranteedResources() {
         return guaranteedResources;
     }
 
-    public List<Resource> getEitherResources() {
+    public List<ArrayList<ResourceEnum>> getEitherResources() {
         return eitherResources;
     }
 
-    public List<Resource> getLeftPlayerReductions() {
+    public List<ResourceEnum> getLeftPlayerReductions() {
         return leftPlayerReductions;
     }
 
-    public List<Resource> getRightPlayerReductions() {
+    public List<ResourceEnum> getRightPlayerReductions() {
         return rightPlayerReductions;
     }
 
@@ -102,19 +101,19 @@ public class PlayerState {
         this.playedCards = playedCards;
     }
 
-    public void setGuaranteedResources(List<Resource> guaranteedResources) {
+    public void setGuaranteedResources(List<ResourceEnum> guaranteedResources) {
         this.guaranteedResources = guaranteedResources;
     }
 
-    public void setEitherResources(List<Resource> eitherResources) {
+    public void setEitherResources(List<ArrayList<ResourceEnum>> eitherResources) {
         this.eitherResources = eitherResources;
     }
 
-    public void setLeftPlayerReductions(List<Resource> leftPlayerReductions) {
+    public void setLeftPlayerReductions(List<ResourceEnum> leftPlayerReductions) {
         this.leftPlayerReductions = leftPlayerReductions;
     }
 
-    public void setRightPlayerReductions(List<Resource> rightPlayerReductions) {
+    public void setRightPlayerReductions(List<ResourceEnum> rightPlayerReductions) {
         this.rightPlayerReductions = rightPlayerReductions;
     }
 
@@ -134,5 +133,12 @@ public class PlayerState {
         this.losePoints = losePoints;
     }
 
+    public void setLeftPlayer(Player leftPlayer){
+        this.leftPlayer = leftPlayer;
+    }
+
+    public void setRightPlayer(Player leftPlayer){
+        this.leftPlayer = leftPlayer;
+    }
 
 }

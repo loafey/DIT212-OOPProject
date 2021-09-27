@@ -1,21 +1,20 @@
 package com.ESSBG.app.Model.Action;
 
-import com.ESSBG.app.Model.Player;
-import com.ESSBG.app.Model.Resource;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EitherResource implements IEitherAction<Resource> {
+public class EitherResource implements IEitherAction {
 
-    private final List<Resource> resources;
+    private final List<ResourceEnum> resources;
 
-    public EitherResource(List<Resource> resources) {
-        this.resources = resources;
+    public EitherResource(List<ResourceEnum> resources) {
+        this.resources = new ArrayList<>(resources);
     }
 
     @Override
-    public List<Resource> getEithers() {
+    public List<ResourceEnum> getEithers() {
         return new ArrayList<>(resources);
     }
 }

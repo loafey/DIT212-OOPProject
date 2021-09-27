@@ -1,7 +1,10 @@
 package com.ESSBG.app.Model;
 
-import com.ESSBG.app.Model.Action.IResource;
+import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
+import com.ESSBG.app.Model.Monuments.Alexandria;
+import com.ESSBG.app.Model.Monuments.Monument;
+
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,12 +22,14 @@ public class GameTest {
     public void setup() {
         game = new Game();
         testPlayers = new ArrayList<>();
-        List<IResource> monAction = new ArrayList<>();
-        monAction.add(new ResourceAction(List.of(Resource.WOOD)));
+        Player p1 = new Player(0);
+        List<IResourceAction> monAction = new ArrayList<>();
+        monAction.add(new ResourceAction(List.of(ResourceEnum.WOOD)));
         int amountTestPLayers = 3;
-        for (int i = 0; i <amountTestPLayers; i++) {
-            Monument mon = new Monument("Monaden", List.of(Resource.ORE), monAction);
-            testPlayers.add(new Player(i, mon));
+        for (int i = 0; i <amountTestPLayers; i++) { 
+            Player pi = new Player(i);
+            testPlayers.add(pi);
+            Monument mon = new Alexandria(pi);
         }
     }
 

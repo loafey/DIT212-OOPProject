@@ -41,8 +41,11 @@ public class Game {
 
     public void updatePlayerNeighbors() {
         for (Player player : players) {
-            player.setLeftPlayer(players.getPrevious(player));
-            player.setRightPlayer(players.getNext(player));
+            PlayerState updatedState = new PlayerState(player.getState());
+            updatedState.setLeftPlayer(players.getPrevious(player));
+            updatedState.setRightPlayer(players.getNext(player));
+            player.setState(updatedState);
+
         }
     }
 
@@ -68,19 +71,6 @@ public class Game {
             Player p = players.get(i);
             Player prev = players.getPrevious(p);
             Player next = players.getNext(p);
-
-            if (p.getWarPoints() < prev.getWarPoints()) {
-                p.addWarToken(-1);
-            }
-            if (p.getWarPoints() > prev.getWarPoints()) {
-                p.addWarToken(x);
-            }
-            if (p.getWarPoints() < next.getWarPoints()) {
-                p.addWarToken(-1);
-            }
-            if (p.getWarPoints() > next.getWarPoints()) {
-                p.addWarToken(x);
-            }
         }
     }
 }

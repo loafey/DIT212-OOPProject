@@ -1,11 +1,6 @@
 package com.ESSBG.app.Model.Action;
 
 import com.ESSBG.app.Model.*;
-import com.ESSBG.app.Model.Cards.Card;
-
-import java.util.HashMap;
-import java.util.List;
-
 /*
 This class represents the card that gives a type of resource (points usually)
  for each colored (only one color, for example yellow) card the neighbors have.

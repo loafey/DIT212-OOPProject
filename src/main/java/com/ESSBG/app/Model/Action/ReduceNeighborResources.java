@@ -1,24 +1,24 @@
 package com.ESSBG.app.Model.Action;
 
-import com.ESSBG.app.Model.Resource;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReduceNeighborResources implements INeighborReduction<Resource> {
+public class ReduceNeighborResources implements INeighborReduction {
 
     private final int reduceTo;
-    private final List<Resource> leftNeighbor;
-    private final List<Resource> rightNeighbor;
+    private final List<ResourceEnum> leftNeighbor;
+    private final List<ResourceEnum> rightNeighbor;
 
-    public ReduceNeighborResources(int reduceTo, List<Resource> leftNeighbor, List<Resource> rightNeighbor) {
+    public ReduceNeighborResources(int reduceTo, List<ResourceEnum> leftNeighbor, List<ResourceEnum> rightNeighbor) {
         this.reduceTo = reduceTo;
         this.leftNeighbor = leftNeighbor;
         this.rightNeighbor = rightNeighbor;
     }
 
     @Override
-    public List<Resource> getLeftNeighbor() {
+    public List<ResourceEnum> getLeftNeighbor() {
         return new ArrayList<>(leftNeighbor);
     }
 
@@ -28,7 +28,7 @@ public class ReduceNeighborResources implements INeighborReduction<Resource> {
     }
 
     @Override
-    public List<Resource> getRightNeighbor() {
+    public List<ResourceEnum> getRightNeighbor() {
         return new ArrayList<>(rightNeighbor);
     }
 }

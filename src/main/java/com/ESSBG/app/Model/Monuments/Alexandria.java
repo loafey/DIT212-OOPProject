@@ -2,7 +2,7 @@ package com.ESSBG.app.Model.Monuments;
 
 import com.ESSBG.app.Model.Action.EitherResource;
 import com.ESSBG.app.Model.Player;
-import com.ESSBG.app.Model.Resource;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class Alexandria extends Monument{
 
     public Alexandria(Player player) {
-        super("Alexandria",player, Resource.GLASS);
+        super("Alexandria",player, ResourceEnum.GLASS);
     }
 
 
@@ -20,30 +20,30 @@ public class Alexandria extends Monument{
 
     @Override
     public void stage2Reward() {
-        List<Resource> newResources = new ArrayList<>();
-        newResources.add(Resource.CLAY);
-        newResources.add(Resource.ORE);
-        newResources.add(Resource.WOOD);
-        newResources.add(Resource.STONE);
+        ArrayList<ResourceEnum> newResources = new ArrayList<>();
+        newResources.add(ResourceEnum.CLAY);
+        newResources.add(ResourceEnum.ORE);
+        newResources.add(ResourceEnum.WOOD);
+        newResources.add(ResourceEnum.STONE);
 
-        List<List<Resource>> currentEitherResources = player.getEitherResources();
+        List<ArrayList<ResourceEnum>> currentEitherResources = player.getState().getEitherResources();
         currentEitherResources.add(newResources);
-        player.setEitherResources(currentEitherResources);
+        player.getState().setEitherResources(currentEitherResources);     //refactor this to be immutable-ish
     }
 
     @Override
     protected void initResourcesToBuildStage1() {
-        resourcesToBuildStage1 = super.initializeResources(Resource.STONE, 2);
+        resourcesToBuildStage1 = super.initializeResources(ResourceEnum.STONE, 2);
     }
 
     @Override
     protected void initResourcesToBuildStage2() {
-        resourcesToBuildStage2 = super.initializeResources(Resource.WOOD, 2);
+        resourcesToBuildStage2 = super.initializeResources(ResourceEnum.WOOD, 2);
     }
 
     @Override
     protected void initResourcesToBuildStage3() {
-        resourcesToBuildStage3 = super.initializeResources(Resource.GLASS, 2);
+        resourcesToBuildStage3 = super.initializeResources(ResourceEnum.GLASS, 2);
     }
 
 

@@ -1,11 +1,11 @@
 package com.ESSBG.app.Model.Action;
 
-import com.ESSBG.app.Model.Resource;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public interface IEitherAction<T> {
+public interface IEitherAction {
 
-    List<T> getEithers();
+    List<ResourceEnum> getEithers();
 
 }

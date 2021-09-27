@@ -1,9 +1,9 @@
 package com.ESSBG.app.Model.Monuments;
 
 import com.ESSBG.app.Model.Action.EitherResource;
-import com.ESSBG.app.Model.Action.IResource;
+import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Player;
-import com.ESSBG.app.Model.Resource;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +12,18 @@ public abstract class Monument implements IMonument {
 
     private final String name;
     protected final Player player;
-    private final Resource startingResource; /** The starting resource given to the player (top left corner on monument)*/
+    private final ResourceEnum startingResource; /** The starting resource given to the player (top left corner on monument)*/
     private int stageBuilt = 0; /** How many stages that have been built yet on the monument*/
-    protected List<Resource> resourcesToBuildStage1;
-    protected List<Resource> resourcesToBuildStage2;
-    protected List<Resource> resourcesToBuildStage3;
+    protected List<ResourceEnum> resourcesToBuildStage1;
+    protected List<ResourceEnum> resourcesToBuildStage2;
+    protected List<ResourceEnum> resourcesToBuildStage3;
 
 
     //private final List<IResource> monAction; //placeholder, need to find a way to generalise all actions
     //private int monUnlock;
 
 
-    public Monument(String name, Player player, Resource startingResource) {
+    public Monument(String name, Player player, ResourceEnum startingResource) {
         this.name = name;
         this.player = player;
         this.startingResource = startingResource;
@@ -42,11 +42,11 @@ public abstract class Monument implements IMonument {
      * if their list of resources is empty. Otherwise throw an exception.
      */
     protected void givePlayerStartingResource(){
-        List<Resource> list = player.getGuaranteedResources();
+        List<ResourceEnum> list = player.getState().getGuaranteedResources();
 
         if (list.isEmpty()) {
             list.add(startingResource);
-            player.setGuaranteedResources(list);
+            player.getState().setGuaranteedResources(list);
         }
         else{
             throw new IllegalStateException("The player's resources should be empty when they are given their starting resource");
@@ -65,15 +65,15 @@ public abstract class Monument implements IMonument {
         return stageBuilt;
     }
 
-    public Resource getStartingResource() {
+    public ResourceEnum getStartingResource() {
         return startingResource;
     }
 
     // Ska ändra så det är mer generellt
     public abstract void stage2Reward();
 
-    public List<Resource> resourcesToBuildAStage(Resource resource, int numberOfUnits){
-        List<Resource> list = new ArrayList<>();
+    public List<ResourceEnum> resourcesToBuildAStage(ResourceEnum resource, int numberOfUnits){
+        List<ResourceEnum> list = new ArrayList<>();
         for (int i=0; i<numberOfUnits; i++){
             list.add(resource);
         }
@@ -87,8 +87,8 @@ public abstract class Monument implements IMonument {
      * @return
      */
 
-    protected List<Resource> initializeResources(Resource resource, int amount){
-        List<Resource> list = new ArrayList<>();
+    protected List<ResourceEnum> initializeResources(ResourceEnum resource, int amount){
+        List<ResourceEnum> list = new ArrayList<>();
         for (int i=0; i<amount; i++){
             list.add(resource);
         }

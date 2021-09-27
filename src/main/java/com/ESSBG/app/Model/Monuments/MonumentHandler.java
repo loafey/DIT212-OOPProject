@@ -2,7 +2,7 @@ package com.ESSBG.app.Model.Monuments;
 
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Player;
-import com.ESSBG.app.Model.Resource;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
@@ -33,18 +33,18 @@ public class MonumentHandler {
 
             switch (monument.getStageBuilt()){
                 case 1:
-                    player.setPeacePoints(player.getPeacePoints() + 3);
+                    //player.setPeacePoints(player.getPeacePoints() + 3);       //points are a guaranteed resource
                     break;
                 case 2:
                     monument.stage2Reward();
                     break;
                 case 3:
-                    player.setPeacePoints(player.getPeacePoints() + 7);
+                    //player.setPeacePoints(player.getPeacePoints() + 7);       //points are a guaranteed resource
                 default:
                     throw new IllegalStateException("The monument's stage is not between 1-3.");
             }
 
-            player.discard(card);
+            //player.discard(card); //player doesn't have discard anymore
             return true;
         }
 

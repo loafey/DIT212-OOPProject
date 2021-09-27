@@ -1,8 +1,11 @@
 package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Action.IEitherAction;
-import com.ESSBG.app.Model.Action.IResource;
+import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
+import com.ESSBG.app.Model.Monuments.Alexandria;
+import com.ESSBG.app.Model.Monuments.Monument;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,12 +20,12 @@ public class PlayerTest {
 
     @Before
     public void setup() {
-        List <Resource> generation = new ArrayList<>();
-        generation.add(Resource.WOOD);
-        List<IResource> monAction = new ArrayList<>();
-        monAction.add(new ResourceAction(List.of(Resource.ORE)));
-        Monument mon = new Monument("Monaden", generation, monAction);
-        player = new Player(0, mon);
+        List <ResourceEnum> generation = new ArrayList<>();
+        generation.add(ResourceEnum.WOOD);
+        List<IResourceAction> monAction = new ArrayList<>();
+        monAction.add(new ResourceAction(List.of(ResourceEnum.ORE)));
+        Monument mon = new Alexandria(player);
+        player = new Player(0);
     }
 
     @Test
