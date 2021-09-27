@@ -7,12 +7,12 @@ import com.ESSBG.app.Model.Resource;
 import java.util.List;
 
 public class MonumentHandler {
-    private final Player player;
     private final Monument monument;
+    private final Player player;
 
-    public MonumentHandler(Player player){
-        this.player = player;
-        monument = player.getMonument();
+    public MonumentHandler(Monument monument){
+        this.monument = monument;
+        this.player = monument.player;
     }
 
     /**
@@ -36,7 +36,7 @@ public class MonumentHandler {
                     player.setPeacePoints(player.getPeacePoints() + 3);
                     break;
                 case 2:
-                    // olika fall, vet ej hur man löser
+                    monument.stage2Reward();
                     break;
                 case 3:
                     player.setPeacePoints(player.getPeacePoints() + 7);
@@ -51,19 +51,5 @@ public class MonumentHandler {
         return false;
     }
 
-    /**
-     * Adds the starting resource given by their monument to a player
-     * if their list of resources is empty. Otherwise throw an exception.
-     */
-    public void givePlayerStartingResource(){
-        List<Resource> list = player.getGuaranteedResources();
 
-        if (list.isEmpty()) {
-            list.add(monument.getStartingResource());
-            player.setGuaranteedResources(list);
-        }
-        else{
-            throw new IllegalStateException("The player's resources should be empty when they are given their starting resource");
-        }
-    }
 }

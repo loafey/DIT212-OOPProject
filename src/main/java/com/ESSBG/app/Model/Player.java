@@ -12,13 +12,13 @@ public class Player {
     private int id;
     private List<Card> cardList;
     private List<Resource> guaranteedResources;
-    private List<Resource> eitherResources;
+    private List<List<Resource>> eitherResources;
     int coins;
     private int warPoints = 0;
     private int peacePoints = 0;
     private final int startCoin = 3;
     private String name;
-    private final Monument monument;
+    //private final Monument monument;
     private int warTokens;
     private Player leftPlayer;
     private Player rightPlayer;
@@ -27,10 +27,10 @@ public class Player {
     private PlayerState state;
 
 
-    public Player(int id, Monument monument) {
+    public Player(int id){// Monument monument) {
         this.id = id;
         this.name = String.valueOf(id);
-        this.monument = monument;
+        //this.monument = monument;
         this.cardList = new ArrayList<>();
         int coins = startCoin;
 
@@ -103,8 +103,8 @@ public class Player {
         return new ArrayList<>(guaranteedResources);
     }
 
-    public List<Resource> getEitherResources() {
-        return new ArrayList<>(eitherResources);
+    public List<List<Resource>> getEitherResources() {
+        return eitherResources;
     }
 
     public void setGuaranteedResources(List<Resource> guaranteedResources) {
@@ -116,7 +116,7 @@ public class Player {
         return state;
     }
 
-    public void setEitherResources(List<Resource> eitherResources) {
+    public void setEitherResources(List<List<Resource>> eitherResources) {
         this.eitherResources = eitherResources;
     }
 
@@ -139,9 +139,12 @@ public class Player {
         return this.coins;
     }
 
+    /*
     public Monument getMonument(){
         return monument;
     }
+
+     */
 
     public boolean discard (Card card){
         for (Card c : cardList){
