@@ -198,22 +198,17 @@
     },
     "monument": {
         "cards": [{
-                "resource": {
-                    "type": "silk",
-                    "amount": 1
-                }
+                "type": "silk",
+                "amount": 1
             },
             {
-                "resource": {
-                    "type": "war",
-                    "amount": 3
-                }
+                "type": "war",
+                "amount": 3
             },
+
             {
-                "resource": {
-                    "type": "wood",
-                    "amount": 75
-                }
+                "type": "wood",
+                "amount": 75
             }
         ],
         "unlocked": 1

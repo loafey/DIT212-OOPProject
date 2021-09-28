@@ -23,9 +23,34 @@ public class DrawableBoard {
         updateHand(skin, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         updateResources(skin, monument, data.getJSONObject("resources"));
-        var monumentJson = data.getJSONObject("monument");
+        updateMonument(skin, monument, data.getJSONObject("monument"));
         var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         var rightNeighbourJson = data.getJSONObject("rightNeighbour");
+    }
+
+    private void updateMonument(Skin skin, Table monument, JSONObject data) {
+        monument.row();
+        
+        Table cardTable = new Table();
+
+        int unlocked = data.getInt("unlocked");
+        
+        int count = 0;
+        for (var i : data.getJSONArray("cards")){
+            JSONObject card = (JSONObject)i;
+            String type = card.getString("type");
+            int amount = card.getInt("amount");
+
+            Button b = new Button(skin);
+            b.add(new Label(type + ": " + amount,skin));
+            if (count < unlocked) {
+                b.setColor(new Color(0, 1, 0, 1));
+            }
+            cardTable.add(b);
+
+            count++;
+        }
+        monument.add(cardTable);
     }
 
     private void updateResources(Skin skin, Table monument, JSONObject data) {
@@ -70,12 +95,8 @@ public class DrawableBoard {
 
     private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation) {
         JSONObject colorString = cardData.getJSONObject("color");
-        Color color = new Color(
-            colorString.getFloat("r"),
-            colorString.getFloat("g"),
-            colorString.getFloat("b"),
-            colorString.getFloat("a")
-        );
+        Color color = new Color(colorString.getFloat("r"), colorString.getFloat("g"), colorString.getFloat("b"),
+                colorString.getFloat("a"));
 
         String cardText = "";
         try {
