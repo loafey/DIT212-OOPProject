@@ -25,38 +25,6 @@ public class PlayerTest {
         List<IResourceAction> monAction = new ArrayList<>();
         monAction.add(new ResourceAction(List.of(ResourceEnum.ORE)));
         Monument mon = new Alexandria(player);
-        player = new Player(0);
-    }
-
-    @Test
-    public void testTestGetName() {
-        player.setName("testPlayer");
-        assertEquals("testPlayer", player.getName());
-    }
-
-    @Test
-    public void testTestSetName() {
-        player.setName("test");
-        assertEquals("test", player.getName());
-    }
-
-
-    @Test
-    public void testGetPeacePoints() {
-        assertEquals(0, player.getPeacePoints());
-    }
-    @Test
-    public void testSetPeacePoints() {
-        player.setPeacePoints(1337);
-        assertEquals(1337, player.getPeacePoints());
-    }
-    @Test
-    public void testGetWarPoints() {
-        assertEquals(0, player.getWarPoints());
-    }
-    @Test
-    public void testSetWarPoints() {
-        player.setWarPoints(1337);
-        assertEquals(1337, player.getWarPoints());
+        player = new Player(0, new PlayerState(null));
     }
 }
