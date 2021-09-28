@@ -7,28 +7,21 @@ import java.util.List;
 
 public class ReduceNeighborResources implements INeighborReduction {
 
-    private final int reduceTo;
     private final List<ResourceEnum> leftNeighbor;
     private final List<ResourceEnum> rightNeighbor;
 
-    public ReduceNeighborResources(int reduceTo, List<ResourceEnum> leftNeighbor, List<ResourceEnum> rightNeighbor) {
-        this.reduceTo = reduceTo;
+    public ReduceNeighborResources(List<ResourceEnum> leftNeighbor, List<ResourceEnum> rightNeighbor) {
         this.leftNeighbor = leftNeighbor;
         this.rightNeighbor = rightNeighbor;
     }
 
     @Override
-    public List<ResourceEnum> getLeftNeighbor() {
+    public List<ResourceEnum> getLeftNeighborReductions() {
         return new ArrayList<>(leftNeighbor);
     }
 
     @Override
-    public int reduceTo() {
-        return reduceTo;
-    }
-
-    @Override
-    public List<ResourceEnum> getRightNeighbor() {
+    public List<ResourceEnum> getRightNeighborReductions() {
         return new ArrayList<>(rightNeighbor);
     }
 }

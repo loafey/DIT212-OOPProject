@@ -8,16 +8,22 @@ import com.ESSBG.app.Model.Action.ColoredCardResource;
 
 import java.util.List;
 
-public class ColorCounterActionHandler {
+public class ColorCounterActionHandler implements IHandler{
 
-    public PlayerState updateState(PlayerState state, ColoredCardResource ccr){
+    ColoredCardResource action;
+
+    public ColorCounterActionHandler(ColoredCardResource action) {
+        this.action = action;
+    }
+
+    public PlayerState updateState(PlayerState state){
         int initialCoins = state.getCoins();
         List<ResourceEnum> totalGuaranteedResources = state.getGuaranteedResources();
-        for (int i = 0; i < calculateTotalColoredCardsMatch(state, ccr) * ccr.getPointsPerCard(); i++){
+        for (int i = 0; i < calculateTotalColoredCardsMatch(state, action) * action.getPointsPerCard(); i++){
             totalGuaranteedResources.add(ResourceEnum.POINT);
         }
 
-        int totalCoins = initialCoins + calculateTotalColoredCardsMatch(state, ccr) * ccr.getCoinsPerCard();
+        int totalCoins = initialCoins + calculateTotalColoredCardsMatch(state, action) * action.getCoinsPerCard();
 
         PlayerState updatedState = new PlayerState(state);
 
@@ -28,7 +34,7 @@ public class ColorCounterActionHandler {
     }
 
     //calculate how many cards from specified neighbors and/or self match the color.
-    private static int calculateTotalColoredCardsMatch(PlayerState state, ColoredCardResource ccr){
+    private int calculateTotalColoredCardsMatch(PlayerState state, ColoredCardResource ccr){
         List<Card> leftNeighborCards = state.getleftPlayerState().getPlayedCards();
         List<Card> rightNeighborCards = state.getRightPlayerState().getPlayedCards();
         List<Card> selfCards = state.getPlayedCards();
@@ -42,7 +48,7 @@ public class ColorCounterActionHandler {
     }
 
     //calculate how many cards a player has played that match the specified color
-    private static int calculatePlayerColorMatch(List<Card> playedCards, ColorEnum color){
+    private int calculatePlayerColorMatch(List<Card> playedCards, ColorEnum color){
         int counter = 0;
         for (Card c : playedCards){
             if (c.getColor().equals(color)) counter++;

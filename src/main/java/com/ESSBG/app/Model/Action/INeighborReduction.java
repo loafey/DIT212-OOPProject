@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface INeighborReduction {
 
-    int reduceTo();
-    List<ResourceEnum> getRightNeighbor();
-    List<ResourceEnum> getLeftNeighbor();
+    List<ResourceEnum> getLeftNeighborReductions();
+    List<ResourceEnum> getRightNeighborReductions();
 
 }
