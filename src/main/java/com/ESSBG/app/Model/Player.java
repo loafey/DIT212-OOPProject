@@ -6,7 +6,7 @@ public class Player {
     private PlayerState state;
 
 
-    public Player(int id, String name, PlayerState state){// Monument monument) {
+    public Player(int id, PlayerState state){// Monument monument) {
         this.id = id;
         this.name = String.valueOf(id);
         this.state = state;

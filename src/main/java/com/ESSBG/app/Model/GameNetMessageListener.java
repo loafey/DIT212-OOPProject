@@ -107,8 +107,10 @@ public class GameNetMessageListener implements Runnable {
         int cardIndex = cardData.getInt("cardIndex");
         String action = cardData.getString("action");
         Player player = joinedUsers.get(id);
+        // TODO
         //List<Card> cardList = player.getCardList();
 
+        // TODO
         // Check if index is allowed.
         // if (0 < cardIndex || cardIndex >= player.getCardList().size()) {
         //     server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
@@ -119,12 +121,14 @@ public class GameNetMessageListener implements Runnable {
         // We have to check whether player has enough resources
         // to upgrade monument or buy card.
         if (action.equals("discard")) {
+            // TODO
             //discardAction(id, msgNum, cardList, cardIndex);
             return;
         }
 
         if (action.equals("monument") || action.equals("place")) {
             // Dataspree!
+            // TODO
             //Card selectedCard = player.getCardList().get(cardIndex);
             Player leftNeighbor = players.getPrevious(player);
             Player rightNeighbor = players.getNext(player);
@@ -155,6 +159,7 @@ public class GameNetMessageListener implements Runnable {
     private void networkRoutine(int id, JSONObject js) {
         // Connection. True = Connect, False = Disconnect.
         if (js.getBoolean("data")) {
+            // TODO
             //Player newPlayer = new Player(id);
             //joinedUsers.put(id, newPlayer);
             //confirmedStart.put(id, false);
@@ -210,6 +215,7 @@ public class GameNetMessageListener implements Runnable {
                 nickelBack++;
             }
         }
+        // TODO
         //joinedUsers.get(playerID).addCoins(nickelBack);
         try {
             server.sendData(playerID, replyMaker(msgNum, true));
@@ -241,6 +247,7 @@ public class GameNetMessageListener implements Runnable {
                 return false;
             }
         }
+        // TODO
         //players.get(id).setName(name);
         return true;
     }
