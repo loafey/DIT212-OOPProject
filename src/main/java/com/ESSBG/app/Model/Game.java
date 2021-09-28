@@ -6,6 +6,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.ESSBG.app.Model.Cards.Card;
+import com.ESSBG.app.Model.Player.Player;
+import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Network.*;
 
 public class Game {

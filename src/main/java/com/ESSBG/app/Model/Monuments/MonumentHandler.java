@@ -1,10 +1,7 @@
 package com.ESSBG.app.Model.Monuments;
 
 import com.ESSBG.app.Model.Cards.Card;
-import com.ESSBG.app.Model.Player;
-import com.ESSBG.app.Model.ResourceEnum;
-
-import java.util.List;
+import com.ESSBG.app.Model.Player.Player;
 
 public class MonumentHandler {
     private final Monument monument;

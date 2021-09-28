@@ -1,4 +1,4 @@
-package com.ESSBG.app.Model;
+package com.ESSBG.app.Model.Player;
 
 public class Player {
     private final int id;

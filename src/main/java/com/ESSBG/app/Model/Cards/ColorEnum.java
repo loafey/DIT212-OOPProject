@@ -1,4 +1,4 @@
-package com.ESSBG.app.Model;
+package com.ESSBG.app.Model.Cards;
 
 public enum ColorEnum {
     RED,

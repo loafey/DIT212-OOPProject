@@ -3,7 +3,7 @@ package com.ESSBG.app.Model.Action.Handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ESSBG.app.Model.PlayerState;
+import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 

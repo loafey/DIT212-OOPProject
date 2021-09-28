@@ -1,6 +1,7 @@
-package com.ESSBG.app.Model;
+package com.ESSBG.app.Model.Player;
 
 import com.ESSBG.app.Model.Cards.Card;
+import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;

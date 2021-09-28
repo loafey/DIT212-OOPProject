@@ -1,11 +1,12 @@
 package com.ESSBG.app.Model;
 
 import java.io.IOException;
-import java.net.*;
 import java.util.concurrent.*;
 import java.util.*;
 
 import com.ESSBG.app.Model.Cards.Card;
+import com.ESSBG.app.Model.Cards.ColorEnum;
+import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Network.*;
 import org.json.*;
 

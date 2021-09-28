@@ -1,10 +1,7 @@
 package com.ESSBG.app.Model.Monuments;
 
-import com.ESSBG.app.Model.Player;
+import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PyramidOfGiza extends Monument{
 

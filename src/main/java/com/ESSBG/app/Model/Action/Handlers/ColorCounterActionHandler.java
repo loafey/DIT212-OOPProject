@@ -1,8 +1,8 @@
 package com.ESSBG.app.Model.Action.Handlers;
 
 import com.ESSBG.app.Model.Cards.Card;
-import com.ESSBG.app.Model.ColorEnum;
-import com.ESSBG.app.Model.PlayerState;
+import com.ESSBG.app.Model.Cards.ColorEnum;
+import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.ColoredCardResource;
 

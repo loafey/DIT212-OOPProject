@@ -1,7 +1,6 @@
 package com.ESSBG.app.Model.Cards;
 
 import com.ESSBG.app.Model.Action.IEitherAction;
-import com.ESSBG.app.Model.ColorEnum;
 import com.ESSBG.app.Model.IBuyable;
 import com.ESSBG.app.Model.ResourceEnum;
 
