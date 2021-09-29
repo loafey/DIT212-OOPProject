@@ -1,8 +1,14 @@
 package com.ESSBG.app.Model.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ESSBG.app.Model.Action.Handlers.IHandler;
+
 public class Player {
     private final int id;
     private final String name;
+    private List<IHandler> handlers;
     private PlayerState state;
 
 
@@ -10,6 +16,7 @@ public class Player {
         this.id = id;
         this.name = String.valueOf(id);
         this.state = state;
+        this.handlers = new ArrayList<>();
 
     }
 
