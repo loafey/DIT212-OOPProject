@@ -1,6 +1,9 @@
 package com.ESSBG.app.Render;
 
 import com.ESSBG.app.Render.GameScene.GameScene;
+import com.ESSBG.app.Render.SettingsScreen.Settings;
+import com.ESSBG.app.Render.SettingsScreen.SettingsController;
+import com.ESSBG.app.Render.SettingsScreen.SettingsScreen;
 import com.ESSBG.app.Render.StartMenu.StartMenu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -10,9 +13,14 @@ public class MainGame extends Game {
 
     @Override
     public void create() {
+        new Settings().applySettings(); // apply all settings that the user have set.
         Screen renderer = new GameScene(this);
         Screen startMenu = new StartMenu(this);
-        setScreen(startMenu);   
+//        Settings settings = new Settings();
+//        SettingsScreen settingsScreen = new SettingsScreen(settings);
+//        new SettingsController(this, settings, settingsScreen);
+
+        setScreen(startMenu);
     }
 
     @Override
