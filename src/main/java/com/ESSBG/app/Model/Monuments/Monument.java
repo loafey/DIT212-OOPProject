@@ -56,7 +56,12 @@ public abstract class Monument implements IMonument {
     }
 
     public void buildStage(){
-        stageBuilt++;
+        if (stageBuilt < 3) {
+            stageBuilt++;
+        }
+        else {
+            throw new IllegalStateException("Cannot build another stage when monument is already at stage 3");
+        }
     }
 
     public int getStageBuilt() {
@@ -67,8 +72,7 @@ public abstract class Monument implements IMonument {
         return startingResource;
     }
 
-    // Ska ändra så det är mer generellt
-    public abstract void stage2Reward();
+
 
     public List<ResourceEnum> resourcesToBuildAStage(ResourceEnum resource, int numberOfUnits){
         List<ResourceEnum> list = new ArrayList<>();
@@ -94,6 +98,10 @@ public abstract class Monument implements IMonument {
     }
 
 
+
+
+    // Has to be specified for each monument
+    public abstract void stage2Reward();
     protected abstract void initResourcesToBuildStage1();
     protected abstract void initResourcesToBuildStage2();
     protected abstract void initResourcesToBuildStage3();

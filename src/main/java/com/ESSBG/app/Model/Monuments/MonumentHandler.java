@@ -2,6 +2,9 @@ package com.ESSBG.app.Model.Monuments;
 
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Player.Player;
+import com.ESSBG.app.Model.ResourceEnum;
+
+import java.util.List;
 
 public class MonumentHandler {
     private final Monument monument;
@@ -30,13 +33,13 @@ public class MonumentHandler {
 
             switch (monument.getStageBuilt()){
                 case 1:
-                    //player.setPeacePoints(player.getPeacePoints() + 3);       //points are a guaranteed resource
+                    level1Reward();      //points are a guaranteed resource
                     break;
                 case 2:
                     monument.stage2Reward();
                     break;
                 case 3:
-                    //player.setPeacePoints(player.getPeacePoints() + 7);       //points are a guaranteed resource
+                    level3Reward();      //points are a guaranteed resource
                 default:
                     throw new IllegalStateException("The monument's stage is not between 1-3.");
             }
@@ -46,6 +49,37 @@ public class MonumentHandler {
         }
 
         return false;
+    }
+
+    /* Anledningen till att level1Reward() och level3Reward() är här och inte i Monument
+       är för att minska risken för fel eftersom de bara ska kallas i den här klassen
+
+     */
+
+    private void level1Reward(){
+        if (monument.getStageBuilt() == 1) {
+            List<ResourceEnum> list = player.getState().getGuaranteedResources(); // Vet att det bryter mot law of demeter, behöver fixa
+            for (int i = 0; i < 3; i++) {
+                list.add(ResourceEnum.POINT);
+            }
+            player.getState().setGuaranteedResources(list);
+        }
+        else {
+            throw new IllegalStateException("Cannot give the player a level 1-reward unless they're at level 1");
+        }
+    }
+
+    private void level3Reward(){
+        if (monument.getStageBuilt() == 3) {
+            List<ResourceEnum> list = player.getState().getGuaranteedResources();
+            for (int i = 0; i < 7; i++) {
+                list.add(ResourceEnum.POINT);
+            }
+            player.getState().setGuaranteedResources(list);
+        }
+        else {
+            throw new IllegalStateException("Cannot give the player a level 3-reward unless they're at level 3");
+        }
     }
 
 
