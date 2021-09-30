@@ -13,11 +13,19 @@ public class LabelCheckBox extends Table {
     public LabelCheckBox(String labelText, float boxScale, Skin skin) {
         label = new Label(labelText, skin);
         checkBox = new CheckBox("", skin);
-        checkBox.getImage().setScale(boxScale);
-        checkBox.getImageCell().padRight(checkBox.getImage().getWidth()*boxScale - checkBox.getImage().getWidth());
-        checkBox.getImageCell().padTop(checkBox.getImage().getHeight()*boxScale - checkBox.getImage().getHeight());
+        setScaleOnCheckBox(boxScale);
         this.add(label).padRight(10);
         this.add(checkBox);
+    }
+
+    public void setScaleOnCheckBox(float scale) {
+        // set the scale to 1, so we don't scale something that's already scaled
+        if (scale != 1) {
+            setScaleOnCheckBox(1);
+        }
+        checkBox.getImage().setScale(scale);
+        checkBox.getImageCell().padRight(checkBox.getImage().getWidth()*scale - checkBox.getImage().getWidth());
+        checkBox.getImageCell().padTop(checkBox.getImage().getHeight()*scale - checkBox.getImage().getHeight());
     }
 
     public void setLabelText(String text) {
