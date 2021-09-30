@@ -15,11 +15,11 @@ public class MainScreen implements ApplicationListener {
     public void create() {
         new Settings().applySettings(); // apply all settings that the user have set.
         Screen startMenu = new StartMenu();
-        Settings settings = new Settings();
-        SettingsScreen settingsScreen = new SettingsScreen(settings);
-        new SettingsController(settings, settingsScreen);
+//        Settings settings = new Settings();
+//        SettingsScreen settingsScreen = new SettingsScreen(settings);
+//        new SettingsController(settings, settingsScreen);
 
-        ScreenManager.getInstance().setScreen(settingsScreen);
+        ScreenManager.getInstance().setScreen(startMenu);
     }
 
     @Override
