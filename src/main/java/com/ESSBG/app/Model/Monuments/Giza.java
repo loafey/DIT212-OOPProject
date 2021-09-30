@@ -6,9 +6,9 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThePyramidsOfGiza extends Monument{
+public class Giza extends Monument{
 
-    public ThePyramidsOfGiza(Player player) {
+    public Giza(Player player) {
         super("ThePyramidsOfGiza",player, ResourceEnum.STONE);
     }
 
