@@ -7,7 +7,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Player.Player;
-import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Network.*;
 
 public class Game {
@@ -43,10 +42,8 @@ public class Game {
 
     public void updatePlayerNeighbors() {
         for (Player player : players) {
-            PlayerState updatedState = new PlayerState(player.getState());
-            updatedState.setLeftPlayer(players.getPrevious(player));
-            updatedState.setRightPlayer(players.getNext(player));
-            player.setState(updatedState);
+            player.setLeftNeighbor(players.getPrevious(player));
+            player.setRightNeighbor(players.getNext(player));
 
         }
     }

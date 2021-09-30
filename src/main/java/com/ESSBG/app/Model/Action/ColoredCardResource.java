@@ -1,12 +1,18 @@
+/*
 package com.ESSBG.app.Model.Action;
 
 import com.ESSBG.app.Model.Cards.ColorEnum;
 
-/*
+
 This class represents the card that gives a type of resource (points usually)
  for each colored (only one color, for example yellow) card the neighbors have.
  Check assets/Cards/TradersGuild.jpg for a concrete example.
 */
+
+/*
+
+Not adding this type of card atm.
+
 public class ColoredCardResource {
 
     private final int pointsPerCard;
@@ -49,3 +55,4 @@ public class ColoredCardResource {
         return color;
     }
 }
+*/

@@ -9,10 +9,14 @@ public enum ResourceEnum  {
     STONE,
     TEXTILE,
     WOOD,
+    //also used to purchase, however not permanent
+    COIN,
     //science, for points in the end
     Laboratory,
     Library,
     Dispensary,
     //end of game point
-    POINT
+    POINT,
+    //end of age war point
+    WAR
 }

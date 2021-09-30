@@ -10,12 +10,16 @@ public class Player {
     private final String name;
     private List<IHandler> handlers;
     private PlayerState state;
+    private Player leftNeighbor;
+    private Player rightNeighbor;
 
 
-    public Player(int id, PlayerState state){// Monument monument) {
+    public Player(int id, PlayerState state, Player leftNeighbor, Player rightNeighbor){// Monument monument) {
         this.id = id;
         this.name = String.valueOf(id);
         this.state = state;
+        this.leftNeighbor = leftNeighbor;
+        this.rightNeighbor = rightNeighbor;
         this.handlers = new ArrayList<>();
 
     }
@@ -41,5 +45,21 @@ public class Player {
 
     public void setState(PlayerState state){
         this.state = new PlayerState(state);
+    }
+
+    public Player getLeftNeighbor(){
+        return leftNeighbor;
+    }
+
+    public Player getRightNeighbor(){
+        return rightNeighbor;
+    }
+
+    public void setLeftNeighbor(Player p){
+        this.leftNeighbor = p;
+    }
+
+    public void setRightNeighbor(Player p){
+        this.rightNeighbor = p;
     }
 }

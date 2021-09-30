@@ -4,8 +4,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public interface IEitherAction {
+public interface IEitherAction extends IAction{
 
-    List<ResourceEnum> getEithers();
 
 }

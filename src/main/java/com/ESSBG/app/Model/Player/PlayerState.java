@@ -5,45 +5,35 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerState {
 
     private List<Card> playedCards;
     private List<ResourceEnum> guaranteedResources;
     private List<ArrayList<ResourceEnum>> eitherResources;
-    private List<ResourceEnum> leftPlayerReductions;
-    private List<ResourceEnum> rightPlayerReductions;
-    int coins;
-    private int warTokens;
+    private List<ResourceEnum> neighborReductions;
     private int winPoints;
     private int losePoints;
-    private Player leftPlayer;
-    private Player rightPlayer;
 
-    public PlayerState(List<Card> playedCards, List<ResourceEnum> guaranteedResources, List<ArrayList<ResourceEnum>> eitherResources, List<ResourceEnum> leftPlayerReductions, List<ResourceEnum> rightPlayerReductions, int coins, int warTokens, int winPoints, int losePoints) {
-        this.playedCards = playedCards;
-        this.guaranteedResources = guaranteedResources;
-        this.eitherResources = eitherResources;
-        this.leftPlayerReductions = leftPlayerReductions;
-        this.rightPlayerReductions = rightPlayerReductions;
-        this.coins = coins;
-        this.warTokens = warTokens;
-        this.winPoints = winPoints;
-        this.losePoints = losePoints;
+
+    public PlayerState(int coins, Player leftPlayer, Player rightPlayer) {
+        this.playedCards = new ArrayList<>();
+        this.guaranteedResources = new ArrayList<>();
+        this.eitherResources = new ArrayList<>();
+        this.neighborReductions = new ArrayList<>();
+
+        this.winPoints = 0;
+        this.losePoints = 0;
     }
 
     public PlayerState(PlayerState state){
         this.playedCards = state.getPlayedCards();
         this.guaranteedResources = state.getGuaranteedResources();
         this.eitherResources = state.getEitherResources();
-        this.leftPlayerReductions = state.getLeftPlayerReductions();
-        this.rightPlayerReductions = state.getRightPlayerReductions();
-        this.coins = state.getCoins();
-        this.warTokens = state.getWarTokens();
+        this.neighborReductions = state.getNeighborReductions();
         this.winPoints = state.getWinPoints();
         this.losePoints = state.getLosePoints();
-        this.leftPlayer = state.getLeftPlayer();
-        this.rightPlayer = state.getRightPlayer();
     }
 
     public List<Card> getPlayedCards() {
@@ -58,20 +48,15 @@ public class PlayerState {
         return eitherResources;
     }
 
-    public List<ResourceEnum> getLeftPlayerReductions() {
-        return leftPlayerReductions;
-    }
-
-    public List<ResourceEnum> getRightPlayerReductions() {
-        return rightPlayerReductions;
+    public List<ResourceEnum> getNeighborReductions() {
+        return neighborReductions;
     }
 
     public int getCoins() {
-        return coins;
-    }
-
-    public int getWarTokens() {
-        return warTokens;
+        return guaranteedResources.stream()
+        .filter(c -> c == ResourceEnum.COIN)
+        .collect(Collectors.toList())
+        .size();    //save everything that is a coin in a new list and return its length
     }
 
     public int getWinPoints() {
@@ -82,21 +67,6 @@ public class PlayerState {
         return losePoints;
     }
 
-    public Player getLeftPlayer() {
-        return leftPlayer;
-    }
-
-    public Player getRightPlayer() {
-        return rightPlayer;
-    }
-
-    public PlayerState getleftPlayerState(){
-        return leftPlayer.getState();
-    }
-
-    public PlayerState getRightPlayerState(){
-        return rightPlayer.getState();
-    }
 
     public void setPlayedCards(List<Card> playedCards) {
         this.playedCards = playedCards;
@@ -110,21 +80,6 @@ public class PlayerState {
         this.eitherResources = eitherResources;
     }
 
-    public void setLeftPlayerReductions(List<ResourceEnum> leftPlayerReductions) {
-        this.leftPlayerReductions = leftPlayerReductions;
-    }
-
-    public void setRightPlayerReductions(List<ResourceEnum> rightPlayerReductions) {
-        this.rightPlayerReductions = rightPlayerReductions;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
-    public void setWarTokens(int warTokens) {
-        this.warTokens = warTokens;
-    }
 
     public void setWinPoints(int winPoints) {
         this.winPoints = winPoints;
@@ -134,12 +89,57 @@ public class PlayerState {
         this.losePoints = losePoints;
     }
 
-    public void setLeftPlayer(Player leftPlayer){
-        this.leftPlayer = leftPlayer;
-    }
 
-    public void setRightPlayer(Player leftPlayer){
-        this.leftPlayer = leftPlayer;
+// ------------------------------------------------------
+
+/**
+ * Adds a card to the list of played cards
+ * @param c
+ */
+public void addCard(Card c){
+    playedCards.add(c);
+}
+
+/**
+ * Adds a resource to the guaranteed resources
+ * @param r
+ */
+public void addGuaranteedResource(ResourceEnum r){
+    guaranteedResources.add(r);
+}
+/**
+ * Adds some either resources to the list of eithers
+ * @param r
+ */
+public void addEitherResource(ArrayList<ResourceEnum> r){
+    eitherResources.add(r);
+}
+
+/**
+ * Adds an amount of coins to the guaranteed resources
+ * @param amount
+ */
+public void addCoins(int amount) {
+    for (int i = 0; i < amount; i++){
+        guaranteedResources.add(ResourceEnum.COIN);
     }
+}
+
+/**
+ * Adds an amount of points to the win points
+ * @param amount
+ */
+public void addWinPoints(int amount){
+    winPoints += amount;
+}
+
+/**
+ * Adds an amount of points to the lose points
+ * @param amount
+ */
+public void addLosePoints(int amount){
+    losePoints += amount;
+}
+
 
 }

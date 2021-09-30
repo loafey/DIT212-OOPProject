@@ -4,8 +4,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public interface IResourceAction {
+public interface IResourceAction extends IAction{
 
-    List<ResourceEnum> getResources(); //maybe parameterize this one over science and resources
 
 }

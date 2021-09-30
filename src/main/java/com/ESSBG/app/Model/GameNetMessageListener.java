@@ -109,13 +109,13 @@ public class GameNetMessageListener implements Runnable {
         String action = cardData.getString("action");
         Player player = joinedUsers.get(id);
         // TODO
-        //List<Card> cardList = player.getCardList();
+        // List<Card> cardList = player.getCardList();
 
         // TODO
         // Check if index is allowed.
         // if (0 < cardIndex || cardIndex >= player.getCardList().size()) {
-        //     server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
-        //     return;
+        // server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
+        // return;
         // }
 
         // discard, place, monument
@@ -123,14 +123,14 @@ public class GameNetMessageListener implements Runnable {
         // to upgrade monument or buy card.
         if (action.equals("discard")) {
             // TODO
-            //discardAction(id, msgNum, cardList, cardIndex);
+            // discardAction(id, msgNum, cardList, cardIndex);
             return;
         }
 
         if (action.equals("monument") || action.equals("place")) {
             // Dataspree!
             // TODO
-            //Card selectedCard = player.getCardList().get(cardIndex);
+            // Card selectedCard = player.getCardList().get(cardIndex);
             Player leftNeighbor = players.getPrevious(player);
             Player rightNeighbor = players.getNext(player);
 
@@ -161,30 +161,15 @@ public class GameNetMessageListener implements Runnable {
         // Connection. True = Connect, False = Disconnect.
         if (js.getBoolean("data")) {
             // TODO
-            //Player newPlayer = new Player(id);
-            //joinedUsers.put(id, newPlayer);
-            //confirmedStart.put(id, false);
-           //players.add(newPlayer);
+            // Player newPlayer = new Player(id);
+            // joinedUsers.put(id, newPlayer);
+            // confirmedStart.put(id, false);
+            // players.add(newPlayer);
         } else {
             // Any connection error should remove.
             joinedUsers.remove(id);
             confirmedStart.remove(id);
             players.remove(id);
-        }
-    }
-
-    /**
-     * Changes name of said player if the name doesn't already exist.
-     */
-    private void nameChangeRoutine(int id, int msgNum, String name) {
-        try {
-            if (playerNameChange(id, name)) {
-                server.sendData(id, replyMaker(msgNum, true));
-            } else {
-                server.sendData(id, replyMaker(msgNum, false, "Name already taken."));
-            }
-        } catch (NoSuchElementException | IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -217,7 +202,7 @@ public class GameNetMessageListener implements Runnable {
             }
         }
         // TODO
-        //joinedUsers.get(playerID).addCoins(nickelBack);
+        // joinedUsers.get(playerID).addCoins(nickelBack);
         try {
             server.sendData(playerID, replyMaker(msgNum, true));
             confirmedStart.put(playerID, true);
@@ -242,6 +227,21 @@ public class GameNetMessageListener implements Runnable {
         return new JSONObject().put("msgNum", msgNum).put("reply", reply);
     }
 
+    /**
+     * Changes name of said player if the name doesn't already exist.
+     */
+    private void nameChangeRoutine(int id, int msgNum, String name) {
+        try {
+            if (playerNameChange(id, name)) {
+                server.sendData(id, replyMaker(msgNum, true));
+            } else {
+                server.sendData(id, replyMaker(msgNum, false, "Name already taken."));
+            }
+        } catch (NoSuchElementException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean playerNameChange(int id, String name) {
         for (Player p : players) {
             if (p.getName().equals(name)) {
@@ -249,7 +249,7 @@ public class GameNetMessageListener implements Runnable {
             }
         }
         // TODO
-        //players.get(id).setName(name);
+        // players.get(id).setName(name);
         return true;
     }
 }
