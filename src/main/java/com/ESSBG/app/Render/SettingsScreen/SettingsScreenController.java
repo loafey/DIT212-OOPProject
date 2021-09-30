@@ -2,6 +2,11 @@ package com.ESSBG.app.Render.SettingsScreen;
 
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * Interface to implement the Controller for SettingsScreen.
+ * <p>
+ * The Controller should implement this if the buttons should do different things depending on where we are in the program.
+ */
 public interface SettingsScreenController {
 
     /**
