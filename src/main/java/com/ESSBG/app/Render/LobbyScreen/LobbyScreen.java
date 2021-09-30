@@ -1,6 +1,5 @@
 package com.ESSBG.app.Render.LobbyScreen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class LobbyScreen implements Screen{
-    private Game game;
     private Stage stage;
     private Skin skin;
     private Table sceneTable;
@@ -22,9 +20,6 @@ public class LobbyScreen implements Screen{
     private TextField ipField;
     private Button joinButton;
 
-    public LobbyScreen(Game game){
-        this.game = game;
-    }
 
     @Override
     public void show() {

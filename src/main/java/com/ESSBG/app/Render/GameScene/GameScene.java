@@ -1,6 +1,5 @@
 package com.ESSBG.app.Render.GameScene;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.*;
 import org.json.JSONObject;
 
 public class GameScene implements Screen {
-    private Game game;
     private Stage stage;
     private Skin skin;
     private Table sceneTable;
@@ -24,10 +22,6 @@ public class GameScene implements Screen {
     private GameController gameController;
 
     private DrawableBoard rPlayer = new DrawableBoard();
-
-    public GameScene(Game game) {
-        this.game = game;
-    }
 
     public void update(JSONObject data) {
         rPlayer.updateBoard(data, gameController, skin, handCardContainer, placedCardContainer, monument);

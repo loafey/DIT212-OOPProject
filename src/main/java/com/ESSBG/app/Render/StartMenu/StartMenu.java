@@ -1,10 +1,10 @@
 package com.ESSBG.app.Render.StartMenu;
 
-import com.ESSBG.app.Render.GameScene.GameScene;
+import com.ESSBG.app.Render.LobbyScreen.LobbyScreen;
+import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.SettingsScreen.Settings;
 import com.ESSBG.app.Render.SettingsScreen.SettingsController;
 import com.ESSBG.app.Render.SettingsScreen.SettingsScreen;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.*;
 public class StartMenu implements Screen {
 
     private Stage stage;
-    private final Game screenHandler;
     private Skin skin;
     private Table table;
 
@@ -27,9 +26,7 @@ public class StartMenu implements Screen {
     private TextButton btnSettings;
     private TextButton btnQuit;
 
-    public StartMenu(Game screenHandler) {
-        this.screenHandler = screenHandler;
-    }
+
 
     private TextButton generateTextButton(String text, Skin skin, ClickListener clickListener) {
         TextButton btn = new TextButton(text, skin);
@@ -131,7 +128,7 @@ public class StartMenu implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                screenHandler.setScreen(new GameScene(screenHandler));
+                ScreenManager.getInstance().setScreen(new LobbyScreen());
             }
         });
 
@@ -141,8 +138,8 @@ public class StartMenu implements Screen {
                 super.touchUp(event, x, y, pointer, button);
                 Settings settings = new Settings();
                 SettingsScreen settingsScreen = new SettingsScreen(settings);
-                new SettingsController(screenHandler, settings, settingsScreen);
-                screenHandler.setScreen(settingsScreen);
+                new SettingsController(settings, settingsScreen);
+                ScreenManager.getInstance().setScreen(settingsScreen);
             }
         });
 
