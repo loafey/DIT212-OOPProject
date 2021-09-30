@@ -33,7 +33,7 @@ public class ColorCounterActionHandler implements IHandler{
         return updatedState;
     }
 
-    //calculate how many cards from specified neighbors and/or self match the color.
+    //calculate how many cards from lspecified neighbors and/or self match the color.
     private int calculateTotalColoredCardsMatch(PlayerState state, ColoredCardResource ccr){
         List<Card> leftNeighborCards = state.getleftPlayerState().getPlayedCards();
         List<Card> rightNeighborCards = state.getRightPlayerState().getPlayedCards();
