@@ -1,25 +1,23 @@
 package com.ESSBG.app.Model.Cards;
 
-import com.ESSBG.app.Model.Action.IEitherAction;
-import com.ESSBG.app.Model.IBuyable;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public class Card implements IBuyable {
-    private String name;
-    private List<ResourceEnum> cost;
-    private ColorEnum color;
-    private IEitherAction action;   //placeholder, need to find a way to generalise all actions
+public class Card<T> {
+    private final String name;
+    private final List<ResourceEnum> cost;
+    private final ColorEnum color;
+    private final T action;   //placeholder, need to find a way to generalise all actions
 
-    public Card(String name,List<ResourceEnum> cost, ColorEnum color, IEitherAction action) {
+    public Card(String name,List<ResourceEnum> cost, ColorEnum color, T action) {
         this.name = name;
         this.cost = cost;
         this.color = color;
         this.action = action;
     }
 
-    public IEitherAction getAction() {
+    public T getAction() {
         return action;
     }
 
