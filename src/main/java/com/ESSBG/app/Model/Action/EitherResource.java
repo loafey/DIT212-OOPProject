@@ -14,7 +14,11 @@ public class EitherResource implements IEitherAction {
     }
 
     @Override
-    public List<ResourceEnum> getEithers() {
-        return new ArrayList<>(resources);
+    public List<ResourceEnum> getList() {
+        List<ResourceEnum> copy = new ArrayList<>();
+        copy.addAll(resources);
+        return copy;
     }
+
+    
 }

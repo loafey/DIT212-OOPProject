@@ -9,6 +9,8 @@ public enum ResourceEnum  {
     STONE,
     TEXTILE,
     WOOD,
+    //also used to purchase, however not permanent
+    COIN,
     //science, for points in the end
     Laboratory,
     Library,

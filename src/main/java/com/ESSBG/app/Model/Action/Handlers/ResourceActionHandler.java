@@ -17,7 +17,7 @@ public class ResourceActionHandler implements IHandler{
 
     public PlayerState updateState(PlayerState state){
         List<ResourceEnum> playerResources = state.getGuaranteedResources();
-        List<ResourceEnum> additionalResources = action.getResources();
+        List<ResourceEnum> additionalResources = action.getList();
         PlayerState updatedState = new PlayerState(state);
         updatedState.setGuaranteedResources(addResources(playerResources, additionalResources));
         return updatedState;

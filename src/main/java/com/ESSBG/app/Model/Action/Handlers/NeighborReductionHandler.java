@@ -17,10 +17,8 @@ public class NeighborReductionHandler implements IHandler {
     @Override
     public PlayerState updateState(PlayerState state) {
         PlayerState updatedState = new PlayerState(state);
-        List<ResourceEnum> leftReductions = updatedState.getLeftPlayerReductions();
-        List<ResourceEnum> rightReductions = updatedState.getRightPlayerReductions();
-        leftReductions.addAll(state.getLeftPlayerReductions()); //concat the lists
-        rightReductions.addAll(state.getRightPlayerReductions());
+        List<ResourceEnum> neighborReductions = updatedState.getNeighborReductions();
+        neighborReductions.addAll(action.getList());
         return updatedState;
     }
 }

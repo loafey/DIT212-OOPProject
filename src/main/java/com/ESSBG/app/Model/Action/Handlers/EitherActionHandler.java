@@ -20,7 +20,7 @@ public class EitherActionHandler implements IHandler {
     public PlayerState updateState(PlayerState state) {
         PlayerState updatedState = new PlayerState(state);
         List<ArrayList<ResourceEnum>> initial = state.getEitherResources();
-        List<ResourceEnum> eithers = action.getEithers();
+        List<ResourceEnum> eithers = action.getList();
         updatedState.setEitherResources(addEithers(initial, eithers));
         return updatedState;
     }

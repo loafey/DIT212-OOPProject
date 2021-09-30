@@ -13,8 +13,11 @@ public class ResourceAction implements IResourceAction {
         this.resources = resources;
     }
 
+
     @Override
-    public List<ResourceEnum> getResources() {
-        return new ArrayList<>(resources);
+    public List<ResourceEnum> getList() {
+        List<ResourceEnum> copy = new ArrayList<>();
+        copy.addAll(resources);
+        return copy;
     }
 }

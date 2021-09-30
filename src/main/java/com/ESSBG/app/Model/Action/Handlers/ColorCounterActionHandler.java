@@ -1,3 +1,5 @@
+
+/*
 package com.ESSBG.app.Model.Action.Handlers;
 
 import com.ESSBG.app.Model.Cards.Card;
@@ -7,6 +9,10 @@ import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.ColoredCardResource;
 
 import java.util.List;
+
+
+
+Not adding this type of card/handler atm.
 
 public class ColorCounterActionHandler implements IHandler{
 
@@ -56,3 +62,4 @@ public class ColorCounterActionHandler implements IHandler{
         return counter;
     }
 }
+*/

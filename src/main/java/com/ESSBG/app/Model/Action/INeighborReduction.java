@@ -4,9 +4,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public interface INeighborReduction {
+public interface INeighborReduction extends IAction{
 
-    List<ResourceEnum> getLeftNeighborReductions();
-    List<ResourceEnum> getRightNeighborReductions();
 
 }
