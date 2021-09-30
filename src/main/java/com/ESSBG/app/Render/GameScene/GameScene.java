@@ -21,6 +21,8 @@ public class GameScene implements Screen {
 
     private Table playerTable;
 
+    private GameController gameController;
+
     private DrawableBoard rPlayer = new DrawableBoard();
 
     public GameScene(Game game) {
@@ -28,7 +30,7 @@ public class GameScene implements Screen {
     }
 
     public void update(JSONObject data) {
-        rPlayer.updateBoard(data, skin, handCardContainer, placedCardContainer, monument);
+        rPlayer.updateBoard(data, gameController, skin, handCardContainer, placedCardContainer, monument);
     }
 
     @Override
@@ -36,6 +38,7 @@ public class GameScene implements Screen {
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
         skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
+        gameController = new GameController();
 
         sceneTable = new Table();
         handCardContainer = new Table();

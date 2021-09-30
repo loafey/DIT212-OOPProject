@@ -1,10 +1,12 @@
 package com.ESSBG.app.Render.GameScene;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +21,8 @@ public class DrawableBoard {
     private int coins;
     private int warPoints;
 
-    public void updateBoard(JSONObject data, Skin skin, Table handTable, Table placedCards, Table monument) {
-        updateHand(skin, handTable, data.getJSONArray("handCards"));
+    public void updateBoard(JSONObject data,GameController controller, Skin skin, Table handTable, Table placedCards, Table monument) {
+        updateHand(skin, controller, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         updateResources(skin, monument, data.getJSONObject("resources"));
         updateMonument(skin, monument, data.getJSONObject("monument"));
@@ -86,11 +88,22 @@ public class DrawableBoard {
         });
     }
 
-    private void updateHand(Skin skin, Table handTable, JSONArray handCards) {
+    private void updateHand(Skin skin, GameController gameController, Table handTable, JSONArray handCards) {
         handTable.clear();
-        handCards.forEach(card -> {
-            handTable.add(GenerateCard(skin, (JSONObject) card, -5f)).width(84).height(128);
-        });
+        int index = 0;
+        for (Object cardData : handCards){
+            Button card = GenerateCard(skin, (JSONObject) cardData, -5f);
+            handTable.add(card).width(84).height(128);
+            // Bypass final thingy
+            int clone = index;
+            card.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    gameController.cardAction(clone);
+                }
+            });
+            index++;
+        }
     }
 
     private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation) {
