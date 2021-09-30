@@ -1,6 +1,9 @@
 package com.ESSBG.app.Render.StartMenu;
 
 import com.ESSBG.app.Render.GameScene.GameScene;
+import com.ESSBG.app.Render.SettingsScreen.Settings;
+import com.ESSBG.app.Render.SettingsScreen.SettingsController;
+import com.ESSBG.app.Render.SettingsScreen.SettingsScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,9 +17,8 @@ import com.badlogic.gdx.utils.viewport.*;
 
 public class StartMenu implements Screen {
 
-    private static final boolean TABLE_DEBUG = false; // this should be false when deployd
     private Stage stage;
-    private Game game;
+    private final Game screenHandler;
     private Skin skin;
     private Table table;
 
@@ -25,8 +27,8 @@ public class StartMenu implements Screen {
     private TextButton btnSettings;
     private TextButton btnQuit;
 
-    public StartMenu(Game game) {
-        this.game = game;
+    public StartMenu(Game screenHandler) {
+        this.screenHandler = screenHandler;
     }
 
     private TextButton generateTextButton(String text, Skin skin, ClickListener clickListener) {
@@ -52,8 +54,7 @@ public class StartMenu implements Screen {
         addToTableRow(actor, 0, 0, 0, bottomPadding);
     }
 
-    private void addToTableRow(Actor actor, float topPadding, float rightPadding, float leftPadding,
-            float bottomPadding) {
+    private void addToTableRow(Actor actor, float topPadding, float rightPadding, float leftPadding, float bottomPadding) {
         table.row();
         Cell<Actor> cell = table.add(actor);
         cell.padTop(topPadding);
@@ -80,7 +81,6 @@ public class StartMenu implements Screen {
         setupButtons();
 
         // Table setup
-        table.setDebug(TABLE_DEBUG);
         table.setFillParent(true);
         addToTableRowPadBottom(titleName, 30);
         addToTableRowPadBottom(btnStart, 10);
@@ -108,11 +108,12 @@ public class StartMenu implements Screen {
 
     @Override
     public void pause() {
-
+        // this is not needed in this view, but must be implemented
     }
 
     @Override
     public void resume() {
+        // this is not needed in this view, but must be implemented
     }
 
     @Override
@@ -122,6 +123,7 @@ public class StartMenu implements Screen {
 
     @Override
     public void dispose() {
+        // this is not needed in this view, but must be implemented
     }
 
     private void setupButtons() {
@@ -129,8 +131,7 @@ public class StartMenu implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                System.out.println("Should swap to some kind of lobby");
-                game.setScreen(new GameScene(game));
+                screenHandler.setScreen(new GameScene(screenHandler));
             }
         });
 
@@ -138,7 +139,10 @@ public class StartMenu implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                System.out.println("Settings");
+                Settings settings = new Settings();
+                SettingsScreen settingsScreen = new SettingsScreen(settings);
+                new SettingsController(screenHandler, settings, settingsScreen);
+                screenHandler.setScreen(settingsScreen);
             }
         });
 
@@ -146,7 +150,6 @@ public class StartMenu implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                System.out.println("Exiting Application");
                 Gdx.app.exit();
             }
         });
