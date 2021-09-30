@@ -1,40 +1,48 @@
 package com.ESSBG.app.Render.SettingsScreen;
 
+import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.StartMenu.StartMenu;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
-public class SettingsController {
+/**
+ * SettingsController is the controller between {@link SettingsScreen} and {@link Settings} when we are in the {@link StartMenu}
+ */
+public class SettingsController implements SettingsScreenController {
 
-    private final Game screenHandler;
     private final Settings settings;
     private final SettingsScreen screen;
 
 
-    public SettingsController(Game screenHandler, Settings settings, SettingsScreen screen) {
-        this.screenHandler = screenHandler;
+    /**
+     * @param settings
+     * @param screen
+     */
+    public SettingsController(Settings settings, SettingsScreen screen) {
         this.settings = settings;
         this.screen = screen;
         addListeners();
     }
 
-    private void addListeners() {
+    @Override
+    public void addListeners() {
         screen.addApplyButtonListener(applyButton());
         screen.addBackButtonListener(backButton());
     }
 
+    @Override
     public ClickListener backButton() {
         return new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                screenHandler.setScreen(new StartMenu(screenHandler));
+                ScreenManager.getInstance().setScreen(new StartMenu());
             }
         };
     }
 
+    @Override
     public ClickListener applyButton() {
         return new ClickListener() {
             @Override
