@@ -16,8 +16,10 @@ public class SettingsController implements SettingsScreenController {
 
 
     /**
-     * @param settings
-     * @param screen
+     * Setting up the ClickListeners for the SettingsScreen.
+     *
+     * @param settings the class with the logic on how to interact with the settings file
+     * @param screen the screen where the applyButton and backButton is
      */
     public SettingsController(Settings settings, SettingsScreen screen) {
         this.settings = settings;
@@ -25,12 +27,22 @@ public class SettingsController implements SettingsScreenController {
         addListeners();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Adds applyButtonListener and backButtonListener to the screen buttons.
+     */
     @Override
     public void addListeners() {
         screen.addApplyButtonListener(applyButton());
         screen.addBackButtonListener(backButton());
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The listener changes screen to {@link StartMenu}.
+     */
     @Override
     public ClickListener backButton() {
         return new ClickListener() {
@@ -42,6 +54,11 @@ public class SettingsController implements SettingsScreenController {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The listener retrieves data from {@link SettingsScreen} and saves it to the settings file.
+     */
     @Override
     public ClickListener applyButton() {
         return new ClickListener() {
