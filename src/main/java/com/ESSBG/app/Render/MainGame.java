@@ -14,7 +14,6 @@ public class MainGame extends Game {
     @Override
     public void create() {
         new Settings().applySettings(); // apply all settings that the user have set.
-        Screen renderer = new GameScene(this);
         Screen startMenu = new StartMenu(this);
 //        Settings settings = new Settings();
 //        SettingsScreen settingsScreen = new SettingsScreen(settings);
