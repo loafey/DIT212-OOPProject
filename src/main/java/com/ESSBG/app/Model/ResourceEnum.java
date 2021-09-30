@@ -14,5 +14,7 @@ public enum ResourceEnum  {
     Library,
     Dispensary,
     //end of game point
-    POINT
+    POINT,
+    //end of age war point
+    WAR
 }
