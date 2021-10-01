@@ -8,7 +8,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
 
-public class EitherActionHandler implements IHandler {
+public class EitherActionHandler implements IEitherActionHandler {
 
     IEitherAction action;
 
@@ -34,5 +34,4 @@ public class EitherActionHandler implements IHandler {
         updatedEithers.add(new ArrayList<>(additional));
         return updatedEithers;
     }
-    
 }

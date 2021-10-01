@@ -4,7 +4,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public interface IEitherAction extends IAction{
-
+public interface IEitherAction {
+    List<ResourceEnum> getList();
 
 }

@@ -1,7 +1,11 @@
 package com.ESSBG.app.Model.Player;
 
 import com.ESSBG.app.Model.Cards.Card;
+import com.ESSBG.app.Model.Cards.EitherResourceCard;
+import com.ESSBG.app.Model.Cards.ReduceNeighborResourceCard;
+import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.ResourceEnum;
+import com.ESSBG.app.Model.Action.EitherResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +13,9 @@ import java.util.stream.Collectors;
 
 public class PlayerState {
 
-    private List<Card> playedCards;
+    private List<EitherResourceCard> playedEitherCards;
+    private List<ReduceNeighborResourceCard> playedReduceCards;
+    private List<ResourceActionCard> playedResourceCards;
     private List<ResourceEnum> guaranteedResources;
     private List<ArrayList<ResourceEnum>> eitherResources;
     private List<ResourceEnum> neighborReductions;
@@ -18,17 +24,20 @@ public class PlayerState {
 
 
     public PlayerState(int coins, Player leftPlayer, Player rightPlayer) {
-        this.playedCards = new ArrayList<>();
+        this.playedEitherCards = new ArrayList<>();
+        this.playedReduceCards = new ArrayList<>();
+        this.playedResourceCards = new ArrayList<>();
         this.guaranteedResources = new ArrayList<>();
         this.eitherResources = new ArrayList<>();
         this.neighborReductions = new ArrayList<>();
-
         this.winPoints = 0;
         this.losePoints = 0;
     }
 
     public PlayerState(PlayerState state){
-        this.playedCards = state.getPlayedCards();
+        this.playedEitherCards = state.getPlayedEitherCards();
+        this.playedReduceCards = state.getPlayedReduceCards();
+        this.playedResourceCards = state.getPlayedResourceCards();
         this.guaranteedResources = state.getGuaranteedResources();
         this.eitherResources = state.getEitherResources();
         this.neighborReductions = state.getNeighborReductions();
@@ -36,8 +45,16 @@ public class PlayerState {
         this.losePoints = state.getLosePoints();
     }
 
-    public List<Card> getPlayedCards() {
-        return playedCards;
+    public List<EitherResourceCard> getPlayedEitherCards() {
+        return playedEitherCards;
+    }
+
+    public List<ReduceNeighborResourceCard> getPlayedReduceCards() {
+        return playedReduceCards;
+    }
+
+    public List<ResourceActionCard> getPlayedResourceCards() {
+        return playedResourceCards;
     }
 
     public List<ResourceEnum> getGuaranteedResources() {
@@ -67,9 +84,16 @@ public class PlayerState {
         return losePoints;
     }
 
+    public void setPlayedEitherCards(List<EitherResourceCard> playedEitherCards) {
+        this.playedEitherCards = playedEitherCards;
+    }
 
-    public void setPlayedCards(List<Card> playedCards) {
-        this.playedCards = playedCards;
+    public void setPlayedReduceCards(List<ReduceNeighborResourceCard> playedReduceCards) {
+        this.playedReduceCards = playedReduceCards;
+    }
+
+    public void setPlayedResourceCards(List<ResourceActionCard> playedResourceCards) {
+        this.playedResourceCards = playedResourceCards;
     }
 
     public void setGuaranteedResources(List<ResourceEnum> guaranteedResources) {
@@ -80,6 +104,9 @@ public class PlayerState {
         this.eitherResources = eitherResources;
     }
 
+    public void setNeighborReductions(List<ResourceEnum> neighborReductions) {
+        this.neighborReductions = neighborReductions;
+    }
 
     public void setWinPoints(int winPoints) {
         this.winPoints = winPoints;
@@ -116,11 +143,27 @@ public class PlayerState {
 // ------------------------------------------------------
 
 /**
- * Adds a card to the list of played cards
+ * Add a EitherResourceCard to the list of played Either cards.
  * @param c
  */
-public void addCard(Card c){
-    playedCards.add(c);
+public void addEitherCard(EitherResourceCard c){
+    playedEitherCards.add(c);
+}
+
+/**
+ * Add a ReduceNeighborResourceCard to the list of played reduce cards
+ * @param c
+ */
+public void addReductionCard(ReduceNeighborResourceCard c){
+    playedReduceCards.add(c);
+}
+
+/**
+ * Add a ResourceCard to the list of played resource acards
+ * @param c
+ */
+public void addResourceCard(ResourceActionCard c){
+    playedResourceCards.add(c);
 }
 
 /**

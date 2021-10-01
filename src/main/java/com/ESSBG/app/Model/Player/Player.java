@@ -3,12 +3,16 @@ package com.ESSBG.app.Model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ESSBG.app.Model.Action.Handlers.IHandler;
+import com.ESSBG.app.Model.Action.Handlers.IEitherActionHandler;
+import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
+import com.ESSBG.app.Model.Action.Handlers.IResourceActionHandler;
 
 public class Player {
     private final int id;
     private final String name;
-    private List<IHandler> handlers;
+    private List<IEitherActionHandler> eitherActionHandlers;
+    private List<INeighborReductionHandler> neighborReductionHandlers;
+    private List<IResourceActionHandler> resourceActionHandlers;
     private PlayerState state;
     private Player leftNeighbor;
     private Player rightNeighbor;
@@ -20,7 +24,9 @@ public class Player {
         this.state = state;
         this.leftNeighbor = leftNeighbor;
         this.rightNeighbor = rightNeighbor;
-        this.handlers = new ArrayList<>();
+        this.eitherActionHandlers = new ArrayList<>();
+        this.neighborReductionHandlers = new ArrayList<>();
+        this.resourceActionHandlers = new ArrayList<>();
 
     }
 

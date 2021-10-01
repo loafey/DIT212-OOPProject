@@ -6,7 +6,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public class NeighborReductionHandler implements IHandler {
+public class NeighborReductionHandler implements INeighborReductionHandler {
 
     INeighborReduction action;
 
