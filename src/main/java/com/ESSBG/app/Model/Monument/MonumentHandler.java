@@ -1,4 +1,4 @@
-package com.ESSBG.app.Model.Monuments;
+package com.ESSBG.app.Model.Monument;
 
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Player.Player;
@@ -26,7 +26,7 @@ public class MonumentHandler {
      */
 
     public boolean buildStageOfMonument(Card card){
-        boolean playerHasEfficientResources = false;    // Vet ej hur man ska kolla det
+        boolean playerHasEfficientResources = false;    //TODO  Vet ej hur man ska kolla det
 
         if (playerHasEfficientResources && monument.getStageBuilt() < 3){
             monument.buildStage();

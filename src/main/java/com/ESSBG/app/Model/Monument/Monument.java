@@ -1,4 +1,4 @@
-package com.ESSBG.app.Model.Monuments;
+package com.ESSBG.app.Model.Monument;
 
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
@@ -33,6 +33,10 @@ public abstract class Monument implements IMonument {
         initResourcesToBuildStage1();
         initResourcesToBuildStage2();
         initResourcesToBuildStage3();
+
+        if (resourcesToBuildStage1 == null || resourcesToBuildStage2 == null || resourcesToBuildStage3 == null){
+            throw new IllegalStateException("Monument " + name + " hasn't been created properly. Missing cost for building at least one state");
+        }
     }
 
     /**

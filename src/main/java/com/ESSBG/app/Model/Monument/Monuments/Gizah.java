@@ -1,14 +1,14 @@
-package com.ESSBG.app.Model.Monuments;
+package com.ESSBG.app.Model.Monument.Monuments;
 
+import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Giza extends Monument{
+public class Gizah extends Monument {
 
-    public Giza(Player player) {
+    public Gizah(Player player) {
         super("ThePyramidsOfGiza",player, ResourceEnum.STONE);
     }
 
@@ -28,11 +28,11 @@ public class Giza extends Monument{
 
     @Override
     protected void initResourcesToBuildStage2() {
-        resourcesToBuildStage1 = super.initializeResources(ResourceEnum.WOOD, 3);
+        resourcesToBuildStage2 = super.initializeResources(ResourceEnum.WOOD, 3);
     }
 
     @Override
     protected void initResourcesToBuildStage3() {
-        resourcesToBuildStage1 = super.initializeResources(ResourceEnum.STONE, 4);
+        resourcesToBuildStage3 = super.initializeResources(ResourceEnum.STONE, 4);
     }
 }
