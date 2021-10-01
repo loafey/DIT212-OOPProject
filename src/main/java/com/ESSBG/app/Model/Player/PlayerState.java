@@ -88,7 +88,30 @@ public class PlayerState {
     public void setLosePoints(int losePoints) {
         this.losePoints = losePoints;
     }
+    
+    /**
+     * Returns the amount of war tokens in the guaranteed list.
+     * @return
+     */
+    public int getWarTokens(){
+        int count = 0;
+        for (ResourceEnum r : guaranteedResources){
+            if (r.equals(ResourceEnum.WAR)) count++;
+        }
+        return count;
+    }
 
+    /**
+     * Sets the amount of war tokens in the guaranteed list.
+     * @param amount
+     */
+    public void setWarTokens(int amount){
+        List<ResourceEnum> resources = guaranteedResources.stream().filter(c -> c != ResourceEnum.WAR).collect(Collectors.toList());
+        for (int i = 0; i < amount; i++){
+            resources.add(ResourceEnum.WAR);
+        }
+        setGuaranteedResources(resources);
+    }
 
 // ------------------------------------------------------
 
