@@ -97,7 +97,7 @@ public class MonumentFactory {
     }
 
 
-    public List<Monument> getMonuments(List<Player> players){
+    public static List<Monument> getMonuments(List<Player> players){
         MonumentFactory m = new MonumentFactory(players);
         return m.monuments;
     }

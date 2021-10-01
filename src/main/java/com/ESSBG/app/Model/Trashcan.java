@@ -2,10 +2,11 @@ package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Cards.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Trashcan {
-    List<Card> cards;
+    List<Card> cards = new ArrayList<>();
 
     public List<Card> getCards() {
         return cards;
