@@ -16,7 +16,10 @@ public class EitherActionHandler implements IEitherActionHandler {
         this.action = action;
     }
 
-    //updates the state with the new either resources added
+    /**
+     * Uses the action and current state to generate an updated state.
+     */
+    @Override
     public PlayerState updateState(PlayerState state) {
         PlayerState updatedState = new PlayerState(state);
         List<ArrayList<ResourceEnum>> initial = state.getEitherResources();
