@@ -5,11 +5,11 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReduceNeighborResources implements INeighborReduction {
+public class NeighborReductionAction implements INeighborReduction {
 
     private final List<ResourceEnum> neighborReductions;
 
-    public ReduceNeighborResources(List<ResourceEnum> neighborReductions) {
+    public NeighborReductionAction(List<ResourceEnum> neighborReductions) {
         this.neighborReductions = neighborReductions;
     }
 

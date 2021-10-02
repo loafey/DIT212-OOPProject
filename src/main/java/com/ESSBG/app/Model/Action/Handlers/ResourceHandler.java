@@ -7,11 +7,11 @@ import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IResourceAction;
 
-public class ResourceActionHandler implements IResourceActionHandler{
+public class ResourceHandler implements IResourceHandler{
 
     IResourceAction action;
 
-    public ResourceActionHandler(IResourceAction action) {
+    public ResourceHandler(IResourceAction action) {
         this.action = action;
     }
 

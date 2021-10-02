@@ -8,11 +8,11 @@ import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
 
-public class EitherActionHandler implements IEitherActionHandler {
+public class EitherHandler implements IEitherHandler {
 
     IEitherAction action;
 
-    public EitherActionHandler(IEitherAction action) {
+    public EitherHandler(IEitherAction action) {
         this.action = action;
     }
 

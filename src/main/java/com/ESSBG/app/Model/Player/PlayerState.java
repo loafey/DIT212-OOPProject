@@ -2,19 +2,20 @@ package com.ESSBG.app.Model.Player;
 
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.EitherResourceCard;
-import com.ESSBG.app.Model.Cards.ReduceNeighborResourceCard;
+import com.ESSBG.app.Model.Cards.NeighborReductionCard;
 import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.EitherResource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PlayerState {
 
     private List<EitherResourceCard> playedEitherCards;
-    private List<ReduceNeighborResourceCard> playedReduceCards;
+    private List<NeighborReductionCard> playedReductionCards;
     private List<ResourceActionCard> playedResourceCards;
     private List<ResourceEnum> guaranteedResources;
     private List<ArrayList<ResourceEnum>> eitherResources;
@@ -22,10 +23,15 @@ public class PlayerState {
     private int winPoints;
     private int losePoints;
 
-
+    /**
+     * Constructor for a PlayerState
+     * @param coins
+     * @param leftPlayer
+     * @param rightPlayer
+     */
     public PlayerState(int coins, Player leftPlayer, Player rightPlayer) {
         this.playedEitherCards = new ArrayList<>();
-        this.playedReduceCards = new ArrayList<>();
+        this.playedReductionCards = new ArrayList<>();
         this.playedResourceCards = new ArrayList<>();
         this.guaranteedResources = new ArrayList<>();
         this.eitherResources = new ArrayList<>();
@@ -34,9 +40,13 @@ public class PlayerState {
         this.losePoints = 0;
     }
 
+    /**
+     * Constructor for a PlayerState. Copies the given PlayerState.
+     * @param state
+     */
     public PlayerState(PlayerState state){
         this.playedEitherCards = state.getPlayedEitherCards();
-        this.playedReduceCards = state.getPlayedReduceCards();
+        this.playedReductionCards = state.getPlayedReductionCards();
         this.playedResourceCards = state.getPlayedResourceCards();
         this.guaranteedResources = state.getGuaranteedResources();
         this.eitherResources = state.getEitherResources();
@@ -45,30 +55,70 @@ public class PlayerState {
         this.losePoints = state.getLosePoints();
     }
 
+    /**
+     * Getter for playedEitherCards
+     * @return List<EitherResourceCard>
+     */
     public List<EitherResourceCard> getPlayedEitherCards() {
-        return playedEitherCards;
+        List<EitherResourceCard> copy = new ArrayList<>();
+        Collections.copy(copy, playedEitherCards);
+        return copy;
     }
 
-    public List<ReduceNeighborResourceCard> getPlayedReduceCards() {
-        return playedReduceCards;
+    /**
+     * Getter for playedReductionCards
+     * @return List<NeighborReductionCard>
+     */
+    public List<NeighborReductionCard> getPlayedReductionCards() {
+        List<NeighborReductionCard> copy = new ArrayList<>();
+        Collections.copy(copy, playedReductionCards);
+        return copy;
     }
 
+    /**
+     * Getter for playdResourceCards
+     * @return List<ResourceActionCard>
+     */
     public List<ResourceActionCard> getPlayedResourceCards() {
-        return playedResourceCards;
+        List<ResourceActionCard> copy = new ArrayList<>();
+        Collections.copy(copy, playedResourceCards);
+        return copy;
     }
 
+    /**
+     * Getter for guaranteedResources
+     * @return List<ResourceEnum>
+     */
     public List<ResourceEnum> getGuaranteedResources() {
-        return guaranteedResources;
+        List<ResourceEnum> copy = new ArrayList<>();
+        Collections.copy(copy, guaranteedResources);
+        return copy;
     }
 
+    /**
+     * Getter for eitherResources
+     * @return List<ArrayList<ResourceEnum>>
+     */
     public List<ArrayList<ResourceEnum>> getEitherResources() {
-        return eitherResources;
+        List<ArrayList<ResourceEnum>> copy = new ArrayList<>();     //not a deep copy so pretty useless
+        Collections.copy(copy, eitherResources);        
+        return copy;
     }
 
+    /**
+     * Getter for neighborReductions
+     * @return List<ResourceEnum>
+     */
     public List<ResourceEnum> getNeighborReductions() {
-        return neighborReductions;
+        List<ResourceEnum> copy = new ArrayList<>();
+        Collections.copy(copy, neighborReductions);
+        return copy;
     }
 
+    /**
+     * Return the amount of coins in guaranteedResources
+     * @return int
+     */
     public int getCoins() {
         return guaranteedResources.stream()
         .filter(c -> c == ResourceEnum.COIN)
@@ -76,42 +126,94 @@ public class PlayerState {
         .size();    //save everything that is a coin in a new list and return its length
     }
 
+    /**
+     * Getter for winPoints
+     * @return int
+     */
     public int getWinPoints() {
         return winPoints;
     }
 
+    /**
+     * Getter for losePoints
+     * @return int
+     */
     public int getLosePoints() {
         return losePoints;
     }
 
+    /**
+     * Setter for playedEitherCards
+     * @param playedEitherCards
+     */
     public void setPlayedEitherCards(List<EitherResourceCard> playedEitherCards) {
-        this.playedEitherCards = playedEitherCards;
+        List<EitherResourceCard> copy = new ArrayList<>();
+        Collections.copy(copy, playedEitherCards);
+        this.playedEitherCards = copy;
     }
 
-    public void setPlayedReduceCards(List<ReduceNeighborResourceCard> playedReduceCards) {
-        this.playedReduceCards = playedReduceCards;
+    /**
+     * Setter for playedReductionsCards
+     * @param playedReduceCards
+     */
+    public void setPlayedReductionCards(List<NeighborReductionCard> playedReduceCards) {
+        List<NeighborReductionCard> copy = new ArrayList<>();
+        Collections.copy(copy, playedReduceCards);
+        this.playedReductionCards = copy;
     }
 
+    /**
+     * Setter for playedResourceCards
+     * @param playedResourceCards
+     */
     public void setPlayedResourceCards(List<ResourceActionCard> playedResourceCards) {
-        this.playedResourceCards = playedResourceCards;
+        List<ResourceActionCard> copy = new ArrayList<>();
+        Collections.copy(copy, playedResourceCards);
+        this.playedResourceCards = copy;
     }
 
+    /**
+     * Setter for guaranteedResources
+     * @param guaranteedResources
+     */
     public void setGuaranteedResources(List<ResourceEnum> guaranteedResources) {
-        this.guaranteedResources = guaranteedResources;
+        List<ResourceEnum> copy = new ArrayList<>();
+        Collections.copy(copy, guaranteedResources);
+        this.guaranteedResources = copy;
     }
 
+    /**
+     * Setter for eitherResources
+     * @param eitherResources
+     */
     public void setEitherResources(List<ArrayList<ResourceEnum>> eitherResources) {
-        this.eitherResources = eitherResources;
+        List<ArrayList<ResourceEnum>> copy = new ArrayList<>();
+        Collections.copy(copy, eitherResources);
+        this.eitherResources = copy;
     }
 
+    /**
+     * Setter for neighborReductions
+     * @param neighborReductions
+     */
     public void setNeighborReductions(List<ResourceEnum> neighborReductions) {
-        this.neighborReductions = neighborReductions;
+        List<ResourceEnum> copy = new ArrayList<>();
+        Collections.copy(copy, neighborReductions);
+        this.neighborReductions = copy;
     }
 
+    /**
+     * Setter for winPoints
+     * @param winPoints
+     */
     public void setWinPoints(int winPoints) {
         this.winPoints = winPoints;
     }
 
+    /**
+     * Setter for losePoints
+     * @param losePoints
+     */
     public void setLosePoints(int losePoints) {
         this.losePoints = losePoints;
     }
@@ -154,8 +256,8 @@ public void addEitherCard(EitherResourceCard c){
  * Add a ReduceNeighborResourceCard to the list of played reduce cards
  * @param c
  */
-public void addReductionCard(ReduceNeighborResourceCard c){
-    playedReduceCards.add(c);
+public void addReductionCard(NeighborReductionCard c){
+    playedReductionCards.add(c);
 }
 
 /**
