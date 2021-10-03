@@ -2,11 +2,8 @@ package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
-import com.ESSBG.app.Model.Monuments.Alexandria;
-import com.ESSBG.app.Model.Monuments.Monument;
 
 import com.ESSBG.app.Model.Player.Player;
-import com.ESSBG.app.Model.Player.PlayerState;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -1,11 +1,15 @@
 package com.ESSBG.app.Model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.ESSBG.app.Model.Cards.Card;
+import com.ESSBG.app.Model.Cards.CardFactory;
+import com.ESSBG.app.Model.Monument.Monument;
+import com.ESSBG.app.Model.Monument.MonumentFactory;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Network.*;
 
@@ -14,6 +18,8 @@ public class Game {
     List<Card> cardDeck;
     Trashcan trash;
     List<List<Card>> periodCards;
+    List<Monument> monuments;
+    int age;
 
     // TODO NAME
     public void not_finished_run() {
@@ -39,6 +45,28 @@ public class Game {
         // }
 
     }
+
+    /**
+     * Initializes cardDeck, periodCards, age, trashcan and monuments
+     */
+
+    private void init(){
+        monuments = MonumentFactory.getMonuments();
+        periodCards = CardFactory.getPeriodCards();
+        cardDeck = periodCards.get(0);
+        trash = new Trashcan();
+        age = 1;
+    }
+
+    /**
+     * Moves the game to the next age and changes the cardDeck to the correct cards for that specific age
+     */
+    private void startNextAge(){
+        age++;
+        cardDeck = periodCards.get(age-1);
+    }
+
+
 
     public void updatePlayerNeighbors() {
         for (Player player : players) {
@@ -72,4 +100,6 @@ public class Game {
             Player next = players.getNext(p);
         }
     }
+
+
 }

@@ -4,19 +4,22 @@ import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rhodos extends Monument {
 
-    public Rhodos(Player player) {
-        super("Rhodos",player, ResourceEnum.ORE);
+    public Rhodos() {
+        super("Rhodos", ResourceEnum.ORE);
     }
 
     @Override
-    public void stage2Reward() {
-        int warTokens = player.getState().getWarTokens();
-        warTokens+=2;
-        player.getState().setWarTokens(warTokens);
+    public List<ResourceEnum> stage2Reward() {
+        ArrayList<ResourceEnum> newResources = new ArrayList<>();
+        newResources.add(ResourceEnum.WAR);
+        newResources.add(ResourceEnum.WAR);
+
+        return newResources;
     }
 
     @Override

@@ -9,20 +9,18 @@ import java.util.List;
 
 public class Babylon extends Monument {
 
-    public Babylon(Player player) {
-        super("Babylon",player, ResourceEnum.CLAY);
+    public Babylon() {
+        super("Babylon", ResourceEnum.CLAY);
     }
 
     @Override
-    public void stage2Reward() {
+    public List<ResourceEnum> stage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();
         newResources.add(ResourceEnum.Laboratory);
         newResources.add(ResourceEnum.Library);
         newResources.add(ResourceEnum.Dispensary);
 
-        List<ArrayList<ResourceEnum>> currentEitherResources = player.getState().getEitherResources();
-        currentEitherResources.add(newResources);
-        player.getState().setEitherResources(currentEitherResources);     //refactor this to be immutable-ish
+        return newResources;
     }
 
     @Override

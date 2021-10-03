@@ -4,23 +4,28 @@ import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Olympia extends Monument {
 
-    public Olympia(Player player) {
-        super("Olympia",player, ResourceEnum.WOOD);
+    public Olympia() {
+        super("Olympia", ResourceEnum.WOOD);
     }
 
 
     // Modified, not how it's actually in the real game
     @Override
-    public void stage2Reward() {
-        List<ResourceEnum> guaranteedResources = player.getState().getGuaranteedResources();
-        for (int i=0; i<5; i++) {
-            guaranteedResources.add(ResourceEnum.POINT);
+    public List<ResourceEnum> stage2Reward() {
+        ArrayList<ResourceEnum> newResources = new ArrayList<>();
+
+        int k=0;
+        while (k<5) {
+            newResources.add(ResourceEnum.POINT);
+            k++;
         }
-        player.getState().setGuaranteedResources(guaranteedResources);
+
+        return newResources;
     }
 
     @Override
