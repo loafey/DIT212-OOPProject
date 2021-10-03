@@ -8,12 +8,19 @@ import java.util.List;
 
 public class NeighborReductionHandler implements INeighborReductionHandler {
 
-    INeighborReduction action;
+    private INeighborReduction action;
 
+    /**
+     * Constructor for a NeighborReductionHandler
+     * @param action
+     */
     public NeighborReductionHandler(INeighborReduction action) {
         this.action = action;
     }
 
+    /**
+     * Returns an updated state, which is calculated using the action.
+     */
     @Override
     public PlayerState updateState(PlayerState state) {
         PlayerState updatedState = new PlayerState(state);

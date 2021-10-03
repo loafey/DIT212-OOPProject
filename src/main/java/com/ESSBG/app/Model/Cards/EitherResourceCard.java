@@ -9,11 +9,21 @@ public class EitherResourceCard extends Card {
 
     private IEitherAction action;
 
+    /**
+     * Constructor for EitherResourceCard
+     * @param name
+     * @param cost
+     * @param color
+     */
     public EitherResourceCard(String name, List<ResourceEnum> cost, ColorEnum color) {
         super(name, cost, color);
         
     }
     
+    /**
+     * Getter for action
+     * @return IEitherAction
+     */
     public IEitherAction getAction(){
         return action;
     }

@@ -144,7 +144,7 @@ public class PlayerState {
      * @param playedEitherCards
      */
     public void setPlayedEitherCards(List<EitherResourceCard> playedEitherCards) {
-        List<EitherResourceCard> copy = new ArrayList<>();
+        List<EitherResourceCard> copy = new ArrayList<>(playedEitherCards.size());
         Collections.copy(copy, playedEitherCards);
         this.playedEitherCards = copy;
     }
@@ -154,7 +154,7 @@ public class PlayerState {
      * @param playedReduceCards
      */
     public void setPlayedReductionCards(List<NeighborReductionCard> playedReduceCards) {
-        List<NeighborReductionCard> copy = new ArrayList<>();
+        List<NeighborReductionCard> copy = new ArrayList<>(playedReduceCards.size());
         Collections.copy(copy, playedReduceCards);
         this.playedReductionCards = copy;
     }
@@ -164,7 +164,7 @@ public class PlayerState {
      * @param playedResourceCards
      */
     public void setPlayedResourceCards(List<ResourceActionCard> playedResourceCards) {
-        List<ResourceActionCard> copy = new ArrayList<>();
+        List<ResourceActionCard> copy = new ArrayList<>(playedResourceCards.size());
         Collections.copy(copy, playedResourceCards);
         this.playedResourceCards = copy;
     }
@@ -174,7 +174,7 @@ public class PlayerState {
      * @param guaranteedResources
      */
     public void setGuaranteedResources(List<ResourceEnum> guaranteedResources) {
-        List<ResourceEnum> copy = new ArrayList<>();
+        List<ResourceEnum> copy = new ArrayList<>(guaranteedResources.size());
         Collections.copy(copy, guaranteedResources);
         this.guaranteedResources = copy;
     }
@@ -184,7 +184,7 @@ public class PlayerState {
      * @param eitherResources
      */
     public void setEitherResources(List<ArrayList<ResourceEnum>> eitherResources) {
-        List<ArrayList<ResourceEnum>> copy = new ArrayList<>();
+        List<ArrayList<ResourceEnum>> copy = new ArrayList<>(eitherResources.size());
         Collections.copy(copy, eitherResources);
         this.eitherResources = copy;
     }
@@ -194,7 +194,7 @@ public class PlayerState {
      * @param neighborReductions
      */
     public void setNeighborReductions(List<ResourceEnum> neighborReductions) {
-        List<ResourceEnum> copy = new ArrayList<>();
+        List<ResourceEnum> copy = new ArrayList<>(neighborReductions.size());
         Collections.copy(copy, neighborReductions);
         this.neighborReductions = copy;
     }

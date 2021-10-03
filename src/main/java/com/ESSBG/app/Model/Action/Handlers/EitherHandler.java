@@ -10,14 +10,14 @@ import com.ESSBG.app.Model.Action.IEitherAction;
 
 public class EitherHandler implements IEitherHandler {
 
-    IEitherAction action;
+    private IEitherAction action;
 
     public EitherHandler(IEitherAction action) {
         this.action = action;
     }
 
     /**
-     * Uses the action and current state to generate an updated state.
+     * Returns an updated state, which is calculated using the action.
      */
     @Override
     public PlayerState updateState(PlayerState state) {

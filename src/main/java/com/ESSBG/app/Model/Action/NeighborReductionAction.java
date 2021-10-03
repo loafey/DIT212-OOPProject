@@ -9,10 +9,18 @@ public class NeighborReductionAction implements INeighborReduction {
 
     private final List<ResourceEnum> neighborReductions;
 
+    /**
+     * Constructor for NeighborReductionAction
+     * @param neighborReductions
+     */
     public NeighborReductionAction(List<ResourceEnum> neighborReductions) {
         this.neighborReductions = neighborReductions;
     }
 
+    /**
+     * Getter for neighborReductions
+     * @return List<ResourceEnum>
+     */
     @Override
     public List<ResourceEnum> getList() {
         List<ResourceEnum> copy = new ArrayList<>();

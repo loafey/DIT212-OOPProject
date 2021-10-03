@@ -9,17 +9,30 @@ public abstract class Card {
     private final List<ResourceEnum> cost;
     private final ColorEnum color;
 
+    /**
+     * Constructor for the abstract class Card
+     * @param name
+     * @param cost
+     * @param color
+     */
     public Card(String name,List<ResourceEnum> cost, ColorEnum color) {
         this.name = name;
         this.cost = cost;
         this.color = color;
     }
 
-
+    /**
+     * Getter for cost
+     * @return List<ResourceEnum>
+     */
     public List<ResourceEnum> getCost() {
         return cost;
     }
 
+    /**
+     * Getter for color
+     * @return ColorEnum
+     */
     public ColorEnum getColor() {
         return color;
     }

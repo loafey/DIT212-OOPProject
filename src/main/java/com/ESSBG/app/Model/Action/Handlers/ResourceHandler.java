@@ -9,12 +9,20 @@ import com.ESSBG.app.Model.Action.IResourceAction;
 
 public class ResourceHandler implements IResourceHandler{
 
-    IResourceAction action;
+    private IResourceAction action;
 
+    /**
+     * Constructor for a ResourceHandler
+     * @param action
+     */
     public ResourceHandler(IResourceAction action) {
         this.action = action;
     }
 
+    /**
+     * Returns an updated state, which is caluclated using action
+     * @param state
+     */
     public PlayerState updateState(PlayerState state){
         List<ResourceEnum> playerResources = state.getGuaranteedResources();
         List<ResourceEnum> additionalResources = action.getList();
