@@ -14,7 +14,7 @@ import javax.management.monitor.Monitor;
 public class Player {
     private final int id;
     private final String name;
-    private final Monument monument;
+    private Monument monument;
     private List<IEitherHandler> eitherActionHandlers;
     private List<INeighborReductionHandler> neighborReductionHandlers;
     private List<IResourceHandler> resourceActionHandlers;
@@ -23,7 +23,7 @@ public class Player {
     private Player rightNeighbor;
 
 
-    public Player(int id, PlayerState state, Player leftNeighbor, Player rightNeighbor, Monument monument) {
+    public Player(int id, PlayerState state, Player leftNeighbor, Player rightNeighbor) {
         this.id = id;
         this.name = String.valueOf(id);
         this.state = state;
@@ -32,7 +32,6 @@ public class Player {
         this.eitherActionHandlers = new ArrayList<>();
         this.neighborReductionHandlers = new ArrayList<>();
         this.resourceActionHandlers = new ArrayList<>();
-        this.monument = monument;
 
     }
 
@@ -73,6 +72,10 @@ public class Player {
 
     public void setRightNeighbor(Player p) {
         this.rightNeighbor = p;
+    }
+
+    public void setMonument(Monument monument) {
+        this.monument = monument;
     }
 
     private void getStage1Reward() {

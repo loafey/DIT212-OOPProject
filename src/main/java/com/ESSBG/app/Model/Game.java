@@ -10,6 +10,7 @@ import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.CardFactory;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Monument.MonumentFactory;
+import com.ESSBG.app.Model.Player.InitializePlayers;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Network.*;
 
@@ -52,6 +53,7 @@ public class Game {
 
     private void init(){
         monuments = MonumentFactory.getMonuments();
+        players = InitializePlayers.getInitializedPlayers(players, monuments);
         periodCards = CardFactory.getPeriodCards();
         cardDeck = periodCards.get(0);
         trash = new Trashcan();
@@ -68,13 +70,7 @@ public class Game {
 
 
 
-    public void updatePlayerNeighbors() {
-        for (Player player : players) {
-            player.setLeftNeighbor(players.getPrevious(player));
-            player.setRightNeighbor(players.getNext(player));
 
-        }
-    }
 
     // Use this method to give war tokens after each age
     private void giveWarTokens(int age) {

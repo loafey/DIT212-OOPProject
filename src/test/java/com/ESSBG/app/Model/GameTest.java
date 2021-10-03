@@ -35,16 +35,20 @@ public class GameTest {
 
     @Test
     @Ignore
+
+    //TODO testa detta i Initalize player istället
     public void testUpdatePlayerNeighbors() {
         game.players.add(testPlayers.get(0));
         game.players.add(testPlayers.get(1));
         game.players.add(testPlayers.get(2));
-        game.updatePlayerNeighbors();
+        /*game.updatePlayerNeighbors();
         assertEquals(game.players.get(0).getState().getLeftPlayer(), testPlayers.get(2));
         assertEquals(game.players.get(0).getState().getRightPlayer(), testPlayers.get(1));
         assertEquals(game.players.get(1).getState().getLeftPlayer(), testPlayers.get(0));
         assertEquals(game.players.get(1).getState().getRightPlayer(), testPlayers.get(2));
         assertEquals(game.players.get(2).getState().getLeftPlayer(), testPlayers.get(1));
         assertEquals(game.players.get(2).getState().getRightPlayer(), testPlayers.get(0));
+
+         */
     }
 }
