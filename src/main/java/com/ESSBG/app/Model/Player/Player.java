@@ -9,8 +9,6 @@ import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.ResourceEnum;
 
-import javax.management.monitor.Monitor;
-
 public class Player {
     private final int id;
     private final String name;

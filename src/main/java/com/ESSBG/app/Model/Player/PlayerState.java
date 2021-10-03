@@ -1,11 +1,9 @@
 package com.ESSBG.app.Model.Player;
 
-import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.EitherResourceCard;
 import com.ESSBG.app.Model.Cards.NeighborReductionCard;
 import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.ResourceEnum;
-import com.ESSBG.app.Model.Action.EitherResource;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,11 +23,10 @@ public class PlayerState {
 
     /**
      * Constructor for a PlayerState
-     * @param coins
      * @param leftPlayer
      * @param rightPlayer
      */
-    public PlayerState(int coins, Player leftPlayer, Player rightPlayer) {
+    public PlayerState(Player leftPlayer, Player rightPlayer) {
         this.playedEitherCards = new ArrayList<>();
         this.playedReductionCards = new ArrayList<>();
         this.playedResourceCards = new ArrayList<>();
