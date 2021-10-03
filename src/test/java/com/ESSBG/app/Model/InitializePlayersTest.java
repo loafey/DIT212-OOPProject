@@ -54,7 +54,7 @@ public class InitializePlayersTest {
     }
 
     @Test
-    public void testPlayerState(){
+    public void testPlayerStateAndResources(){
         for (Player p : players){
             assertNotNull(p.getState());
             //assertEquals(3, p.getState().getCoins());

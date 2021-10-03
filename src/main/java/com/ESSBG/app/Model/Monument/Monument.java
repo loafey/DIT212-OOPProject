@@ -69,8 +69,17 @@ public abstract class Monument implements IMonument {
         return list;
     }
 
+    public List<ResourceEnum> getResourcesToBuildStage1() {
+        return resourcesToBuildStage1;
+    }
 
+    public List<ResourceEnum> getResourcesToBuildStage2() {
+        return resourcesToBuildStage2;
+    }
 
+    public List<ResourceEnum> getResourcesToBuildStage3() {
+        return resourcesToBuildStage3;
+    }
 
     // Has to be specified for each monument
     public abstract List<ResourceEnum> stage2Reward();

@@ -49,7 +49,7 @@ public class InitializePlayers {
     }
 
     /**
-     * This method takes in a list of players who has not yet been assigned their left leighbour, right enighbour and monument
+     * This method takes in a list of players who has not yet been assigned their left neighbour, right neighbour and monument
      * Return a list where each player is assigned their neighbours and a random monument (all players will have a different monument)
      * @param players
      * @param monuments
