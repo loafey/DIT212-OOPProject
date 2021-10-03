@@ -20,6 +20,8 @@ public class LobbyScreen implements Screen{
     private TextField ipField;
     private Button joinButton;
 
+    private Table lobbyTable;
+
 
     @Override
     public void show() {
@@ -28,20 +30,50 @@ public class LobbyScreen implements Screen{
         skin = new Skin(Gdx.files.internal("Assets/Skins/LobbyScreen/LobbySceneSkin.json"));
         
         sceneTable = new Table();
-        sceneTable.center();
+        sceneTable.top().left();
         sceneTable.setFillParent(true);
+        sceneTable.setDebug(true);
         stage.addActor(sceneTable);
 
         Gdx.input.setInputProcessor(stage);
         
-        sceneTable.add(new Label("Join Server:",skin));
-        sceneTable.row();
+        Table connectContainer = new Table();
+        connectContainer.top().left();
+        sceneTable.add(connectContainer).fill();
+        Table connectTable = new Table();
+        connectTable.top().left();
+        connectTable.add(new Label("Join Server:",skin));
+        connectTable.row();
         joinButton = new Button(skin);
-        joinButton.add(new Label("Connect:", skin));
-        sceneTable.add(joinButton);
-
+        joinButton.add(new Label("Connect", skin));
+        connectTable.add(joinButton);
         ipField = new TextField("", skin);
-        sceneTable.add(ipField);
+        connectTable.add(ipField);
+        
+        connectContainer.add(connectTable).fill().expand();
+
+        lobbyTable = new Table();
+        lobbyTable.setDebug(true);
+        lobbyTable.top().left();
+        lobbyTable.add(new Label("Lobby info: ", skin)).fill();
+        lobbyTable.row();
+
+        Table playerTable = new Table();
+        lobbyTable.add(playerTable).expandY().fill();
+        
+        for (int x = 0; x < 200; x++){
+            playerTable.add(new Button(skin));
+            if (x % 32 == 0) 
+            playerTable.row();
+        }
+
+        lobbyTable.row();
+        
+        Button startButton = new Button(skin);
+        startButton.add(new Label("Start Game", skin));
+        lobbyTable.add(startButton).fillX().expandX();
+
+        sceneTable.add(lobbyTable).fill().expand();
     }
     @Override
     public void render(float delta) {
