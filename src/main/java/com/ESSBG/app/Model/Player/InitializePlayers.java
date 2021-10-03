@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InitializePlayers {
-    List<Monument> monuments;
-    ConcurrentCircularList<Player> players;
+    private List<Monument> monuments;
+    private ConcurrentCircularList<Player> players;
 
     private InitializePlayers(ConcurrentCircularList<Player> players, List<Monument> monuments){
         this.players = players;
@@ -33,6 +33,13 @@ public class InitializePlayers {
         }
     }
 
+    /**
+     * This method takes in a list of players who has not yet been assigned their left leighbour, right enighbour and monument
+     * Return a list where each player is assigned their neighbours and a random monument (all players will have a different monument)
+     * @param players
+     * @param monuments
+     * @return
+     */
     public static ConcurrentCircularList<Player> getInitializedPlayers(ConcurrentCircularList<Player> players, List<Monument> monuments){
         InitializePlayers initializePlayers = new InitializePlayers(players, monuments);
         return initializePlayers.players;

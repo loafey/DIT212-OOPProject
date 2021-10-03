@@ -15,9 +15,8 @@ public class MonumentFactory {
 
 
     /**
-     * Adds a letter representing each possible monument to tmpList if tmpList is empty
+     * Add all possible monuments to the monument list
      */
-
     private void initMonumentList() {
         monuments.add(new Alexandria());
         monuments.add(new Babylon());
@@ -32,7 +31,6 @@ public class MonumentFactory {
 
     /**
      * Shuffles a list using Fisher yates method
-     *
      * @param list
      * @param <T>
      */
@@ -51,6 +49,10 @@ public class MonumentFactory {
         }
     }
 
+    /**
+     * Gives a shuffled list of all monuments (one of each kind)
+     * @return
+     */
 
     public static List<Monument> getMonuments() {
         MonumentFactory m = new MonumentFactory();
