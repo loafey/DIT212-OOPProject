@@ -174,9 +174,11 @@ public class PlayerState {
      * @param guaranteedResources
      */
     public void setGuaranteedResources(List<ResourceEnum> guaranteedResources) {
-        List<ResourceEnum> copy = new ArrayList<>(guaranteedResources.size());
+        /*List<ResourceEnum> copy = new ArrayList<>(guaranteedResources.size());
         Collections.copy(copy, guaranteedResources);
-        this.guaranteedResources = copy;
+
+         */
+        this.guaranteedResources = guaranteedResources;
     }
 
     /**

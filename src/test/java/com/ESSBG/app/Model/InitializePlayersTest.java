@@ -53,12 +53,15 @@ public class InitializePlayersTest {
         }
     }
 
+    //TODO vrf funkar det inte???
     @Test
     public void testPlayerStateAndResources(){
         for (Player p : players){
             assertNotNull(p.getState());
             //assertEquals(3, p.getState().getCoins());
-            assertEquals(4, p.getState().getGuaranteedResources().size());
+            int expected = 4;
+            int actual = p.getState().getGuaranteedResources().size();
+            assertEquals(expected, actual);
         }
     }
 
