@@ -1,11 +1,9 @@
 package com.ESSBG.app.Model.Player;
 
-import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.EitherResourceCard;
 import com.ESSBG.app.Model.Cards.NeighborReductionCard;
 import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.ResourceEnum;
-import com.ESSBG.app.Model.Action.EitherResource;
 
 import java.util.ArrayList;
 import java.util.Collections;
