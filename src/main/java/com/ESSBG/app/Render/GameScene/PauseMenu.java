@@ -4,12 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
-public class PauseMenu extends Table {
+public class PauseMenu extends Window {
     private Button resumeButton;
     private Button exitButton;
 
     public PauseMenu(Skin skin) {
+        super("yo", skin);
         this.center();
         this.add(new Label("7 Wonders", skin));
         this.row();
