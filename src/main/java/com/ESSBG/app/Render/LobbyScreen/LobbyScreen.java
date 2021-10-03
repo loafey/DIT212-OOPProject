@@ -61,9 +61,12 @@ public class LobbyScreen implements Screen{
         Table playerTable = new Table();
         lobbyTable.add(playerTable).expandY().fill();
         
+        
         for (int x = 0; x < 200; x++){
-            playerTable.add(new Button(skin));
-            if (x % 32 == 0) 
+            Table infoTable = new Table();
+            infoTable.left();
+            infoTable.add(new Label("Player name", skin)).fillX();
+            playerTable.add(infoTable);
             playerTable.row();
         }
 
