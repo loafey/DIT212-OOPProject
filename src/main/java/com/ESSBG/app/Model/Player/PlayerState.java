@@ -53,7 +53,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for playedEitherCards
+     * Getter for playedEitherCards. playedEitherCards represent all played either cards
      * @return List<EitherResourceCard>
      */
     public List<EitherResourceCard> getPlayedEitherCards() {
@@ -63,7 +63,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for playedReductionCards
+     * Getter for playedReductionCards. playedReductionCards represent all played reduction cards
      * @return List<NeighborReductionCard>
      */
     public List<NeighborReductionCard> getPlayedReductionCards() {
@@ -73,7 +73,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for playdResourceCards
+     * Getter for playdResourceCards. playdResourceCards represent all played resource cards
      * @return List<ResourceActionCard>
      */
     public List<ResourceActionCard> getPlayedResourceCards() {
@@ -83,7 +83,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for guaranteedResources
+     * Getter for guaranteedResources. guaranteedResources represent all resources that are guaranteed to be available
      * @return List<ResourceEnum>
      */
     public List<ResourceEnum> getGuaranteedResources() {
@@ -93,7 +93,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for eitherResources
+     * Getter for eitherResources. eitherResource represent resources which of only one can be chosen from
      * @return List<ArrayList<ResourceEnum>>
      */
     public List<ArrayList<ResourceEnum>> getEitherResources() {
@@ -103,7 +103,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for neighborReductions
+     * Getter for neighborReductions. neighborReductions represent which resources have reduced price
      * @return List<ResourceEnum>
      */
     public List<ResourceEnum> getNeighborReductions() {
@@ -124,7 +124,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for winPoints
+     * Getter for winPoints. winPoints represents how many wars were won
      * @return int
      */
     public int getWinPoints() {
@@ -132,7 +132,7 @@ public class PlayerState {
     }
 
     /**
-     * Getter for losePoints
+     * Getter for losePoints. losePoints represents how many wars were won
      * @return int
      */
     public int getLosePoints() {
@@ -140,7 +140,7 @@ public class PlayerState {
     }
 
     /**
-     * Setter for playedEitherCards
+     * Setter for playedEitherCards. playedEitherCards represents played either cards
      * @param playedEitherCards
      */
     public void setPlayedEitherCards(List<EitherResourceCard> playedEitherCards) {
@@ -150,7 +150,7 @@ public class PlayerState {
     }
 
     /**
-     * Setter for playedReductionsCards
+     * Setter for playedReductionsCards. playedReductionsCards represents played reduction cards
      * @param playedReduceCards
      */
     public void setPlayedReductionCards(List<NeighborReductionCard> playedReduceCards) {
@@ -202,7 +202,7 @@ public class PlayerState {
     }
 
     /**
-     * Setter for winPoints
+     * Setter for winPoints. winPoints represents how many wars were won
      * @param winPoints
      */
     public void setWinPoints(int winPoints) {
@@ -210,7 +210,7 @@ public class PlayerState {
     }
 
     /**
-     * Setter for losePoints
+     * Setter for losePoints. losePoints represents how many wars were lost.
      * @param losePoints
      */
     public void setLosePoints(int losePoints) {
