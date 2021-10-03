@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Babylon extends Monument {
 
-    public Babylon(Player player) {
-        super("Babylon",player, ResourceEnum.CLAY);
+    public Babylon() {
+        super("Babylon", ResourceEnum.CLAY);
     }
 
     @Override
@@ -20,10 +20,7 @@ public class Babylon extends Monument {
         newResources.add(ResourceEnum.Library);
         newResources.add(ResourceEnum.Dispensary);
 
-        List<ArrayList<ResourceEnum>> currentEitherResources = player.getState().getEitherResources();
-        currentEitherResources.add(newResources);
-        player.getState().setEitherResources(currentEitherResources);     //refactor this to be immutable-ish
-        return null;
+        return newResources;
     }
 
     @Override

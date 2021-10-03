@@ -4,22 +4,26 @@ import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Gizah extends Monument {
 
-    public Gizah(Player player) {
-        super("ThePyramidsOfGiza",player, ResourceEnum.STONE);
+    public Gizah() {
+        super("ThePyramidsOfGiza", ResourceEnum.STONE);
     }
 
     @Override
     public List<ResourceEnum> stage2Reward() {
-        List<ResourceEnum> guaranteedResources = player.getState().getGuaranteedResources();
-        for (int i=0; i<5; i++) {
-            guaranteedResources.add(ResourceEnum.POINT);
+        ArrayList<ResourceEnum> newResources = new ArrayList<>();
+
+        int k=0;
+        while (k<5) {
+            newResources.add(ResourceEnum.POINT);
+            k++;
         }
-        player.getState().setGuaranteedResources(guaranteedResources);
-        return guaranteedResources;
+
+        return newResources;
     }
 
     @Override

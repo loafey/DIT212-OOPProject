@@ -51,7 +51,7 @@ public class Game {
      */
 
     private void init(){
-        monuments = MonumentFactory.getMonuments(players);
+        monuments = MonumentFactory.getMonuments();
         periodCards = CardFactory.getPeriodCards();
         cardDeck = periodCards.get(0);
         trash = new Trashcan();

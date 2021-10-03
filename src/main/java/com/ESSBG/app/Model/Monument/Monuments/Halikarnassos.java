@@ -4,23 +4,27 @@ import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.ResourceEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Halikarnassos extends Monument {
 
-    public Halikarnassos(Player player) {
-        super("Halikarnassos",player, ResourceEnum.TEXTILE);
+    public Halikarnassos() {
+        super("Halikarnassos", ResourceEnum.TEXTILE);
     }
 
     // Modified, not how it's actually in the real game
     @Override
     public List<ResourceEnum> stage2Reward() {
-        List<ResourceEnum> guaranteedResources = player.getState().getGuaranteedResources();
-        for (int i=0; i<5; i++) {
-            guaranteedResources.add(ResourceEnum.POINT);
+        ArrayList<ResourceEnum> newResources = new ArrayList<>();
+
+        int k=0;
+        while (k<5) {
+            newResources.add(ResourceEnum.POINT);
+            k++;
         }
-        player.getState().setGuaranteedResources(guaranteedResources);
-        return guaranteedResources;
+
+        return newResources;
     }
 
     @Override
