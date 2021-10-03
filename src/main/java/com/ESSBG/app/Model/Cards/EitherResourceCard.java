@@ -15,9 +15,9 @@ public class EitherResourceCard extends Card {
      * @param cost
      * @param color
      */
-    public EitherResourceCard(String name, List<ResourceEnum> cost, ColorEnum color) {
+    public EitherResourceCard(String name, List<ResourceEnum> cost, ColorEnum color, IEitherAction action) {
         super(name, cost, color);
-        
+        this.action = action;
     }
     
     /**

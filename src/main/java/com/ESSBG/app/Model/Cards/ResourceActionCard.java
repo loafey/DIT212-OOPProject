@@ -18,7 +18,7 @@ public class ResourceActionCard extends Card{
      */
     public ResourceActionCard(String name, List<ResourceEnum> cost, ColorEnum color, IResourceAction action) {
         super(name, cost, color);
-        
+        this.action = action;
     }
     
     /**

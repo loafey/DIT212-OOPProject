@@ -30,7 +30,15 @@ public class Player {
         this.eitherActionHandlers = new ArrayList<>();
         this.neighborReductionHandlers = new ArrayList<>();
         this.resourceActionHandlers = new ArrayList<>();
+    }
 
+    public Player(int id, PlayerState state) {
+        this.id = id;
+        this.name = String.valueOf(id);
+        this.state = state;
+        this.eitherActionHandlers = new ArrayList<>();
+        this.neighborReductionHandlers = new ArrayList<>();
+        this.resourceActionHandlers = new ArrayList<>();
     }
 
     @Override

@@ -23,10 +23,8 @@ public class PlayerState {
 
     /**
      * Constructor for a PlayerState
-     * @param leftPlayer
-     * @param rightPlayer
      */
-    public PlayerState(Player leftPlayer, Player rightPlayer) {
+    public PlayerState() {
         this.playedEitherCards = new ArrayList<>();
         this.playedReductionCards = new ArrayList<>();
         this.playedResourceCards = new ArrayList<>();

@@ -5,7 +5,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EitherResource implements IEitherAction {
+public class EitherResourceAction implements IEitherAction {
 
     private final List<ResourceEnum> resources;
 
@@ -13,7 +13,7 @@ public class EitherResource implements IEitherAction {
      * Constructor for EitherResource
      * @param resources
      */
-    public EitherResource(List<ResourceEnum> resources) {
+    public EitherResourceAction(List<ResourceEnum> resources) {
         this.resources = new ArrayList<>(resources);
     }
 
