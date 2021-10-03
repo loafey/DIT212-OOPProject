@@ -76,6 +76,10 @@ public class Player {
         this.monument = monument;
     }
 
+    public Monument getMonument() {
+        return monument;
+    }
+
     private void getStage1Reward() {
         List<ResourceEnum> list = this.getState().getGuaranteedResources();
         for (int i = 0; i < 3; i++) {
@@ -127,5 +131,21 @@ public class Player {
         }
 
         return false;
+    }
+
+    /**
+     * Initialize the starting amount of coins and the play'ers monument's starting resource
+     */
+    public void initResources(){
+        List<ResourceEnum> list = state.getGuaranteedResources();
+
+        int k=0;
+        while (k<3) {
+            list.add(ResourceEnum.COIN);
+            k++;
+        }
+
+        list.add(monument.getStartingResource());
+        this.getState().setGuaranteedResources(list);
     }
 }
