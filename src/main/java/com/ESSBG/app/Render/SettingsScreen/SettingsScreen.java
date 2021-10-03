@@ -16,6 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+/**
+ * SettingsScreen is the view for the settings menu.
+ */
 public class SettingsScreen implements Screen {
     private static final boolean DEBUG = false; // TODO DISABLE THIS
     private final Stage stage;
@@ -35,6 +38,11 @@ public class SettingsScreen implements Screen {
     protected LabelTextField fpsLimit;
     protected LabelCheckBox vSyncCheckBox;
 
+    /**
+     * Initializes the view.
+     *
+     * @param settings the class to get the data from
+     */
     public SettingsScreen(Settings settings) {
         this.settings = settings;
         Viewport vp = new ScreenViewport();
@@ -53,6 +61,21 @@ public class SettingsScreen implements Screen {
         rightTableSetup(rightSubTable);
     }
 
+
+    /**
+     * @param e the event to be attached to the back button
+     */
+    protected void addBackButtonListener(EventListener e) {
+        backButton.addListener(e);
+    }
+
+    /**
+     * @param e the event to be attached to the apply button
+     */
+    protected void addApplyButtonListener(EventListener e) {
+        applyButton.addListener(e);
+    }
+
     @Override
     public void show() {
         stage.addActor(mainTable);
@@ -63,7 +86,7 @@ public class SettingsScreen implements Screen {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        renderCellBorder(mainTable, 10);
+//        renderCellBorder(mainTable, 10);
 
         stage.act(delta);
         stage.draw();
@@ -119,14 +142,6 @@ public class SettingsScreen implements Screen {
             }
         }
         shapeRenderer.end();
-    }
-
-    protected void addBackButtonListener(EventListener e) {
-        backButton.addListener(e);
-    }
-
-    protected void addApplyButtonListener(EventListener e) {
-        applyButton.addListener(e);
     }
 
     private void mainTableSetup(Table table) {
