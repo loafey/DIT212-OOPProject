@@ -13,12 +13,13 @@ public class Gizah extends Monument {
     }
 
     @Override
-    public void stage2Reward() {
+    public List<ResourceEnum> stage2Reward() {
         List<ResourceEnum> guaranteedResources = player.getState().getGuaranteedResources();
         for (int i=0; i<5; i++) {
             guaranteedResources.add(ResourceEnum.POINT);
         }
         player.getState().setGuaranteedResources(guaranteedResources);
+        return guaranteedResources;
     }
 
     @Override

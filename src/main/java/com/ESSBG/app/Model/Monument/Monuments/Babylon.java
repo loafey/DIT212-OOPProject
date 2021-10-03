@@ -14,7 +14,7 @@ public class Babylon extends Monument {
     }
 
     @Override
-    public void stage2Reward() {
+    public List<ResourceEnum> stage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();
         newResources.add(ResourceEnum.Laboratory);
         newResources.add(ResourceEnum.Library);
@@ -23,6 +23,7 @@ public class Babylon extends Monument {
         List<ArrayList<ResourceEnum>> currentEitherResources = player.getState().getEitherResources();
         currentEitherResources.add(newResources);
         player.getState().setEitherResources(currentEitherResources);     //refactor this to be immutable-ish
+        return null;
     }
 
     @Override

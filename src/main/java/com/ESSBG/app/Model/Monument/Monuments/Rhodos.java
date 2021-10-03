@@ -13,10 +13,11 @@ public class Rhodos extends Monument {
     }
 
     @Override
-    public void stage2Reward() {
+    public List<ResourceEnum> stage2Reward() {
         int warTokens = player.getState().getWarTokens();
         warTokens+=2;
         player.getState().setWarTokens(warTokens);
+        return null;
     }
 
     @Override

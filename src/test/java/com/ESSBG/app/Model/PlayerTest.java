@@ -2,8 +2,8 @@ package com.ESSBG.app.Model;
 
 import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
-import com.ESSBG.app.Model.Monuments.Alexandria;
-import com.ESSBG.app.Model.Monuments.Monument;
+import com.ESSBG.app.Model.Monument.Monuments.Alexandria;
+import com.ESSBG.app.Model.Monument.Monument;
 
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.Player.PlayerState;
@@ -22,7 +22,7 @@ public class PlayerTest {
         generation.add(ResourceEnum.WOOD);
         List<IResourceAction> monAction = new ArrayList<>();
         monAction.add(new ResourceAction(List.of(ResourceEnum.ORE)));
-        Monument mon = new Alexandria(player);
-        player = new Player(0, new PlayerState(null));
+        Monument mon = new Alexandria();
+        //player = new Player();
     }
 }

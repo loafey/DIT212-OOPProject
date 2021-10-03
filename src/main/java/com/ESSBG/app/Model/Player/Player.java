@@ -6,10 +6,15 @@ import java.util.List;
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
+import com.ESSBG.app.Model.Monument.Monument;
+import com.ESSBG.app.Model.ResourceEnum;
+
+import javax.management.monitor.Monitor;
 
 public class Player {
     private final int id;
     private final String name;
+    private final Monument monument;
     private List<IEitherHandler> eitherActionHandlers;
     private List<INeighborReductionHandler> neighborReductionHandlers;
     private List<IResourceHandler> resourceActionHandlers;
@@ -18,7 +23,7 @@ public class Player {
     private Player rightNeighbor;
 
 
-    public Player(int id, PlayerState state, Player leftNeighbor, Player rightNeighbor){// Monument monument) {
+    public Player(int id, PlayerState state, Player leftNeighbor, Player rightNeighbor, Monument monument) {
         this.id = id;
         this.name = String.valueOf(id);
         this.state = state;
@@ -27,6 +32,7 @@ public class Player {
         this.eitherActionHandlers = new ArrayList<>();
         this.neighborReductionHandlers = new ArrayList<>();
         this.resourceActionHandlers = new ArrayList<>();
+        this.monument = monument;
 
     }
 
@@ -45,27 +51,80 @@ public class Player {
         return name;
     }
 
-    public PlayerState getState(){
+    public PlayerState getState() {
         return new PlayerState(state);
     }
 
-    public void setState(PlayerState state){
+    public void setState(PlayerState state) {
         this.state = new PlayerState(state);
     }
 
-    public Player getLeftNeighbor(){
+    public Player getLeftNeighbor() {
         return leftNeighbor;
     }
 
-    public Player getRightNeighbor(){
+    public Player getRightNeighbor() {
         return rightNeighbor;
     }
 
-    public void setLeftNeighbor(Player p){
+    public void setLeftNeighbor(Player p) {
         this.leftNeighbor = p;
     }
 
-    public void setRightNeighbor(Player p){
+    public void setRightNeighbor(Player p) {
         this.rightNeighbor = p;
+    }
+
+    private void getStage1Reward() {
+        List<ResourceEnum> list = this.getState().getGuaranteedResources();
+        for (int i = 0; i < 3; i++) {
+            list.add(ResourceEnum.POINT);
+        }
+        this.getState().setGuaranteedResources(list);
+    }
+
+    //TODO generalisera för olika typer av monument så vi kan ha either och neighbour också
+    private void getStage2reward(){
+        List<ResourceEnum> list = this.getState().getGuaranteedResources();
+        List<ResourceEnum> newResources = monument.stage2Reward();
+
+        for (ResourceEnum r : newResources){
+            list.add(r);
+        }
+
+        this.getState().setGuaranteedResources(list);
+    }
+
+    private void getStage3Reward() {
+        List<ResourceEnum> list = this.getState().getGuaranteedResources();
+        for (int i = 0; i < 7; i++) {
+            list.add(ResourceEnum.POINT);
+        }
+        this.getState().setGuaranteedResources(list);
+    }
+
+
+    public boolean buildStageOfMonument(){
+        boolean playerHasEfficientResources = false;    //TODO  Vet ej hur man ska kolla det
+
+        if (playerHasEfficientResources && monument.getStageBuilt() < 3){
+            monument.buildStage();
+
+            switch (monument.getStageBuilt()){
+                case 1:
+                    getStage1Reward();
+                    break;
+                case 2:
+                    getStage2reward();
+                    break;
+                case 3:
+                    getStage3Reward();
+            }
+
+            //player.discard(card); //player doesn't have discard anymore
+            return true;
+        }
+
+        return false;
     }
 }

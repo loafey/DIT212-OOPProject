@@ -5,6 +5,8 @@ import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 
+import java.util.List;
+
 public class Ephesos extends Monument {
 
     public Ephesos(Player player) {
@@ -13,10 +15,11 @@ public class Ephesos extends Monument {
 
 
     @Override
-    public void stage2Reward() {
+    public List<ResourceEnum> stage2Reward() {
         PlayerState updatedState = player.getState();
         updatedState.addCoins(9);
         player.setState(updatedState);
+        return null;
     }
 
     @Override
