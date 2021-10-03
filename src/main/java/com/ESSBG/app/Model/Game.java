@@ -71,7 +71,6 @@ public class Game {
 
 
 
-
     // Use this method to give war tokens after each age
     private void giveWarTokens(int age) {
         int x = 0;

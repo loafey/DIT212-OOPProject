@@ -3,6 +3,7 @@ package com.ESSBG.app.Model.Player;
 import com.ESSBG.app.Model.ConcurrentCircularList;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Monument.MonumentFactory;
+import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ public class InitializePlayers {
         this.monuments = monuments;
         setMonumentsToPlayers();
         updatePlayerNeighbors();
+        initPlayerState();
+        initPlayerResources();
     }
 
     private void setMonumentsToPlayers(){
@@ -30,6 +33,18 @@ public class InitializePlayers {
             player.setLeftNeighbor(players.getPrevious(player));
             player.setRightNeighbor(players.getNext(player));
 
+        }
+    }
+
+    private void initPlayerState(){
+        for(Player player : players){
+            player.setState(new PlayerState(player.getLeftNeighbor(), player.getRightNeighbor()));
+        }
+    }
+
+    private void initPlayerResources(){
+        for (Player player : players){
+            player.initResources();
         }
     }
 
