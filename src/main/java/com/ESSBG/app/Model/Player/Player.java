@@ -17,7 +17,7 @@ public class Player {
     private List<INeighborReductionHandler> neighborReductionHandlers;
     private List<IResourceHandler> resourceActionHandlers;
     private PlayerState state;
-    private Player leftNeighbor;
+    private Player leftNeighbor;    //remove, player shouldn't hold his own neighbors
     private Player rightNeighbor;
 
 
