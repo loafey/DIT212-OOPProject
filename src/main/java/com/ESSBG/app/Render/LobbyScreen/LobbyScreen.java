@@ -38,6 +38,7 @@ public class LobbyScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         
         Table connectContainer = new Table();
+        connectContainer.pad(10);
         connectContainer.top().left();
         sceneTable.add(connectContainer).fill();
         Table connectTable = new Table();
@@ -46,13 +47,14 @@ public class LobbyScreen implements Screen{
         connectTable.row();
         joinButton = new Button(skin);
         joinButton.add(new Label("Connect", skin));
-        connectTable.add(joinButton);
+        connectTable.add(joinButton).fillX();
         ipField = new TextField("", skin);
         connectTable.add(ipField);
         
         connectContainer.add(connectTable).fill().expand();
 
         lobbyTable = new Table();
+        lobbyTable.pad(10);
         lobbyTable.setDebug(true);
         lobbyTable.top().left();
         lobbyTable.add(new Label("Lobby info: ", skin)).fill();
@@ -60,12 +62,15 @@ public class LobbyScreen implements Screen{
 
         Table playerTable = new Table();
         lobbyTable.add(playerTable).expandY().fill();
+        playerTable.top().left();
         
         
-        for (int x = 0; x < 200; x++){
+        for (int x = 0; x < 7; x++){
             Table infoTable = new Table();
             infoTable.left();
-            infoTable.add(new Label("Player name", skin)).fillX();
+            Label l = new Label("Player" + x, skin);
+            l.setAlignment(0);
+            infoTable.add(l);
             playerTable.add(infoTable);
             playerTable.row();
         }
@@ -75,6 +80,10 @@ public class LobbyScreen implements Screen{
         Button startButton = new Button(skin);
         startButton.add(new Label("Start Game", skin));
         lobbyTable.add(startButton).fillX().expandX();
+
+        Button leaveButton = new Button(skin);
+        leaveButton.add(new Label("Leave lobby", skin));
+        lobbyTable.add(leaveButton).fillX().expandX();
 
         sceneTable.add(lobbyTable).fill().expand();
     }
