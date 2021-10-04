@@ -24,7 +24,7 @@ import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Network.*;
 
 public class Game {
-    // TODO test
+    // TODO change to private
     public ConcurrentCircularList<Player> players = new ConcurrentCircularList<>(new ReentrantLock(true));
     private List<List<Card>> currentPeriodCards;
     private Trashcan trash;
@@ -56,6 +56,7 @@ public class Game {
         // }
     }
 
+    //TODO reimplement without instanceof
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
