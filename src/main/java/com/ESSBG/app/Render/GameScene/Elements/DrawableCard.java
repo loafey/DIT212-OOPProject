@@ -1,4 +1,4 @@
-package com.ESSBG.app.Render.GameScene;
+package com.ESSBG.app.Render.GameScene.Elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

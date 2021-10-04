@@ -1,4 +1,4 @@
-package com.ESSBG.app.Render.GameScene;
+package com.ESSBG.app.Render.GameScene.Elements;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;

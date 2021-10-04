@@ -1,5 +1,7 @@
 package com.ESSBG.app.Render.GameScene;
 
+import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
+import com.ESSBG.app.Render.GameScene.Elements.DrawableMonument;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
