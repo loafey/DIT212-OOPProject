@@ -55,9 +55,7 @@ public class PlayerState {
      * @return List<EitherResourceCard>
      */
     public List<EitherResourceCard> getPlayedEitherCards() {
-        List<EitherResourceCard> copy = new ArrayList<>();
-        Collections.copy(copy, playedEitherCards);
-        return copy;
+        return new ArrayList<>(playedEitherCards);
     }
 
     /**
@@ -65,9 +63,7 @@ public class PlayerState {
      * @return List<NeighborReductionCard>
      */
     public List<NeighborReductionCard> getPlayedReductionCards() {
-        List<NeighborReductionCard> copy = new ArrayList<>();
-        Collections.copy(copy, playedReductionCards);
-        return copy;
+        return new ArrayList<>(playedReductionCards);
     }
 
     /**
@@ -75,9 +71,7 @@ public class PlayerState {
      * @return List<ResourceActionCard>
      */
     public List<ResourceActionCard> getPlayedResourceCards() {
-        List<ResourceActionCard> copy = new ArrayList<>();
-        Collections.copy(copy, playedResourceCards);
-        return copy;
+        return new ArrayList<>(playedResourceCards);
     }
 
     /**
@@ -85,9 +79,7 @@ public class PlayerState {
      * @return List<ResourceEnum>
      */
     public List<ResourceEnum> getGuaranteedResources() {
-        List<ResourceEnum> copy = new ArrayList<>();
-        Collections.copy(copy, guaranteedResources);
-        return copy;
+        return new ArrayList<>(guaranteedResources);
     }
 
     /**
@@ -95,9 +87,7 @@ public class PlayerState {
      * @return List<ArrayList<ResourceEnum>>
      */
     public List<ArrayList<ResourceEnum>> getEitherResources() {
-        List<ArrayList<ResourceEnum>> copy = new ArrayList<>();     //not a deep copy so pretty useless
-        Collections.copy(copy, eitherResources);        
-        return copy;
+        return new ArrayList<>(eitherResources);     //not a deep copy so pretty useless
     }
 
     /**
@@ -105,9 +95,7 @@ public class PlayerState {
      * @return List<ResourceEnum>
      */
     public List<ResourceEnum> getNeighborReductions() {
-        List<ResourceEnum> copy = new ArrayList<>();
-        Collections.copy(copy, neighborReductions);
-        return copy;
+        return new ArrayList<>(neighborReductions);
     }
 
     /**
@@ -142,9 +130,7 @@ public class PlayerState {
      * @param playedEitherCards
      */
     public void setPlayedEitherCards(List<EitherResourceCard> playedEitherCards) {
-        List<EitherResourceCard> copy = new ArrayList<>(playedEitherCards.size());
-        Collections.copy(copy, playedEitherCards);
-        this.playedEitherCards = copy;
+        this.playedEitherCards = new ArrayList<>(playedEitherCards);
     }
 
     /**
@@ -152,9 +138,7 @@ public class PlayerState {
      * @param playedReduceCards
      */
     public void setPlayedReductionCards(List<NeighborReductionCard> playedReduceCards) {
-        List<NeighborReductionCard> copy = new ArrayList<>(playedReduceCards.size());
-        Collections.copy(copy, playedReduceCards);
-        this.playedReductionCards = copy;
+        this.playedReductionCards = new ArrayList<>(playedReduceCards);
     }
 
     /**
@@ -162,9 +146,7 @@ public class PlayerState {
      * @param playedResourceCards
      */
     public void setPlayedResourceCards(List<ResourceActionCard> playedResourceCards) {
-        List<ResourceActionCard> copy = new ArrayList<>(playedResourceCards.size());
-        Collections.copy(copy, playedResourceCards);
-        this.playedResourceCards = copy;
+        this.playedResourceCards = new ArrayList<>(playedResourceCards);
     }
 
     /**
@@ -184,9 +166,7 @@ public class PlayerState {
      * @param eitherResources
      */
     public void setEitherResources(List<ArrayList<ResourceEnum>> eitherResources) {
-        List<ArrayList<ResourceEnum>> copy = new ArrayList<>(eitherResources.size());
-        Collections.copy(copy, eitherResources);
-        this.eitherResources = copy;
+        this.eitherResources = new ArrayList<>(eitherResources);
     }
 
     /**
@@ -194,9 +174,7 @@ public class PlayerState {
      * @param neighborReductions
      */
     public void setNeighborReductions(List<ResourceEnum> neighborReductions) {
-        List<ResourceEnum> copy = new ArrayList<>(neighborReductions.size());
-        Collections.copy(copy, neighborReductions);
-        this.neighborReductions = copy;
+        this.neighborReductions = new ArrayList<>(neighborReductions);
     }
 
     /**
