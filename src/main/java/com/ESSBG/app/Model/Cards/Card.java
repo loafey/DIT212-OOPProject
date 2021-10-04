@@ -22,6 +22,14 @@ public abstract class Card {
     }
 
     /**
+     * Getter for name
+     * @return String
+     */
+    public String getName(){
+        return name;
+    }
+
+    /**
      * Getter for cost
      * @return List<ResourceEnum>
      */
