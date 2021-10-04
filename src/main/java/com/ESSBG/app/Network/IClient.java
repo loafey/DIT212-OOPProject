@@ -21,9 +21,16 @@ interface IClient {
      *
      * Resets the domain before each run.
      *
-     * @return true if client started, else false. Connectionstatus in msgQueue
+     * @return true if client started, else false. Connectionstatus in msgQueue.
      */
     boolean runClient();
+    /**
+     * Essentially the same as runClient() but with ip address as choice.
+     *
+     * @param ipAddress ip address in the shape of "123.123.123.123"
+     * @return true if client started, else false. Connectionstatus in msgQueue.
+     */
+    boolean runClient(String ipAddress);
 
     /**
      * Closes the socket

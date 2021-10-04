@@ -13,7 +13,16 @@ public class Client extends Base implements IClient {
     private Lock lock;
 
     @Override
+    public boolean runClient(String ipAddress) {
+        return runClientHelper(ipAddress);
+    }
+
+    @Override
     public boolean runClient() {
+        return runClientHelper(Constants.IP);
+    }
+
+    private boolean runClientHelper(String ipAddress) {
         try {
             // Shutdown existing stuff
             try {
@@ -24,7 +33,7 @@ public class Client extends Base implements IClient {
             // Recreate the world
             lock = new ReentrantLock(true);
             msgQueue = new LinkedBlockingQueue<JSONObject>();
-            serverSocket = new Socket(InetAddress.getByName(Constants.IP), Constants.PORT);
+            serverSocket = new Socket(InetAddress.getByName(ipAddress), Constants.PORT);
             thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
             thread.start();
             return true;
