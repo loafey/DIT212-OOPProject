@@ -21,7 +21,11 @@ public class LobbyScreen implements Screen{
     private Button joinButton;
 
     private Table lobbyTable;
+    private Table playerTable;
 
+    private Button startButton;
+    private Button leaveButton;
+    private Button hostButton;
 
     @Override
     public void show() {
@@ -41,6 +45,7 @@ public class LobbyScreen implements Screen{
         connectContainer.pad(10);
         connectContainer.top().left();
         sceneTable.add(connectContainer).fill();
+
         Table connectTable = new Table();
         connectTable.top().left();
         connectTable.add(new Label("Join Server:",skin));
@@ -50,6 +55,10 @@ public class LobbyScreen implements Screen{
         connectTable.add(joinButton).fillX();
         ipField = new TextField("", skin);
         connectTable.add(ipField);
+        hostButton = new Button(skin);
+        hostButton.add("Host");
+        connectTable.row();
+        connectTable.add(hostButton).fill();
         
         connectContainer.add(connectTable).fill().expand();
 
@@ -60,33 +69,23 @@ public class LobbyScreen implements Screen{
         lobbyTable.add(new Label("Lobby info: ", skin)).fill();
         lobbyTable.row();
 
-        Table playerTable = new Table();
+        playerTable = new Table();
         lobbyTable.add(playerTable).expandY().fill();
         playerTable.top().left();
         
-        
-        for (int x = 0; x < 7; x++){
-            Table infoTable = new Table();
-            infoTable.left();
-            Label l = new Label("Player" + x, skin);
-            l.setAlignment(0);
-            infoTable.add(l);
-            playerTable.add(infoTable);
-            playerTable.row();
-        }
-
         lobbyTable.row();
         
-        Button startButton = new Button(skin);
+        startButton = new Button(skin);
         startButton.add(new Label("Start Game", skin));
         lobbyTable.add(startButton).fillX().expandX();
 
-        Button leaveButton = new Button(skin);
+        leaveButton = new Button(skin);
         leaveButton.add(new Label("Leave lobby", skin));
         lobbyTable.add(leaveButton).fillX().expandX();
 
         sceneTable.add(lobbyTable).fill().expand();
     }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
