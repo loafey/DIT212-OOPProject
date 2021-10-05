@@ -18,7 +18,7 @@ public class NeighborReductionCard extends Card {
      * @param action
      */
     public NeighborReductionCard(String name, List<ResourceEnum> cost, ColorEnum color, NeighborReductionAction action) {
-        super(name, cost, color);
+        super(name, cost, color, CardTypeEnum.NEIGHBORREDUCTION);
         this.action = action;
 
     }
