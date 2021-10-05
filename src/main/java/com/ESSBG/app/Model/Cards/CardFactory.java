@@ -1,5 +1,8 @@
 package com.ESSBG.app.Model.Cards;
 
+import com.ESSBG.app.Model.Action.ResourceAction;
+import com.ESSBG.app.Model.ResourceEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,11 @@ public class CardFactory {
         return allCards;
     }
 
+    //TODO generate more random cards
     public static Card generateCard(int age) {
-        return null;
+        List<ResourceEnum> list = new ArrayList<>();
+        list.add(ResourceEnum.WOOD);
+        list.add(ResourceEnum.WOOD);
+        return new ResourceActionCard("Sawmill", null, ColorEnum.BROWN, new ResourceAction(list));
     }
 }
