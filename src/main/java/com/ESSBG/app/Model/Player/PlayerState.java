@@ -6,7 +6,6 @@ import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +47,21 @@ public class PlayerState {
         this.neighborReductions = state.getNeighborReductions();
         this.winPoints = state.getWinPoints();
         this.losePoints = state.getLosePoints();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerState that = (PlayerState) o;
+        return winPoints == that.winPoints &&
+                losePoints == that.losePoints &&
+                playedEitherCards.equals(that.playedEitherCards) &&
+                playedReductionCards.equals(that.playedReductionCards) &&
+                playedResourceCards.equals(that.playedResourceCards) &&
+                guaranteedResources.equals(that.guaranteedResources) &&
+                eitherResources.equals(that.eitherResources) &&
+                neighborReductions.equals(that.neighborReductions);
     }
 
     /**
