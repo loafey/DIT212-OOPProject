@@ -34,6 +34,15 @@ public class PlayerStateTest {
     }
 
     @Test
+    public void testEquals() {
+        playerState.addCoins(10);
+        PlayerState newState = new PlayerState(playerState);
+        assertEquals(playerState, newState);
+        playerState.addWinPoints(1);
+        assertNotEquals(playerState, newState);
+    }
+
+    @Test
     public void playerStateConstructor() {
         ArrayList<ResourceEnum> resourceEnums = new ArrayList<>();
         resourceEnums.add(ResourceEnum.STONE);
@@ -46,14 +55,7 @@ public class PlayerStateTest {
         playerState.addWinPoints(20);
         playerState.addLosePoints(10);
         PlayerState newPlayerState = new PlayerState(playerState);
-        assertArrayEquals(playerState.getPlayedEitherCards().toArray(),    newPlayerState.getPlayedEitherCards().toArray());
-        assertArrayEquals(playerState.getPlayedReductionCards().toArray(), newPlayerState.getPlayedReductionCards().toArray());
-        assertArrayEquals(playerState.getPlayedResourceCards().toArray(),  newPlayerState.getPlayedResourceCards().toArray());
-        assertArrayEquals(playerState.getGuaranteedResources().toArray(),  newPlayerState.getGuaranteedResources().toArray());
-        assertArrayEquals(playerState.getEitherResources().toArray(),      newPlayerState.getEitherResources().toArray());
-        assertArrayEquals(playerState.getNeighborReductions().toArray(),   newPlayerState.getNeighborReductions().toArray());
-        assertEquals(playerState.getWinPoints(),                           newPlayerState.getWinPoints());
-        assertEquals(playerState.getLosePoints(),                          newPlayerState.getLosePoints());
+        assertEquals(playerState, newPlayerState);
     }
 
     @Test
