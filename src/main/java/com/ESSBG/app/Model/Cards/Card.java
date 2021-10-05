@@ -46,4 +46,12 @@ public abstract class Card {
     public ColorEnum getColor() {
         return color;
     }
+
+    /**
+     * Getter for CardTypeEnum
+     * @return CardTypeEnum
+     */
+    public CardTypeEnum getCardTypeEnum() {
+        return cardTypeEnum;
+    }
 }
