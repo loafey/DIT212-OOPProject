@@ -52,7 +52,6 @@ public class Game {
         // }
     }
 
-    //TODO reimplement without instanceof
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
