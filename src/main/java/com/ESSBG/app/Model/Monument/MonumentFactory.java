@@ -1,7 +1,6 @@
 package com.ESSBG.app.Model.Monument;
 
 import com.ESSBG.app.Model.Monument.Monuments.*;
-import com.ESSBG.app.Model.Player.Player;
 
 import java.util.*;
 
