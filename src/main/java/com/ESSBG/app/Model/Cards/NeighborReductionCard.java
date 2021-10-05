@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.ESSBG.app.Model.Action.NeighborReductionAction;
 import com.ESSBG.app.Model.ResourceEnum;
-import com.ESSBG.app.Model.Action.INeighborReduction;
+import com.ESSBG.app.Model.Action.INeighborReductionAction;
 
 public class NeighborReductionCard extends Card {
 
-    private INeighborReduction action;
+    private INeighborReductionAction action;
 
     /**
      * Constructor for NeighborReductionCard
@@ -17,7 +17,7 @@ public class NeighborReductionCard extends Card {
      * @param color
      * @param action
      */
-    public NeighborReductionCard(String name, List<ResourceEnum> cost, ColorEnum color, NeighborReductionAction action) {
+    public NeighborReductionCard(String name, List<ResourceEnum> cost, ColorEnum color, INeighborReductionAction action) {
         super(name, cost, color, CardTypeEnum.NEIGHBORREDUCTION);
         this.action = action;
 
@@ -27,7 +27,7 @@ public class NeighborReductionCard extends Card {
      * Getter for action. INeighborReduction represents an action that returns resources to reduce the cost of 
      * @return INeighborReduction
      */
-    public INeighborReduction getAction(){
+    public INeighborReductionAction getAction(){
         return action;
     }
     

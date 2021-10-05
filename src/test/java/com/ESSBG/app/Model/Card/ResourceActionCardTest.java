@@ -7,26 +7,27 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
 import com.ESSBG.app.Model.ResourceEnum;
-import com.ESSBG.app.Model.Action.EitherResourceAction;
-import com.ESSBG.app.Model.Action.IEitherAction;
-import com.ESSBG.app.Model.Cards.EitherResourceCard;
+import com.ESSBG.app.Model.Action.IResourceAction;
+import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.Cards.ColorEnum;
+import com.ESSBG.app.Model.Cards.ResourceActionCard;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class EitherResourceCardTest {
+
+public class ResourceActionCardTest {
     
-    EitherResourceCard card;
-    IEitherAction action;
+    ResourceActionCard card;
+    IResourceAction action;
 
     @Before
     public void setup(){
         List<ResourceEnum> resourceEnumList = new ArrayList<>();
         resourceEnumList.add(ResourceEnum.STONE);
         resourceEnumList.add(ResourceEnum.CLAY);
-        action = new EitherResourceAction(resourceEnumList);
-        card = new EitherResourceCard("Test", resourceEnumList, ColorEnum.GRAY, action);
+        action = new ResourceAction(resourceEnumList);
+        card = new ResourceActionCard("Test", resourceEnumList, ColorEnum.YELLOW, action);
     }
 
     @Test

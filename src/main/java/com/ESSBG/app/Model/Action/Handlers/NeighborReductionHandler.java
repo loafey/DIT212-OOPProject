@@ -1,6 +1,6 @@
 package com.ESSBG.app.Model.Action.Handlers;
 
-import com.ESSBG.app.Model.Action.INeighborReduction;
+import com.ESSBG.app.Model.Action.INeighborReductionAction;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 
@@ -8,13 +8,13 @@ import java.util.List;
 
 public class NeighborReductionHandler implements INeighborReductionHandler {
 
-    private INeighborReduction action;
+    private INeighborReductionAction action;
 
     /**
      * Constructor for a NeighborReductionHandler
      * @param action
      */
-    public NeighborReductionHandler(INeighborReduction action) {
+    public NeighborReductionHandler(INeighborReductionAction action) {
         this.action = action;
     }
 

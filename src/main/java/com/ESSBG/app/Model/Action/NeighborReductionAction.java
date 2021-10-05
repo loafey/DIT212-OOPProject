@@ -5,7 +5,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeighborReductionAction implements INeighborReduction {
+public class NeighborReductionAction implements INeighborReductionAction {
 
     private final List<ResourceEnum> neighborReductions;
 
