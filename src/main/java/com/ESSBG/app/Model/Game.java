@@ -11,11 +11,7 @@ import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
-import com.ESSBG.app.Model.Cards.Card;
-import com.ESSBG.app.Model.Cards.CardFactory;
-import com.ESSBG.app.Model.Cards.EitherResourceCard;
-import com.ESSBG.app.Model.Cards.NeighborReductionCard;
-import com.ESSBG.app.Model.Cards.ResourceActionCard;
+import com.ESSBG.app.Model.Cards.*;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Monument.MonumentFactory;
 import com.ESSBG.app.Model.Player.InitializePlayers;
@@ -60,21 +56,22 @@ public class Game {
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
+        CardTypeEnum type = c.getCardTypeEnum();
 
-        if (c instanceof EitherResourceCard) {
+        if (type == CardTypeEnum.EITHERRESOURCE) {
             IEitherHandler a = new EitherHandler(((EitherResourceCard)c).getAction());
             PlayerState pState = a.updateState(p.getState());
             p.setState(pState);
-        } else if (c instanceof NeighborReductionCard) {
+        } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
             INeighborReductionHandler a = new NeighborReductionHandler(((NeighborReductionCard)c).getAction());
             PlayerState pState = a.updateState(p.getState());
             p.setState(pState);
-        } else if (c instanceof ResourceActionCard) {
+        } else if (type == CardTypeEnum.RESOURCEACTION) {
             IResourceHandler a = new ResourceHandler(((ResourceActionCard)c).getAction());
             PlayerState pState = a.updateState(p.getState());
             p.setState(pState);
         } else {
-            System.out.println("what?");    
+            System.out.println("what?");
         }
     }   
 
