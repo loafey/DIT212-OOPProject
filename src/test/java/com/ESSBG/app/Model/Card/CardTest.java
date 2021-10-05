@@ -13,25 +13,25 @@ import java.util.List;
 
 public class CardTest {
 
-    Card c;
+    Card card;
 
     @Before
     public void setup(){
-        new EitherResourceCard("Test", List.of(ResourceEnum.WAR), ColorEnum.BLUE, null);
+        card = new EitherResourceCard("Test", List.of(ResourceEnum.WAR), ColorEnum.BLUE, null);
     }
 
     @Test
     public void testGetColor(){
-        assertEquals(ColorEnum.BLUE, c.getColor());
+        assertEquals(ColorEnum.BLUE, card.getColor());
     }
 
     @Test
     public void testGetCost(){
-        assertEquals(List.of(ResourceEnum.WAR), c.getCost());
+        assertEquals(List.of(ResourceEnum.WAR), card.getCost());
     }
 
     @Test
     public void testGetName(){
-        assertEquals("Test", c.getName());
+        assertEquals("Test", card.getName());
     }
 }
