@@ -154,6 +154,8 @@ public class Player {
         }
 
         list.add(monument.getStartingResource());
-        this.getState().setGuaranteedResources(list);
+        PlayerState newState = getState();
+        newState.setGuaranteedResources(list);
+        setState(newState);
     }
 }
