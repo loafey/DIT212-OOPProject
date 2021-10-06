@@ -24,12 +24,16 @@ public class GameScene implements Screen {
 
     private GameController gameController;
 
-    private DrawableBoard rPlayer = new DrawableBoard();
+    private DrawableBoard board = new DrawableBoard();
 
     private Table pauseMenu;
 
+    /**
+     * Takes in JSON data to be displayed by the view.
+     * @param data The data in question
+     */
     public void update(JSONObject data) {
-        rPlayer.updateBoard(data, gameController, skin, handCardContainer, placedCardContainer, monument);
+        board.updateBoard(data, gameController, skin, handCardContainer, placedCardContainer, monument);
     }
 
     @Override

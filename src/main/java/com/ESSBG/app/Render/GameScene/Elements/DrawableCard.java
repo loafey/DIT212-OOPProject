@@ -18,6 +18,12 @@ public class DrawableCard extends Button {
     private float rotationGoal;
     private float rotationCurrent;
 
+    /**
+     * Creates a clickable card 
+     * @param skin The skin to be used
+     * @param rotation The rotation of the card
+     * @param color The color of the card
+     */
     public DrawableCard(Skin skin, float rotation, Color color) {
         super(skin);
 
