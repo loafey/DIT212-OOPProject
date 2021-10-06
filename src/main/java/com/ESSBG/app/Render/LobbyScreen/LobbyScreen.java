@@ -91,18 +91,6 @@ public class LobbyScreen implements Screen{
 
         sceneTable.add(lobbyTable).fill().expand();
 
-        initializeButtons();
-    }
-
-    private void initializeButtons(){
-        leaveButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                game = new Game();
-                game.not_finished_run();
-                
-            }
-        });
     }
 
     @Override
