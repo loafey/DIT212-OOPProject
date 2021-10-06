@@ -23,10 +23,7 @@ public class NeighborReductionAction implements INeighborReductionAction {
      */
     @Override
     public List<ResourceEnum> getList() {
-        List<ResourceEnum> copy = new ArrayList<>();
-        for (ResourceEnum r : neighborReductions){
-            copy.add(r);
-        }
+        List<ResourceEnum> copy = new ArrayList<>(neighborReductions);
         return copy;
     }
 

@@ -23,10 +23,7 @@ public class EitherResourceAction implements IEitherAction {
      */
     @Override
     public List<ResourceEnum> getList() {
-        List<ResourceEnum> copy = new ArrayList<>();
-        copy.addAll(resources);
+        List<ResourceEnum> copy = new ArrayList<>(resources);
         return copy;
     }
-
-    
 }
