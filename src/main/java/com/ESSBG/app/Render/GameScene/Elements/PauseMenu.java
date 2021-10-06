@@ -10,6 +10,10 @@ public class PauseMenu extends Window {
     private Button resumeButton;
     private Button exitButton;
 
+    /**
+     * A simple pause menu, not yet implemented
+     * @param skin
+     */
     public PauseMenu(Skin skin) {
         super("yo", skin);
         this.center();

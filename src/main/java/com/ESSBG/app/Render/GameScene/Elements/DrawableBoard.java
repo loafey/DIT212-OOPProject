@@ -16,13 +16,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-// TODO REMOVE ALL MAGIC NUMBERS
-
 public class DrawableBoard {
-    private int coins;
-    private int warPoints;
-
-    public void updateBoard(JSONObject data,GameController controller, Skin skin, Table handTable, Table placedCards, Table monument) {
+    /**
+     * Updates the board 
+     * @param data The data to be displayed
+     * @param controller A GameController so the buttons can be linked up to appropriate actions when clicked.
+     * @param skin The skin to be used
+     * @param handTable The table where cards in your hand should be displayed
+     * @param placedCards The table where cards you have placed should be displayed
+     * @param monument The table for the monument
+     */
+    public void updateBoard(JSONObject data, GameController controller, Skin skin, Table handTable, Table placedCards, Table monument) {
         updateHand(skin, controller, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         updateResources(skin, monument, data.getJSONObject("resources"));
@@ -31,7 +35,14 @@ public class DrawableBoard {
         var rightNeighbourJson = data.getJSONObject("rightNeighbour");
     }
 
+    /**
+     * Clears and redraws the monument with the new data
+     * @param skin The skin to be used
+     * @param monument The table for the monument
+     * @param data The data to be displayed
+     */
     private void updateMonument(Skin skin, Table monument, JSONObject data) {
+        monument.clear();
         monument.row();
         
         Table cardTable = new Table();
@@ -56,6 +67,12 @@ public class DrawableBoard {
         monument.add(cardTable);
     }
 
+    /**
+     * Displays coins and war points in the monument.
+     * @param skin The skin to be used
+     * @param monument The table for the monument
+     * @param data The data to be displayed
+     */
     private void updateResources(Skin skin, Table monument, JSONObject data) {
         monument.row();
         monument.add(new Label("Coins: " + data.getInt("coins"), skin));
@@ -63,6 +80,12 @@ public class DrawableBoard {
         monument.add(new Label("War: " + data.getInt("war"), skin));
     }
 
+    /**
+     * Displays the cards you have placed.
+     * @param skin The skin to be used
+     * @param monument The table for the monument
+     * @param cards The cards to be displayed
+     */
     private void updatePlacedCards(Skin skin, Table placedCardsTable, JSONArray cards) {
         placedCardsTable.clear();
         HashMap<Color, ArrayList<Button>> sortedCards = new HashMap<>();
@@ -89,13 +112,20 @@ public class DrawableBoard {
         });
     }
 
+    /**
+     * Updates the cards displayed in your hand
+     * @param skin The skin to be used
+     * @param gameController A GameController so the buttons can be linked up to appropriate actions when clicked.
+     * @param handTable The table to contain the cards
+     * @param handCards The card data to be displayed
+     */
     private void updateHand(Skin skin, GameController gameController, Table handTable, JSONArray handCards) {
         handTable.clear();
         int index = 0;
         for (Object cardData : handCards){
             Button card = GenerateCard(skin, (JSONObject) cardData, -5f);
             handTable.add(card).width(84).height(128);
-            // Bypass final thingy
+
             int clone = index;
             card.addListener(new ClickListener() {
                 @Override
@@ -107,6 +137,13 @@ public class DrawableBoard {
         }
     }
 
+    /**
+     * Generates a card
+     * @param skin The skin to be used
+     * @param cardData The cards data
+     * @param rotation The rotation of the card
+     * @return
+     */
     private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation) {
         JSONObject colorString = cardData.getJSONObject("color");
         Color color = new Color(colorString.getFloat("r"), colorString.getFloat("g"), colorString.getFloat("b"),
