@@ -1,5 +1,6 @@
 package com.ESSBG.app.Model.Player;
 
+import com.ESSBG.app.Model.CircularList;
 import com.ESSBG.app.Model.ConcurrentCircularList;
 import com.ESSBG.app.Model.Monument.Monument;
 
@@ -7,9 +8,9 @@ import java.util.List;
 
 public class InitializePlayers {
     private List<Monument> monuments;
-    private ConcurrentCircularList<Player> players;
+    private CircularList<Player> players;
 
-    private InitializePlayers(ConcurrentCircularList<Player> players, List<Monument> monuments){
+    private InitializePlayers(CircularList<Player> players, List<Monument> monuments){
         this.players = players;
         this.monuments = monuments;
         setMonumentsToPlayers();
@@ -52,7 +53,7 @@ public class InitializePlayers {
      * @param monuments
      * @return
      */
-    public static ConcurrentCircularList<Player> getInitializedPlayers(ConcurrentCircularList<Player> players, List<Monument> monuments){
+    public static CircularList<Player> getInitializedPlayers(CircularList<Player> players, List<Monument> monuments){
         InitializePlayers initializePlayers = new InitializePlayers(players, monuments);
         return initializePlayers.players;
     }

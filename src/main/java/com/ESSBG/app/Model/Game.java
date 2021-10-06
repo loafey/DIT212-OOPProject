@@ -1,9 +1,6 @@
 package com.ESSBG.app.Model;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantLock;
 
 import com.ESSBG.app.Model.Action.Handlers.EitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
@@ -17,40 +14,17 @@ import com.ESSBG.app.Model.Monument.MonumentFactory;
 import com.ESSBG.app.Model.Player.InitializePlayers;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.Player.PlayerState;
-import com.ESSBG.app.Network.*;
 
 public class Game {
     // TODO change to private
-    public ConcurrentCircularList<Player> players = new ConcurrentCircularList<>(new ReentrantLock(true));
+    public CircularList<Player> players = new CircularList<>();
     private List<List<Card>> currentPeriodCards;
     private Trashcan trash;
     private List<Monument> monuments;
     private int age = 1;
     private final int handSize = 7;
 
-    // TODO NAME
-    public void not_finished_run() {
-        // The ordering starting server or not, preferably initialize the world first.
 
-        // Start Lobby, wait for people to join.
-        IServer server = new Server();
-        ConcurrentHashMap<Integer, Player> joinedUsers = new ConcurrentHashMap<>();
-        ConcurrentHashMap<Integer, Boolean> confirmedStart = new ConcurrentHashMap<>();
-        try {
-            server.runServer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Start messageListener
-        (new Thread(new GameNetMessageListener(server, joinedUsers, players, confirmedStart))).start();
-
-        // while(true) {
-        // try {
-        // int sx = 3;
-        // } catch (InterruptedException dont_care) {
-        // }
-        // }
-    }
 
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);

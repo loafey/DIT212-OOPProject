@@ -3,22 +3,18 @@ package com.ESSBG.app.Model;
 import com.ESSBG.app.Model.Monument.MonumentFactory;
 import com.ESSBG.app.Model.Player.InitializePlayers;
 import com.ESSBG.app.Model.Player.Player;
-import com.ESSBG.app.Model.Player.PlayerState;
 import org.junit.Before;
 import org.junit.Test;
-import org.lwjgl.system.CallbackI;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class InitializePlayersTest {
     Player A = new Player(0, null, null, null);
     Player B = new Player(1, null, null, null);
     Player C = new Player(2, null, null,null);
     Player D = new Player(3, null, null, null);
-    ConcurrentCircularList<Player> playersTmp = new ConcurrentCircularList(new ReentrantLock(true));
+    CircularList<Player> playersTmp = new CircularList<>();
     List<Player> players = new ArrayList<>();
 
     @Before
