@@ -23,7 +23,7 @@ public class MonumentFactory {
         monuments.add(new Olympia());
         monuments.add(new Halikarnassos());
         monuments.add(new Gizah());
-        monuments.add(new Ephesos());
+        monuments.add(new Ephesus());
 
 
     }

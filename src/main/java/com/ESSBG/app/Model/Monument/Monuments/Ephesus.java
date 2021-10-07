@@ -8,9 +8,9 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ephesos extends Monument {
+public class Ephesus extends Monument {
 
-    public Ephesos() {
+    public Ephesus() {
         super("Ephesos", ResourceEnum.PAPYRUS);
     }
 

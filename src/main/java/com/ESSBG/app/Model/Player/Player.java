@@ -43,7 +43,9 @@ public class Player {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null) return false;
+        if (o == null) {
+            return false;
+        }
         Player p = (Player) o;
         return p.getId() == this.id;
     }
