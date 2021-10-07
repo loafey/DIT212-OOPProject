@@ -32,20 +32,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void setLeftNeighbor() {
-        Player p2 = new Player(1, new PlayerState());
-        p.setLeftNeighbor(p2);
-        assertEquals(p.getLeftNeighbor(), p2);
-    }
-
-    @Test
-    public void setRightNeighbor() {
-        Player p2 = new Player(1, new PlayerState());
-        p.setRightNeighbor(p2);
-        assertEquals(p.getRightNeighbor(), p2);
-    }
-
-    @Test
     public void setMonument() {
         Monument mon = new Alexandria();
         p.setMonument(mon);

@@ -28,9 +28,6 @@ public class LobbyScreen implements Screen{
     private Button leaveButton;
     private Button hostButton;
 
-    // TODO make into a singleton?
-    private Game game;
-
     @Override
     public void show() {
         Viewport vp = new ScreenViewport();
