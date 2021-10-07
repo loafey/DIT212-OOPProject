@@ -17,8 +17,6 @@ public class Player {
     private List<INeighborReductionHandler> neighborReductionHandlers;
     private List<IResourceHandler> resourceActionHandlers;
     private PlayerState state;
-    private Player leftNeighbor;    //remove, player shouldn't hold his own neighbors
-    private Player rightNeighbor;
 
     /**
      * The constructor for a Player. Creates a player with an id, a state and initializes it's neighbors.
@@ -126,7 +124,8 @@ public class Player {
     }
 
     /**
-     * Builds a stage of this player's monument if the player has efficient resources to do so
+     * Builds a stage of this player's monument and gives this player that certain stage's reward
+     * if the player has efficient resources to do so
      * @return true if build successful, false if not
      */
     public boolean buildStageOfMonument(){
