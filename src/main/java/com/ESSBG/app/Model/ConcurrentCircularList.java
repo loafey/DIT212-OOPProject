@@ -2,11 +2,16 @@ package com.ESSBG.app.Model;
 
 import java.util.concurrent.locks.*;
 
+/**
+ * Author: Björn Rosengren
+ *
+ * Wrapper class to make the circular list free from race conditions.
+ */
 public class ConcurrentCircularList<T> extends CircularList<T> {
     Lock lock;
 
-    protected ConcurrentCircularList(Lock lock) {
-        this.lock = lock;
+    protected ConcurrentCircularList() {
+        this.lock = new ReentrantLock(true);
     }
 
     @Override

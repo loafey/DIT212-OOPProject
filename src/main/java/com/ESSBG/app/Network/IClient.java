@@ -5,6 +5,8 @@ import java.util.concurrent.*;
 import org.json.*;
 
 /**
+ * Author: Björn Rosengren
+ *
  * Order of Operation: <br>
  * 1: IClient c = new Client(); <br>
  * 2: c.runClient(); <br>
@@ -24,6 +26,7 @@ interface IClient {
      * @return true if client started, else false. Connectionstatus in msgQueue.
      */
     boolean runClient();
+
     /**
      * Essentially the same as runClient() but with ip address as choice.
      *

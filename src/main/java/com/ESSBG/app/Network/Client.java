@@ -6,6 +6,13 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import java.io.*;
 
+/**
+ * Author: Björn Rosengren
+ *
+ * The client class. This client connects to the server and if it is connected,
+ * it will detach the listener part due to its blocking nature and listen to
+ * each message the server sends.
+ */
 public class Client extends Base implements IClient {
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private Socket serverSocket;

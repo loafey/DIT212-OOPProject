@@ -1,5 +1,13 @@
 package com.ESSBG.app.Network;
 
+/**
+ * Author: Björn Rosengren
+ *
+ * Convert int to bytestring or bytestring to int. To be able to use n-bytes to
+ * represent the length of a message. All messages should contain n-bytes header
+ * which the receiver knows, but the unknown variable is the message length.
+ * This is crucial.
+ */
 final class Converter {
     // Don't allow creating objects of this.
     private Converter() {

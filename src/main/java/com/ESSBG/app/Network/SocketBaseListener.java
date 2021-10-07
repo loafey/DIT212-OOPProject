@@ -7,6 +7,8 @@ import java.util.concurrent.locks.Lock;
 import org.json.*;
 
 /**
+ * Author: Björn Rosengren
+ *
  * Baseclass to reduce copy paste, easier testing.
  */
 public abstract class SocketBaseListener implements Runnable {
@@ -21,6 +23,11 @@ public abstract class SocketBaseListener implements Runnable {
         this.msgQueue = msgQueue;
     }
 
+    /**
+     * Receives the entire message: 4-BYTE HEADER + MESSAGE
+     *
+     * @return JSONOBject
+     */
     protected JSONObject recvAll() {
         try {
             InputStream stream = socket.getInputStream();
@@ -57,6 +64,8 @@ public abstract class SocketBaseListener implements Runnable {
         return null;
     }
 
+    // Disconnect itself, this causes an eruption of exceptions which we uses to
+    // "stop" the server. A less crude method would be using variables to stop.
     protected void disconnectSocket() {
         try {
             socket.close();
