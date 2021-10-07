@@ -6,6 +6,8 @@ import org.json.*;
 import java.io.*;
 
 /**
+ * Author: Björn Rosengren
+ *
  * Order of Operation:<br>
  * 1: IServer s = new Server(); <br>
  * 2: c.runServer(); <br>
@@ -24,6 +26,7 @@ public interface IServer {
 
     /**
      * Checks if socket is closed.
+     * 
      * @return
      */
     boolean isSocketClosed();

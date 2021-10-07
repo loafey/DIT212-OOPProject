@@ -7,6 +7,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.io.*;
 
+/**
+ * Author: Björn Rosengren
+ *
+ * The "main" part of the server.
+ *
+ * Handles the connected users and max connected users. In our case, since we
+ * are making a game, variables are more fitting to the context rather than
+ * being a very generic server. A generic server would also be much less
+ * abstract, but harder to use.
+ */
 public class Server extends Base implements IServer {
     private ConcurrentHashMap<Integer, Socket> hashMap;
     private LinkedBlockingQueue<JSONObject> msgQueue;
@@ -81,11 +91,12 @@ public class Server extends Base implements IServer {
         return hashMap.containsKey(id);
     }
 
-    // Only for testing or not. Disconnects the user.
+    // Only for testing or not. Disconnects the user. For an eventual kick method?
     protected void disconnectUserSocket(int id) throws IOException {
         hashMap.get(id).close();
     }
 
+    // Only for testing
     protected int getNumberOfUsers() {
         return hashMap.size();
     }

@@ -3,8 +3,10 @@ package com.ESSBG.app.Network;
 import org.json.*;
 
 /**
- * To produce easy passable statements for the networking module These types are
- * to help where to route the data.
+ * Author: Björn Rosengren
+ *
+ * To produce easy passable statements for the networking module. These types
+ * are to help where to route the data.
  */
 final class JSONFactory {
     // Don't allow creating obj of this.

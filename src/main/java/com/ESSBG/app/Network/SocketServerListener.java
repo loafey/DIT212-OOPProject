@@ -5,6 +5,14 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
+/**
+ * Author: Björn Rosengren
+ *
+ * "Attaches" itself to each client to be able to listen what the client are
+ * telling us. If we didn't have threading, everything would be blocked due to
+ * sockets are blocking. Async would work but then there would be a risk of
+ * having a while loop running wild, 100% cpu...
+ */
 public class SocketServerListener extends SocketBaseListener {
     private ConcurrentHashMap<Integer, Socket> hashMap;
     private volatile int[] maxplayersAtIndexZero;

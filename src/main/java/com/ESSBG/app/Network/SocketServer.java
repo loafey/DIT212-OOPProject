@@ -5,7 +5,9 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import org.json.JSONObject;
 
-/***
+/**
+ * Author: Björn Rosengren
+ *
  * This class is only for detaching itself from the main-thread and letting it
  * run just serving new players to connect and "attach" a server for the player.
  */

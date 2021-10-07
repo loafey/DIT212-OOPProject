@@ -6,6 +6,13 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
+/**
+ * Author: Björn Rosengren
+ *
+ * This class is only for detaching itself from the main-thread to let the
+ * client receive messages from the server. It might work without threading, but
+ * then there is the risk of 100% cpu or the entire program deadlocks.
+ */
 public class SocketClientListener extends SocketBaseListener {
     protected SocketClientListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
         super(socket, lock, msgQueue);
