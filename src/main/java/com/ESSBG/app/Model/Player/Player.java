@@ -19,7 +19,7 @@ public class Player {
     private PlayerState state;
 
     /**
-     * The constructor for a Player. Creates a player with an id, a state and initializes it's neighbors.
+     * The constructor for a Player. Creates a player with an id and a state.
      * @param id Unique id-number for each player
      * @param state A player state that holds this player's resources and cards
      */
