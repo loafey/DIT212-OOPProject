@@ -17,7 +17,7 @@ import com.ESSBG.app.Model.Player.PlayerState;
 
 public class Game {
     // TODO change to private
-    public ConcurrentCircularList<Player> players = new ConcurrentCircularList<>();
+    public CircularList<Player> players = new CircularList<>();
     private List<List<Card>> currentPeriodCards;
     private Trashcan trash;
     private List<Monument> monuments;
