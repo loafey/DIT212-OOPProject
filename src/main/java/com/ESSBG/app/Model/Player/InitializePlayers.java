@@ -14,7 +14,6 @@ public class InitializePlayers {
         this.players = players;
         this.monuments = monuments;
         setMonumentsToPlayers();
-        updatePlayerNeighbors();
         initPlayerState();
         initPlayerResources();
     }
@@ -23,14 +22,6 @@ public class InitializePlayers {
         for (int i=0; i<players.size(); i++){
             Player p = players.get(i);
             p.setMonument(monuments.get(i));
-        }
-    }
-
-    private void updatePlayerNeighbors() {
-        for (Player player : players) {
-            player.setLeftNeighbor(players.getPrevious(player));
-            player.setRightNeighbor(players.getNext(player));
-
         }
     }
 

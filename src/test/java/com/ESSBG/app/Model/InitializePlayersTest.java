@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InitializePlayersTest {
-    Player A = new Player(0, null, null, null);
-    Player B = new Player(1, null, null, null);
-    Player C = new Player(2, null, null,null);
-    Player D = new Player(3, null, null, null);
+    Player A = new Player(0, null);
+    Player B = new Player(1, null);
+    Player C = new Player(2, null);
+    Player D = new Player(3, null);
     CircularList<Player> playersTmp = new CircularList<>();
     List<Player> players = new ArrayList<>();
 
@@ -27,20 +27,6 @@ public class InitializePlayersTest {
         players = InitializePlayers.getInitializedPlayers(playersTmp, MonumentFactory.getMonuments());
     }
 
-    @Test
-    public void testNeighbours(){
-        assertEquals(D, A.getLeftNeighbor());
-        assertEquals(B, A.getRightNeighbor());
-
-        assertEquals(A, B.getLeftNeighbor());
-        assertEquals(C, B.getRightNeighbor());
-
-        assertEquals(B, C.getLeftNeighbor());
-        assertEquals(D, C.getRightNeighbor());
-
-        assertEquals(C, D.getLeftNeighbor());
-        assertEquals(A, D.getRightNeighbor());
-    }
 
     @Test
     public void testMonumentsNotNull(){
