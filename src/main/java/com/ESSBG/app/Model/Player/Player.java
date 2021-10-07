@@ -48,6 +48,14 @@ public class Player {
     }
 
     /**
+     * Getter for name
+     * @return this player's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Getter for id
      * @return this player's id
      */
@@ -55,13 +63,6 @@ public class Player {
         return id;
     }
 
-    /**
-     * Getter for name
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
 
     /**
      * Getter for state
@@ -100,7 +101,9 @@ public class Player {
         for (int i = 0; i < 3; i++) {
             list.add(ResourceEnum.POINT);
         }
-        this.getState().setGuaranteedResources(list);
+        PlayerState s = this.getState();
+        s.setGuaranteedResources(list);
+        this.setState(s);
     }
 
     //TODO generalisera för olika typer av monument så vi kan ha either och neighbour också
@@ -112,7 +115,9 @@ public class Player {
             list.add(r);
         }
 
-        this.getState().setGuaranteedResources(list);
+        PlayerState s = this.getState();
+        s.setGuaranteedResources(list);
+        this.setState(s);
     }
 
     private void getStage3Reward() {
@@ -120,7 +125,10 @@ public class Player {
         for (int i = 0; i < 7; i++) {
             list.add(ResourceEnum.POINT);
         }
-        this.getState().setGuaranteedResources(list);
+
+        PlayerState s = this.getState();
+        s.setGuaranteedResources(list);
+        this.setState(s);
     }
 
     /**
@@ -129,7 +137,7 @@ public class Player {
      * @return true if build successful, false if not
      */
     public boolean buildStageOfMonument(){
-        boolean playerHasEfficientResources = false;    //TODO  Vet ej hur man ska kolla det
+        boolean playerHasEfficientResources = true;    //TODO  Vet ej hur man ska kolla det
 
         if (playerHasEfficientResources && monument.getStageBuilt() < 3){
             monument.buildStage();

@@ -25,24 +25,70 @@ public class PlayerTest {
     }
 
     @Test
-    public void setState() {
+    public void testGetId(){
+        assertEquals(0, p.getId());
+    }
+
+    @Test
+    public void testGetState(){
+        assertNotNull(p.getState());
+    }
+
+    @Test
+    public void testSetState() {
         PlayerState newState = new PlayerState();
         p.setState(newState);
         assertEquals(p.getState(), newState);
     }
 
     @Test
-    public void setMonument() {
+    public void testSetAndGetMonument() {
         Monument mon = new Alexandria();
         p.setMonument(mon);
         assertEquals(p.getMonument(), mon);
     }
 
     @Test
-    @Ignore
-    public void buildStageOfMonument() {
-        fail("Vet inte hur man ska testa");
+    public void testInitPlayerResources(){
+        p.setMonument(new Alexandria());
+        p.initResources();
+
+        assertEquals(3, p.getState().getCoins());
+        assertEquals(4, p.getState().getGuaranteedResources().size());
+        assertTrue(p.getState().getGuaranteedResources().contains(ResourceEnum.GLASS));
     }
+
+    @Test
+    public void buildStageOfMonument() {
+        p.setMonument(new Alexandria());
+        p.initResources();
+
+
+        int nOfCoins = p.getState().getCoins();
+        int amountOfGlass = 1;
+
+        // First upgrade, should give 3 victory points
+        p.buildStageOfMonument();
+
+        assertEquals(7, p.getState().getGuaranteedResources().size());
+        assertEquals(1, p.getMonument().getStageBuilt());
+
+
+        // Second upgrade, should add four resources
+        p.buildStageOfMonument();
+
+        assertEquals(11, p.getState().getGuaranteedResources().size());
+        assertEquals(2, p.getMonument().getStageBuilt());
+
+
+        //Third upgrade, should add 7 victory points
+        p.buildStageOfMonument();
+
+        assertEquals(18,  p.getState().getGuaranteedResources().size());
+        assertEquals(3, p.getMonument().getStageBuilt());
+    }
+
+
 
     @Test
     public void initResources() {

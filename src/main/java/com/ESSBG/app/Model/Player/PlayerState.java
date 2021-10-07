@@ -165,14 +165,14 @@ public class PlayerState {
 
     /**
      * Setter for guaranteedResources
-     * @param guaranteedResources
+     * @param newGuaranteedResources
      */
-    public void setGuaranteedResources(List<ResourceEnum> guaranteedResources) {
+    public void setGuaranteedResources(List<ResourceEnum> newGuaranteedResources) {
         /*List<ResourceEnum> copy = new ArrayList<>(guaranteedResources.size());
         Collections.copy(copy, guaranteedResources);
 
          */
-        this.guaranteedResources = guaranteedResources;
+        this.guaranteedResources = newGuaranteedResources;
     }
 
     /**
