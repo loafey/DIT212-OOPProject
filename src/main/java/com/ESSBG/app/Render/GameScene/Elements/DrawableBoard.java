@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DrawableBoard {
@@ -88,20 +87,21 @@ public class DrawableBoard {
      */
     private void updatePlacedCards(Skin skin, Table placedCardsTable, JSONArray cards) {
         placedCardsTable.clear();
+        // Sorts the cards into their respective colours by 
+        // placing them in the ArrayList that corresponds to their color.
         HashMap<Color, ArrayList<Button>> sortedCards = new HashMap<>();
         cards.forEach(cardData -> {
             Button card = GenerateCard(skin, (JSONObject) cardData, 0f);
             Color color = card.getColor();
 
-            if (sortedCards.containsKey(color)) {
-                sortedCards.get(color).add(card);
-            } else {
+            if (!sortedCards.containsKey(color)) {
                 ArrayList<Button> list = new ArrayList<>();
-                list.add(card);
                 sortedCards.put(color, list);
             }
+            sortedCards.get(color).add(card);
         });
 
+        // Iterate over all the ArrayLists, creating a new table for each one of them.
         sortedCards.forEach((color, list) -> {
             Table newTable = new Table();
             list.forEach(card -> {
@@ -126,6 +126,7 @@ public class DrawableBoard {
             Button card = GenerateCard(skin, (JSONObject) cardData, -5f);
             handTable.add(card).width(84).height(128);
 
+            // The index must be copied so it exists in the same scope as the new object.
             int clone = index;
             card.addListener(new ClickListener() {
                 @Override
@@ -149,16 +150,15 @@ public class DrawableBoard {
         Color color = new Color(colorString.getFloat("r"), colorString.getFloat("g"), colorString.getFloat("b"),
                 colorString.getFloat("a"));
 
+        // Try to get the Resource info, and if it does not exist, try to to get action data instead.
         String cardText = "";
-        try {
-            var resource = cardData.getJSONObject("resource");
+        if (cardData.has("resource")) {
+            JSONObject resource = cardData.getJSONObject("resource");
             cardText += resource.getString("type") + " " + resource.getInt("amount");
-        } catch (JSONException e) {
-        }
-        try {
-            var action = cardData.getJSONObject("action");
+        } else if(cardData.has("action")) {
+            JSONObject action = cardData.getJSONObject("action");
+            // TODO interperit action data 
             cardText += "action";
-        } catch (JSONException e) {
         }
 
         Button card = new DrawableCard(skin, rotation, color);
