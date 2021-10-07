@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {
@@ -68,6 +70,15 @@ public class PlayerTest {
         int amountOfGlass = 1;
 
         // First upgrade, should give 3 victory points
+        List<ResourceEnum> list = p.getState().getGuaranteedResources();
+        list.add(ResourceEnum.STONE);
+        list.add(ResourceEnum.STONE);
+
+        PlayerState s = p.getState();
+        s.setGuaranteedResources(list);
+        p.setState(s);
+
+
         p.buildStageOfMonument();
 
         assertEquals(7, p.getState().getGuaranteedResources().size());
