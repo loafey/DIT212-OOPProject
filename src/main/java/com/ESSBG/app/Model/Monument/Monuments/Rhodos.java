@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Rhodos extends Monument {
 
+
     public Rhodos() {
         super("Rhodos", ResourceEnum.ORE);
     }
