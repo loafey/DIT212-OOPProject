@@ -1,5 +1,8 @@
 package com.ESSBG.app.Model.Cards;
 
+/**
+ * Describes the color of a card
+ */
 public enum ColorEnum {
     RED,
     BLUE,

@@ -1,5 +1,8 @@
 package com.ESSBG.app.Model;
 
+/**
+ * Represents the different types of resources/ assets available in the game
+ */
 public enum ResourceEnum  {
     //used to purchase
     CLAY,
