@@ -46,6 +46,6 @@ public class NeighborReductionHandlerTest {
     public void updatedStateIsUpdated(){
         List<ResourceEnum> list = new ArrayList<>(resourceEnumList);
         PlayerState updatedState = handler.updateState(state);
-        assertEquals(updatedState.getEitherResources(), list);
+        assertEquals(updatedState.getNeighborReductions(), list);
     }
 }
