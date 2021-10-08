@@ -26,6 +26,7 @@ public class NeighborReductionHandler implements INeighborReductionHandler {
         PlayerState updatedState = new PlayerState(state);
         List<ResourceEnum> neighborReductions = updatedState.getNeighborReductions();
         neighborReductions.addAll(action.getList());
+        updatedState.setNeighborReductions(neighborReductions);
         return updatedState;
     }
 }

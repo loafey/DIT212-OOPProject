@@ -6,7 +6,7 @@ import com.ESSBG.app.Model.Action.Handlers.EitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
-import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandlerTest;
+import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
 import com.ESSBG.app.Model.Cards.*;
 import com.ESSBG.app.Model.Monument.Monument;
@@ -36,7 +36,7 @@ public class Game {
             PlayerState pState = a.updateState(p.getState());
             p.setState(pState);
         } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
-            INeighborReductionHandler a = new NeighborReductionHandlerTest(((NeighborReductionCard)c).getAction());
+            INeighborReductionHandler a = new NeighborReductionHandler(((NeighborReductionCard)c).getAction());
             PlayerState pState = a.updateState(p.getState());
             p.setState(pState);
         } else if (type == CardTypeEnum.RESOURCEACTION) {
