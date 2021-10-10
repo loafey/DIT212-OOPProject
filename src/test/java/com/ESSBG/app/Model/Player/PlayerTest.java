@@ -43,6 +43,47 @@ public class PlayerTest {
         assertEquals(p.getState(), newState);
     }
 
+
+    @Test
+    public void buildStageOfMonument() {
+        p.setMonument(new Alexandria());
+        p.initResources();
+
+
+        int nOfCoins = p.getState().getCoins();
+        int amountOfGlass = 1;
+
+        // First upgrade, should give 3 victory points
+        List<ResourceEnum> list = p.getState().getGuaranteedResources();
+        list.add(ResourceEnum.STONE);
+        list.add(ResourceEnum.STONE);
+
+        PlayerState s = p.getState();
+        s.setGuaranteedResources(list);
+        p.setState(s);
+
+
+        p.buildStageOfMonument();
+
+        assertEquals(7, p.getState().getGuaranteedResources().size());
+        assertEquals(1, p.getMonument().getStageBuilt());
+
+
+        // Second upgrade, should add four resources
+        p.buildStageOfMonument();
+
+        assertEquals(11, p.getState().getGuaranteedResources().size());
+        assertEquals(2, p.getMonument().getStageBuilt());
+
+
+        //Third upgrade, should add 7 victory points
+        p.buildStageOfMonument();
+
+        assertEquals(18,  p.getState().getGuaranteedResources().size());
+        assertEquals(3, p.getMonument().getStageBuilt());
+    }
+
+
     @Test
     public void testSetAndGetMonument() {
         Monument mon = new Alexandria();
