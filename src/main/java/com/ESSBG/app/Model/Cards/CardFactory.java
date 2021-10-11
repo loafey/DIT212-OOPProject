@@ -91,14 +91,10 @@ public class CardFactory {
         list.add(ResourceEnum.WOOD);
         list.add(ResourceEnum.CLAY);
         list.add(ResourceEnum.GLASS);
- /*
-                ORE,
-                PAPYRUS,
-                STONE,
-                TEXTILE,
-                WOOD,
-
-  */
+        list.add(ResourceEnum.ORE);
+        list.add(ResourceEnum.PAPYRUS);
+        list.add(ResourceEnum.STONE);
+        list.add(ResourceEnum.TEXTILE);
         return list;
     }
 

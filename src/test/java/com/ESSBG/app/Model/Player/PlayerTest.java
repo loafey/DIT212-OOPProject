@@ -44,11 +44,13 @@ public class PlayerTest {
     }
 
 
+
     @Test
     public void buildStageOfMonument() {
         p.setMonument(new Alexandria());
         p.initResources();
 
+        assertEquals(4, p.getState().getGuaranteedResources().size());
 
         // Add stone to be able to build first upgrade
         List<ResourceEnum> list = p.getState().getGuaranteedResources();
@@ -60,25 +62,47 @@ public class PlayerTest {
         p.setState(s);
 
 
-        // First upgrade, should give 3 additional resources
-        // TODO hur ska vi göra med stenen?
+        // First upgrade, should give 3 additional resources (plus the stone)
         p.buildStageOfMonument();
 
-        assertEquals(7, p.getState().getGuaranteedResources().size());
+        assertEquals(9, p.getState().getGuaranteedResources().size());
         assertEquals(1, p.getMonument().getStageBuilt());
 
 
-        // Second upgrade, should add four resources
+        // Trying to upgrade, should not upgrade because we don't have enough resources
         p.buildStageOfMonument();
 
-        assertEquals(11, p.getState().getGuaranteedResources().size());
+        assertEquals(9, p.getState().getGuaranteedResources().size());
+        assertEquals(1, p.getMonument().getStageBuilt());
+
+
+        // Second upgrade with efficient resources, should give 4 additional resources (plus the wood)
+        List<ResourceEnum> list2 = p.getState().getGuaranteedResources();
+        list2.add(ResourceEnum.WOOD);
+        list2.add(ResourceEnum.WOOD);
+
+        PlayerState s2 = p.getState();
+        s2.setGuaranteedResources(list2);
+        p.setState(s2);
+
+        p.buildStageOfMonument();
+
+        assertEquals(15, p.getState().getGuaranteedResources().size());
         assertEquals(2, p.getMonument().getStageBuilt());
 
 
-        //Third upgrade, should add 7 victory points
+        //Third upgrade, should give 7 additional victory points (plus the glass)
+        List<ResourceEnum> list3 = p.getState().getGuaranteedResources();
+        list3.add(ResourceEnum.GLASS);
+        list3.add(ResourceEnum.GLASS);
+
+        PlayerState s3 = p.getState();
+        s3.setGuaranteedResources(list3);
+        p.setState(s3);
+
         p.buildStageOfMonument();
 
-        assertEquals(18,  p.getState().getGuaranteedResources().size());
+        assertEquals(24, p.getState().getGuaranteedResources().size());
         assertEquals(3, p.getMonument().getStageBuilt());
     }
 
