@@ -55,7 +55,8 @@ public class Game {
     private void init(){
         monuments = MonumentFactory.getMonuments();
         players = InitializePlayers.getInitializedPlayers(players, monuments);
-        currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
+        CardFactory cardFactory = new CardFactory();
+        currentPeriodCards = cardFactory.generateHands(age, players.size(), handSize);
         trash = new Trashcan();
     }
 
@@ -65,7 +66,8 @@ public class Game {
     private void startNextAge(){
         giveWarTokens(age);
         age++;
-        currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
+        CardFactory cardFactory = new CardFactory();
+        currentPeriodCards = cardFactory.generateHands(age, players.size(), handSize);
     }
 
     // Use this method to give war tokens after each age

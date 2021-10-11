@@ -50,10 +50,7 @@ public class PlayerTest {
         p.initResources();
 
 
-        int nOfCoins = p.getState().getCoins();
-        int amountOfGlass = 1;
-
-        // First upgrade, should give 3 victory points
+        // Add stone to be able to build first upgrade
         List<ResourceEnum> list = p.getState().getGuaranteedResources();
         list.add(ResourceEnum.STONE);
         list.add(ResourceEnum.STONE);
@@ -63,6 +60,8 @@ public class PlayerTest {
         p.setState(s);
 
 
+        // First upgrade, should give 3 additional resources
+        // TODO hur ska vi göra med stenen?
         p.buildStageOfMonument();
 
         assertEquals(7, p.getState().getGuaranteedResources().size());

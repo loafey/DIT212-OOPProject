@@ -54,4 +54,6 @@ public abstract class Card {
     public CardTypeEnum getCardTypeEnum() {
         return cardTypeEnum;
     }
+
+
 }
