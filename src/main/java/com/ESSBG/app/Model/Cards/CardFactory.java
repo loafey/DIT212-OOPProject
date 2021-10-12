@@ -10,22 +10,23 @@ import java.util.Random;
 public class CardFactory {
     private final List<ResourceEnum> noCost = new ArrayList<>();
 
-    public static List<List<Card>> getPeriodCards(){
+    public static List<List<Card>> getPeriodCards() {
         return null;
     }
 
     /**
      * Initializes all cards in the game for a specific age
-     * @param age The current age (1-3)
+     *
+     * @param age          The current age (1-3)
      * @param playerAmount The amount of players in the game
-     * @param handSize The size of a hand
+     * @param handSize     The size of a hand
      * @return all cards
      */
     public List<List<Card>> generateHands(int age, int playerAmount, int handSize) {
         ArrayList<List<Card>> allCards = new ArrayList<>(playerAmount);
-        for (int i = 0; i < playerAmount; i++){
+        for (int i = 0; i < playerAmount; i++) {
             ArrayList<Card> hand = new ArrayList<>(handSize);
-            for (int j = 0; j < handSize; j++){
+            for (int j = 0; j < handSize; j++) {
                 hand.add(generateCards(age).get(j));
             }
             allCards.add(hand);
@@ -34,61 +35,73 @@ public class CardFactory {
     }
 
 
-
-    public List<Card> generateCards(int age){
+    public List<Card> generateCards(int age) {
         List<Card> cards = new ArrayList<>();
         List<ResourceEnum> basicResources = getAllBasicResources();
-
         int nrOfResourceCopies = 2;
         int nrOfResources = age;
+        int nrOfWarPointsOnCard = age;
+        int nrOfWarCards = 2 * age + 4;
+        int nrOfCoinsOnCard = 3 + 2 * age;
+        int nrOfCoinCards = age * 3;
 
         // Basic resources
-        for (ResourceEnum r : getAllBasicResources()){
+        for (ResourceEnum r : getAllBasicResources()) {
             cards.add(new ResourceActionCard("Resource", noCost, ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResources, r))));
 
         }
         // Luxury resources
-        for (ResourceEnum r : getAllLuxuryResources()){
+        for (ResourceEnum r : getAllLuxuryResources()) {
             cards.add(new ResourceActionCard("Resource", noCost, ColorEnum.GRAY, new ResourceAction(getListOfResources(nrOfResources, r))));
 
         }
+
         // War
+        for (int i = 0; i < nrOfWarCards; i++) {
+            cards.add(new ResourceActionCard("War wagon", noCost, ColorEnum.RED, new ResourceAction(getListOfResources(nrOfWarPointsOnCard, ResourceEnum.WAR))));
+        }
+
+        // Coins
+        for (int i = 0; i < nrOfCoinCards; i++) {
+            cards.add(new ResourceActionCard("Treasure", noCost, ColorEnum.YELLOW, new ResourceAction(getListOfResources(nrOfCoinsOnCard, ResourceEnum.COIN))));
+        }
+
+
         // Victory points
         // Either resources
         // Neighbor red resources
         // Lib, lab, disp
+
         return cards;
     }
 
 
     /**
      * Gives the correct color for each resource type
+     *
      * @param r resource
      * @return color for the resource
      */
-    private ColorEnum getColor(ResourceEnum r){
-        if (r.equals(ResourceEnum.WAR)){
+    private ColorEnum getColor(ResourceEnum r) {
+        if (r.equals(ResourceEnum.WAR)) {
             return ColorEnum.RED;
-        }
-        else if (r.equals(ResourceEnum.POINT)){
+        } else if (r.equals(ResourceEnum.POINT)) {
             return ColorEnum.BLUE;
-        }
-        else if (r.equals(ResourceEnum.COIN)){
+        } else if (r.equals(ResourceEnum.COIN)) {
             return ColorEnum.YELLOW;
-        }
-        else if(r.equals(ResourceEnum.Laboratory) || r.equals(ResourceEnum.Dispensary) || r.equals(ResourceEnum.Library)){
+        } else if (r.equals(ResourceEnum.Laboratory) || r.equals(ResourceEnum.Dispensary) || r.equals(ResourceEnum.Library)) {
             return ColorEnum.GREEN;
-        }
-        else {
+        } else {
             return ColorEnum.BROWN;
         }
     }
 
     /**
      * Generate a list of all available resources in the game
+     *
      * @return
      */
-    private List<ResourceEnum> getAllBasicResources(){
+    private List<ResourceEnum> getAllBasicResources() {
         List<ResourceEnum> list = new ArrayList<>();
         list.add(ResourceEnum.WOOD);
         list.add(ResourceEnum.CLAY);
@@ -99,9 +112,10 @@ public class CardFactory {
 
     /**
      * Generate a list of all available resources in the game
+     *
      * @return
      */
-    private List<ResourceEnum> getAllLuxuryResources(){
+    private List<ResourceEnum> getAllLuxuryResources() {
         List<ResourceEnum> list = new ArrayList<>();
 
         list.add(ResourceEnum.PAPYRUS);
@@ -112,14 +126,15 @@ public class CardFactory {
 
     /**
      * Get a list of resources of a certain amount
-     * @param amount how many items you want to have
+     *
+     * @param amount   how many items you want to have
      * @param resource the kind of resource you want to have
      * @return
      */
-    private List<ResourceEnum> getListOfResources(int amount, ResourceEnum resource){
+    private List<ResourceEnum> getListOfResources(int amount, ResourceEnum resource) {
         List<ResourceEnum> resources = new ArrayList<>();
 
-        for (int i=0; i<amount; i++){
+        for (int i = 0; i < amount; i++) {
             resources.add(resource);
         }
 
