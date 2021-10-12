@@ -2,25 +2,30 @@ package com.ESSBG.app.Model.Cards;
 
 import java.util.List;
 
-import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
 import com.ESSBG.app.Model.ResourceEnum;
+import com.ESSBG.app.Model.Action.IEitherAction;
 
 public class EitherResourceCard extends Card {
 
-    private IEitherHandler handler;
+    private IEitherAction action;
 
     /**
      * Constructor for EitherResourceCard
      * @param name
      * @param cost
      * @param color
-     * @param handler
      */
-    public EitherResourceCard(String name, List<ResourceEnum> cost, ColorEnum color, IEitherHandler handler) {
+    public EitherResourceCard(String name, List<ResourceEnum> cost, ColorEnum color, IEitherAction action) {
         super(name, cost, color, CardTypeEnum.EITHERRESOURCE);
-        this.handler = handler;
+        this.action = action;
     }
     
-
+    /**
+     * Getter for action
+     * @return IEitherAction
+     */
+    public IEitherAction getAction(){
+        return action;
+    }
 
 }

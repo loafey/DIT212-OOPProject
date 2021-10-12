@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class PlayerState {
     // TODO change to one list
-
     private List<EitherResourceCard> playedEitherCards;
     private List<NeighborReductionCard> playedReductionCards;
     private List<ResourceActionCard> playedResourceCards;
