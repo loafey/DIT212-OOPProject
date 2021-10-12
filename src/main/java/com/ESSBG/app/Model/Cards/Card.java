@@ -1,5 +1,6 @@
 package com.ESSBG.app.Model.Cards;
 
+import com.ESSBG.app.Model.Action.Handlers.IHandler;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
@@ -54,6 +55,8 @@ public abstract class Card {
     public CardTypeEnum getCardTypeEnum() {
         return cardTypeEnum;
     }
+
+    public abstract IHandler getHandler();
 
 
 }

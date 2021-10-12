@@ -22,7 +22,7 @@ public class CardFactory {
     private List<List<Card>> allCards = new ArrayList<>();
 
 
-    private CardFactory (){
+    private CardFactory(int age, int playerAmount, int handSize) {
         List<ResourceEnum> singleCoin = new ArrayList<>();
         singleCoin.add(ResourceEnum.COIN);
         this.singleCoin = singleCoin;
@@ -31,45 +31,51 @@ public class CardFactory {
         singleWood.add(ResourceEnum.WOOD);
         this.singleWood = singleWood;
 
-        generateCardsAge1();
+        List<Card> cards = new ArrayList<>();
+
+        switch (age) {
+            case 1:
+                cards = generateCardsAge1();
+                break;
+            case 2:
+                cards = generateCardsAge2();
+                break;
+            case 3:
+                cards = generateCardsAge3();
+                break;
+        }
+
+        initializeHands(cards, playerAmount, handSize);
+
     }
 
 
-    // TODO hard code different cards
-    public static List<List<Card>> getPeriodCards() {
-        return null;
-    }
-
-
-
-    public static List<List<Card>> getCards(){
-        CardFactory cardFactory = new CardFactory();
+    public static List<List<Card>> generateHands(int age, int playerAmount, int handSize) {
+        CardFactory cardFactory = new CardFactory(age, playerAmount, handSize);
         return cardFactory.allCards;
     }
 
+
     /**
      * Initializes all cards in the game for a specific age
-     *
-     * @param age          The current age (1-3)
      * @param playerAmount The amount of players in the game
      * @param handSize     The size of a hand
      * @return all cards
      */
-    private void initializeHands(int age, int playerAmount, int handSize) {
-
+    private void initializeHands(List<Card> cards, int playerAmount, int handSize) {
         for (int i = 0; i < playerAmount; i++) {
             ArrayList<Card> hand = new ArrayList<>(handSize);
             for (int j = 0; j < handSize; j++) {
-                hand.add(generateCardsAge1().get(j));
+                hand.add(cards.get(j));
             }
             allCards.add(hand);
         }
     }
 
 
-
     /**
      * Generates a list of shuffled cards for age 1. All cards will have five copies in the list.
+     *
      * @return list of cards for age 1
      */
     private List<Card> generateCardsAge1() {
@@ -80,56 +86,64 @@ public class CardFactory {
         List<ResourceEnum> tmp1 = new ArrayList<>();
         tmp1.add(ResourceEnum.STONE);
         tmp1.add(ResourceEnum.ORE);
-        list.add(new EitherResourceCard("", singleCoin,ColorEnum.BROWN, new EitherHandler(new EitherResourceAction(tmp1)));
+        list.add(new EitherResourceCard("", singleCoin, ColorEnum.BROWN, new EitherHandler(new EitherResourceAction(tmp1))));
 
 
         List<ResourceEnum> tmp2 = new ArrayList<>();
         tmp2.add(ResourceEnum.WOOD);
         tmp2.add(ResourceEnum.CLAY);
-        list.add(new EitherResourceCard("", singleCoin,ColorEnum.BROWN, new EitherHandler(new EitherResourceAction(tmp2))));
+        list.add(new EitherResourceCard("", singleCoin, ColorEnum.BROWN, new EitherHandler(new EitherResourceAction(tmp2))));
 
 
         List<ResourceEnum> tmp3 = new ArrayList<>();
         tmp3.add(ResourceEnum.WAR);
-        list.add(new ResourceActionCard("", singleWood,ColorEnum.RED, new ResourceHandler((new ResourceAction(tmp3)))));
+        list.add(new ResourceActionCard("", singleWood, ColorEnum.RED, new ResourceHandler((new ResourceAction(tmp3)))));
 
 
         List<ResourceEnum> tmp4 = new ArrayList<>();
-        for (int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             tmp4.add(ResourceEnum.COIN);
         }
-        list.add(new ResourceActionCard("", noResources,ColorEnum.YELLOW, new ResourceHandler((new ResourceAction(tmp4)))));
+        list.add(new ResourceActionCard("", noResources, ColorEnum.YELLOW, new ResourceHandler((new ResourceAction(tmp4)))));
 
 
         List<ResourceEnum> tmp5 = new ArrayList<>();
         tmp5.add(ResourceEnum.GLASS);
         tmp5.add(ResourceEnum.TEXTILE);
         tmp5.add(ResourceEnum.PAPYRUS);
-        list.add(new EitherResourceCard("", noResources,ColorEnum.YELLOW, new EitherHandler(new EitherResourceAction(tmp5))));
+        list.add(new EitherResourceCard("", noResources, ColorEnum.YELLOW, new EitherHandler(new EitherResourceAction(tmp5))));
 
 
         List<ResourceEnum> tmp6 = new ArrayList<>();
         tmp6.add(ResourceEnum.ORE);
-        list.add(new ResourceActionCard("", noResources,ColorEnum.BROWN, new ResourceHandler((new ResourceAction(tmp6)))));
+        list.add(new ResourceActionCard("", noResources, ColorEnum.BROWN, new ResourceHandler((new ResourceAction(tmp6)))));
 
 
         List<ResourceEnum> tmp7 = new ArrayList<>();
         tmp7.add(ResourceEnum.WOOD);
-        list.add(new ResourceActionCard("", noResources,ColorEnum.BROWN, new ResourceHandler((new ResourceAction(tmp7)))));
+        list.add(new ResourceActionCard("", noResources, ColorEnum.BROWN, new ResourceHandler((new ResourceAction(tmp7)))));
 
 
         List<ResourceEnum> tmp8 = new ArrayList<>();
         tmp8.add(ResourceEnum.STONE);
-        list.add(new ResourceActionCard("", noResources,ColorEnum.BROWN, new ResourceHandler((new ResourceAction(tmp8)))));
+        list.add(new ResourceActionCard("", noResources, ColorEnum.BROWN, new ResourceHandler((new ResourceAction(tmp8)))));
 
-        for(int i=0; i<list.size(); i++){
-            for (int j=0; j<copies; j++){
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < copies; j++) {
                 list.add(list.get(j));
             }
         }
 
         shuffle(list);
         return list;
+    }
+
+    private List<Card> generateCardsAge2() {
+        return null;
+    }
+
+    private List<Card> generateCardsAge3(){
+        return null;
     }
 
     /**

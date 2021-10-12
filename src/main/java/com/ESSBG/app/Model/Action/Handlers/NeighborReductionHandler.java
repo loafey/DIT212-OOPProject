@@ -1,5 +1,6 @@
 package com.ESSBG.app.Model.Action.Handlers;
 
+import com.ESSBG.app.Model.Action.IAction;
 import com.ESSBG.app.Model.Action.INeighborReductionAction;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
@@ -28,5 +29,10 @@ public class NeighborReductionHandler implements INeighborReductionHandler {
         neighborReductions.addAll(action.getList());
         updatedState.setNeighborReductions(neighborReductions);
         return updatedState;
+    }
+
+    @Override
+    public IAction getAction() {
+        return action;
     }
 }

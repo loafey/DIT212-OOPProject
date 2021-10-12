@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class CardFactoryTest {
-    List<List<Card>> cardList = CardFactory.getCards();
+    List<List<Card>> cardList = CardFactory.generateHands(1, 7, 7);
 
     @Test
     public void testCorrectAmountOfCards(){

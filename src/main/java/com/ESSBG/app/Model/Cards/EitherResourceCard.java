@@ -3,6 +3,7 @@ package com.ESSBG.app.Model.Cards;
 import java.util.List;
 
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
+import com.ESSBG.app.Model.Action.Handlers.IHandler;
 import com.ESSBG.app.Model.ResourceEnum;
 
 public class EitherResourceCard extends Card {
@@ -20,7 +21,10 @@ public class EitherResourceCard extends Card {
         super(name, cost, color, CardTypeEnum.EITHERRESOURCE);
         this.handler = handler;
     }
-    
 
 
+    @Override
+    public IHandler getHandler() {
+        return handler;
+    }
 }

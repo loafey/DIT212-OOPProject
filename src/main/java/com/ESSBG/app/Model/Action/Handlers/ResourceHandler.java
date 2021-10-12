@@ -3,6 +3,7 @@ package com.ESSBG.app.Model.Action.Handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ESSBG.app.Model.Action.IAction;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IResourceAction;
@@ -35,5 +36,10 @@ public class ResourceHandler implements IResourceHandler{
         List<ResourceEnum> updatedResources = new ArrayList<>(initResources);
         updatedResources.addAll(additionalResources);
         return updatedResources;
+    }
+
+    @Override
+    public IAction getAction() {
+        return action;
     }
 }

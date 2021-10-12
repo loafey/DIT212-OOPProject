@@ -26,7 +26,7 @@ public class ResourceHandlerTest {
 
     @Before
     public void setup(){
-        ResourceActionCard card = new ResourceActionCard("Test", resourceEnumList, ColorEnum.BLUE, action);
+        ResourceActionCard card = new ResourceActionCard("Test", resourceEnumList, ColorEnum.BLUE, handler);
         state = new PlayerState();
         state.addResourceCard(card);
         resourceEnumList = new ArrayList<>();

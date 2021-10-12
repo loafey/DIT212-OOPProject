@@ -2,12 +2,8 @@ package com.ESSBG.app.Model;
 
 import java.util.List;
 
-import com.ESSBG.app.Model.Action.Handlers.EitherHandler;
-import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
-import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
-import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
-import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
-import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
+import com.ESSBG.app.Model.Action.Handlers.*;
+import com.ESSBG.app.Model.Action.IAction;
 import com.ESSBG.app.Model.Cards.*;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Monument.MonumentFactory;
@@ -29,23 +25,10 @@ public class Game {
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
-        CardTypeEnum type = c.getCardTypeEnum();
 
-        if (type == CardTypeEnum.EITHERRESOURCE) {
-            IEitherHandler a = new EitherHandler(((EitherResourceCard)c).getAction());
-            PlayerState pState = a.updateState(p.getState());
-            p.setState(pState);
-        } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
-            INeighborReductionHandler a = new NeighborReductionHandler(((NeighborReductionCard)c).getAction());
-            PlayerState pState = a.updateState(p.getState());
-            p.setState(pState);
-        } else if (type == CardTypeEnum.RESOURCEACTION) {
-            IResourceHandler a = new ResourceHandler(((ResourceActionCard)c).getAction());
-            PlayerState pState = a.updateState(p.getState());
-            p.setState(pState);
-        } else {
-            System.out.println("what?");
-        }
+        IHandler handler = c.getHandler();
+        PlayerState pState = handler.updateState(p.getState());
+        p.setState(pState);
     }   
 
     /**
@@ -55,8 +38,7 @@ public class Game {
     private void init(){
         monuments = MonumentFactory.getMonuments();
         players = InitializePlayers.getInitializedPlayers(players, monuments);
-        CardFactory cardFactory = new CardFactory();
-        currentPeriodCards = cardFactory.generateHands(age, players.size(), handSize);
+        currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
         trash = new Trashcan();
     }
 
@@ -66,8 +48,7 @@ public class Game {
     private void startNextAge(){
         giveWarTokens(age);
         age++;
-        CardFactory cardFactory = new CardFactory();
-        currentPeriodCards = cardFactory.generateHands(age, players.size(), handSize);
+        currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
     }
 
     // Use this method to give war tokens after each age

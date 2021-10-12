@@ -2,6 +2,7 @@ package com.ESSBG.app.Model.Cards;
 
 import java.util.List;
 
+import com.ESSBG.app.Model.Action.Handlers.IHandler;
 import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
 import com.ESSBG.app.Model.Action.NeighborReductionAction;
 import com.ESSBG.app.Model.ResourceEnum;
@@ -24,6 +25,9 @@ public class NeighborReductionCard extends Card {
 
     }
 
-
+    @Override
+    public IHandler getHandler() {
+        return handler;
+    }
     
 }
