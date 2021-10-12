@@ -3,7 +3,6 @@ package com.ESSBG.app.Model.Action.Handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ESSBG.app.Model.Action.IAction;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
@@ -29,11 +28,6 @@ public class EitherHandler implements IEitherHandler {
         return updatedState;
     }
 
-    @Override
-    public IAction getAction() {
-        return action;
-    }
-
     //adds the list of resources to the 2d list of resources
     private List<ArrayList<ResourceEnum>> addEithers(List<ArrayList<ResourceEnum>> initial, List<ResourceEnum> additional){
         ArrayList<ArrayList<ResourceEnum>> updatedEithers = new ArrayList<>();
@@ -43,6 +37,4 @@ public class EitherHandler implements IEitherHandler {
         updatedEithers.add(new ArrayList<>(additional));
         return updatedEithers;
     }
-
-
 }

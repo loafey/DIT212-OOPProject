@@ -25,7 +25,7 @@ public class NeighborReductionHandlerTest {
 
     @Before
     public void setup(){
-        NeighborReductionCard card = new NeighborReductionCard("Test", resourceEnumList, ColorEnum.BLUE, handler);
+        NeighborReductionCard card = new NeighborReductionCard("Test", resourceEnumList, ColorEnum.BLUE, action);
         state = new PlayerState();
         state.addReductionCard(card);
         resourceEnumList = new ArrayList<>();
