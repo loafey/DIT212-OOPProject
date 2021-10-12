@@ -25,7 +25,7 @@ public class EitherHandlerTest {
 
     @Before
     public void setup(){
-        EitherResourceCard card = new EitherResourceCard("Test", resourceEnumList, ColorEnum.BLUE, action);
+        EitherResourceCard card = new EitherResourceCard("Test", resourceEnumList, ColorEnum.BLUE, handler);
         state = new PlayerState();
         state.addEitherCard(card);
         resourceEnumList = new ArrayList<>();

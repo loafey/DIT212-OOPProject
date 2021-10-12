@@ -26,11 +26,11 @@ public class EitherResourceCardTest {
         resourceEnumList.add(ResourceEnum.STONE);
         resourceEnumList.add(ResourceEnum.CLAY);
         action = new EitherResourceAction(resourceEnumList);
-        card = new EitherResourceCard("Test", resourceEnumList, ColorEnum.GRAY, action);
+        card = new EitherResourceCard("Test", resourceEnumList, ColorEnum.GRAY, handler);
     }
 
     @Test
     public void testGetAction(){
-        assertEquals(card.getAction().getClass(), action.getClass());
+        assertEquals(card.getHandler().getAction().getClass(), action.getClass());
     }
 }
