@@ -231,75 +231,100 @@ public class PlayerState {
         setGuaranteedResources(resources);
     }
 
-// ------------------------------------------------------
+    // ------------------------------------------------------
 
-/**
- * Add a EitherResourceCard to the list of played Either cards.
- * @param c
- */
-public void addEitherCard(EitherResourceCard c){
-    playedEitherCards.add(c);
-}
-
-/**
- * Add a ReduceNeighborResourceCard to the list of played reduce cards
- * @param c
- */
-public void addReductionCard(NeighborReductionCard c){
-    playedReductionCards.add(c);
-}
-
-/**
- * Add a ResourceCard to the list of played resource acards
- * @param c
- */
-public void addResourceCard(ResourceActionCard c){
-    playedResourceCards.add(c);
-}
-
-/**
- * Adds a resource to the guaranteed resources
- * @param r
- */
-public void addGuaranteedResource(ResourceEnum r){
-    guaranteedResources.add(r);
-}
-/**
- * Adds some either resources to the list of eithers
- * @param r
- */
-public void addEitherResource(ArrayList<ResourceEnum> r){
-    eitherResources.add(r);
-}
-
-/**
- * Adds an amount of coins to the guaranteed resources
- * @param amount
- */
-public void addCoins(int amount) {
-    for (int i = 0; i < amount; i++){
-        guaranteedResources.add(ResourceEnum.COIN);
+    /**
+     * Add a EitherResourceCard to the list of played Either cards.
+     * @param c
+     */
+    public void addEitherCard(EitherResourceCard c){
+        playedEitherCards.add(c);
     }
-}
 
-/**
- * Adds an amount of points to the win points
- * @param amount
- */
-public void addWinPoints(int amount){
-    winPoints += amount;
-}
+    /**
+     * Add a ReduceNeighborResourceCard to the list of played reduce cards
+     * @param c
+     */
+    public void addReductionCard(NeighborReductionCard c){
+        playedReductionCards.add(c);
+    }
 
-/**
- * Adds an amount of points to the lose points
- * @param amount
- */
-public void addLosePoints(int amount){
-    losePoints += amount;
-}
+    /**
+     * Add a ResourceCard to the list of played resource acards
+     * @param c
+     */
+    public void addResourceCard(ResourceActionCard c){
+        playedResourceCards.add(c);
+    }
 
+    /**
+     * Adds a resource to the guaranteed resources
+     * @param r
+     */
+    public void addGuaranteedResource(ResourceEnum r){
+        guaranteedResources.add(r);
+    }
+    /**
+     * Adds some either resources to the list of eithers
+     * @param r
+     */
+    public void addEitherResource(ArrayList<ResourceEnum> r){
+        eitherResources.add(r);
+    }
 
+    /**
+     * Adds an amount of coins to the guaranteed resources
+     * @param amount
+     */
+    public void addCoins(int amount) {
+        for (int i = 0; i < amount; i++){
+            guaranteedResources.add(ResourceEnum.COIN);
+        }
+    }
 
+    /**
+     * Adds an amount of points to the win points
+     * @param amount
+     */
+    public void addWinPoints(int amount){
+        winPoints += amount;
+    }
 
+    /**
+     * Adds an amount of points to the lose points
+     * @param amount
+     */
+    public void addLosePoints(int amount){
+        losePoints += amount;
+    }
 
+    public boolean canAfford(List<ResourceEnum> cost){
+        boolean richEnough = true;
+        cost = new ArrayList<>(cost);
+        List<ResourceEnum> guaranteed = getGuaranteedResources();
+        List<ArrayList<ResourceEnum>> eithers = getEitherResources(); 
+        for (ResourceEnum r : cost){
+            if(guaranteed.contains(r)) {
+                guaranteed.remove(r);
+                cost.remove(r);
+            } else {
+                richEnough = false;
+                break;
+            }
+        }
+        if (richEnough) {
+            return true;
+        } else {
+            for (ResourceEnum r : cost) {
+                for (int i = 0; i < eithers.size(); i++){
+                    if (eithers.get(i).contains(r)) {
+                        eithers.remove(i);
+                        i--;
+                        cost.remove(r);
+                    }
+                }
+            } //currently eitherResources are considered as guaranteedResources in this computation.    
+        }     //TODO implement smart algorithm for eithers (forevr TODO)
+        return cost.size() == 0;
+    }
 }
