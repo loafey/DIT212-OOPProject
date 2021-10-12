@@ -2,31 +2,25 @@ package com.ESSBG.app.Model.Cards;
 
 import java.util.List;
 
+import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IResourceAction;
 
 public class ResourceActionCard extends Card{
 
-    private IResourceAction action;
+    private IResourceHandler handler;
 
     /**
      * Constructs a ResourceActionCard
      * @param name
      * @param cost
      * @param color
-     * @param action
+     * @param handler
      */
-    public ResourceActionCard(String name, List<ResourceEnum> cost, ColorEnum color, IResourceAction action) {
+    public ResourceActionCard(String name, List<ResourceEnum> cost, ColorEnum color, IResourceHandler handler) {
         super(name, cost, color, CardTypeEnum.RESOURCEACTION);
-        this.action = action;
+        this.handler = handler;
     }
-    
-    /**
-     * Getter for IResourceAction. IResourceAction represents an action that returns a guaranteed list of resources
-     * @return IResourceAction
-     */
-    public IResourceAction getAction(){
-        return action;
-    }
+
 
 }
