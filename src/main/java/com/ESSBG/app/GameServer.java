@@ -31,12 +31,15 @@ public class GameServer implements Runnable {
         this.joinedUsers = new ConcurrentHashMap<>();
         this.players = new ConcurrentCircularList<>();
         this.confirmedStart = new ConcurrentHashMap<>();
-        this.msgQueue = server.getMsgQueue();
         game = new Game();
     }
 
     @Override
     public void run() {
+        try {
+            server.runServer();
+            this.msgQueue = server.getMsgQueue();
+        } catch (IOException e) {}
         while (!server.isSocketClosed()) {
             gameLogic();
         }

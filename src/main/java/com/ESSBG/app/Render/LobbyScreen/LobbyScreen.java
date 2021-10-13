@@ -1,15 +1,19 @@
 package com.ESSBG.app.Render.LobbyScreen;
 
+import com.ESSBG.app.GameServer;
 import com.ESSBG.app.Model.Game;
+import com.ESSBG.app.Network.Client;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -27,6 +31,8 @@ public class LobbyScreen implements Screen{
     private Button startButton;
     private Button leaveButton;
     private Button hostButton;
+
+    private Client client;
 
     @Override
     public void show() {
@@ -87,6 +93,17 @@ public class LobbyScreen implements Screen{
         sceneTable.add(lobbyTable).fill().expand();
 
         // TODO add host button
+        hostButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                new Thread(new GameServer ()).start();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {}
+                client = new Client();
+                client.runClient();
+            }
+        });
         
     }
 
@@ -97,6 +114,14 @@ public class LobbyScreen implements Screen{
 
         stage.act(delta);
         stage.draw();
+
+        if (client != null){
+            if (client.getMsgQueue().size() > 0){
+                try {
+                    System.out.println(client.getMsgQueue().take());
+                } catch (InterruptedException e) {}
+            }
+        }
     }
     @Override
     public void resize(int width, int height) {
