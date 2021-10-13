@@ -10,7 +10,7 @@ import java.util.concurrent.locks.*;
 public class ConcurrentCircularList<T> extends CircularList<T> {
     Lock lock;
 
-    protected ConcurrentCircularList() {
+    public ConcurrentCircularList() {
         this.lock = new ReentrantLock(true);
     }
 
