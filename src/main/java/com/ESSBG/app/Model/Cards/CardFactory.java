@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CardFactory {
-    private final List<ResourceEnum> noCost = new ArrayList<>();
+    private static final List<ResourceEnum> noCost = new ArrayList<>();
 
     private CardFactory(){
     }
