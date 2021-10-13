@@ -323,8 +323,8 @@ public class PlayerState {
                         cost.remove(r);
                     }
                 }
-            } //currently eitherResources are considered as guaranteedResources in this computation.    
-        }     //TODO implement smart algorithm for eithers (forevr TODO)
+            } // currently eitherResources have no extra functionality compared to guaranteedResources.    
+        }     // TODO can be solved using satisfiability. Kind of out of scope in this course and low on time.
         return cost.size() == 0;
     }
 }

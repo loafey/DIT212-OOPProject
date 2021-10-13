@@ -25,6 +25,15 @@ public class Game {
     private int age = 1;
     private final int handSize = 7;
 
+    private void trashCard(int playerIndex, int cardIndex) {
+        Player p = players.get(playerIndex);
+        trash.addCard(currentPeriodCards.get(playerIndex).remove(cardIndex));
+        PlayerState pState = p.getState();
+
+        pState.addCoins(2);
+        p.setState(pState);
+    }
+
     private void upgradeMonument(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         currentPeriodCards.get(playerIndex).remove(cardIndex);
@@ -34,14 +43,16 @@ public class Game {
         List<ResourceEnum> cost = new ArrayList<>(); //smelliest of codes but its what we got to work with
         switch (m.getStageBuilt()) {
             case 1 : cost = m.getResourcesToBuildStage1(); break;
-            case 2 : cost = m.getResourcesToBuildStage2();break;
-            case 3 : cost = m.getResourcesToBuildStage3();break;
+            case 2 : cost = m.getResourcesToBuildStage2(); break;
+            case 3 : cost = m.getResourcesToBuildStage3(); break;
             default: break;
         }
 
         if (pState.canAfford(cost)){
-            System.out.println("fuck bitches");
+            m.buildStage();
         }
+        p.setMonument(m);
+        p.setState(pState);
     }
 
     private void pickCard(int playerIndex, int cardIndex) {
@@ -70,12 +81,10 @@ public class Game {
     /**
      * Initializes cardDeck, periodCards, age, trashcan and monuments
      */
-
     private void init(){
         monuments = MonumentFactory.getMonuments();
         players = InitializePlayers.getInitializedPlayers(players, monuments);
-        CardFactory cardFactory = new CardFactory();
-        currentPeriodCards = cardFactory.generateHands(age, players.size(), handSize);
+        currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
         trash = new Trashcan();
     }
 
@@ -85,26 +94,13 @@ public class Game {
     private void startNextAge(){
         giveWarTokens(age);
         age++;
-        CardFactory cardFactory = new CardFactory();
-        currentPeriodCards = cardFactory.generateHands(age, players.size(), handSize);
+        currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
     }
 
     // Use this method to give war tokens after each age
     private void giveWarTokens(int age) {
-        int x = 0;
-
         // Calculate the winning points during each age
-        switch (age) {
-            case 1:
-                x = 1;
-                break;
-            case 2:
-                x = 3;
-                break;
-            case 3:
-                x = 5;
-                break;
-        }
+        int winPoints = (age * 2) - 1;
 
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
@@ -115,12 +111,17 @@ public class Game {
 
             // TODO make immutable
             if (pWarPoints > nextWarPoints) {
-                p.getState().addWinPoints(x);
-                next.getState().addLosePoints(x);
+                p.getState().addWinPoints(winPoints);
+                next.getState().addLosePoints(winPoints);
             } else if (pWarPoints < nextWarPoints) {
-                next.getState().addWinPoints(x);
-                p.getState().addLosePoints(x);
+                next.getState().addWinPoints(winPoints);
+                p.getState().addLosePoints(winPoints);
             }
         }
+    }
+
+
+    private Player calculateWinner() {
+        return players.stream().reduce(players.get(0), (p1, p2) -> p1.getPoints() > p2.getPoints() ? p1 : p2);
     }
 }
