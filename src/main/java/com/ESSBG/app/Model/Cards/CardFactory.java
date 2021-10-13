@@ -10,6 +10,9 @@ import java.util.Random;
 public class CardFactory {
     private final List<ResourceEnum> noCost = new ArrayList<>();
 
+    private CardFactory(){
+    }
+
     public static List<List<Card>> getPeriodCards() {
         return null;
     }
@@ -22,7 +25,7 @@ public class CardFactory {
      * @param handSize     The size of a hand
      * @return all cards
      */
-    public List<List<Card>> generateHands(int age, int playerAmount, int handSize) {
+    public static List<List<Card>> generateHands(int age, int playerAmount, int handSize) {
         ArrayList<List<Card>> allCards = new ArrayList<>(playerAmount);
         for (int i = 0; i < playerAmount; i++) {
             ArrayList<Card> hand = new ArrayList<>(handSize);
@@ -35,7 +38,7 @@ public class CardFactory {
     }
 
 
-    public List<Card> generateCards(int age) {
+    public static List<Card> generateCards(int age) {
         List<Card> cards = new ArrayList<>();
         List<ResourceEnum> basicResources = getAllBasicResources();
         int nrOfResourceCopies = 2;
@@ -82,7 +85,7 @@ public class CardFactory {
      * @param r resource
      * @return color for the resource
      */
-    private ColorEnum getColor(ResourceEnum r) {
+    private static ColorEnum getColor(ResourceEnum r) {
         if (r.equals(ResourceEnum.WAR)) {
             return ColorEnum.RED;
         } else if (r.equals(ResourceEnum.POINT)) {
@@ -101,7 +104,7 @@ public class CardFactory {
      *
      * @return
      */
-    private List<ResourceEnum> getAllBasicResources() {
+    private static List<ResourceEnum> getAllBasicResources() {
         List<ResourceEnum> list = new ArrayList<>();
         list.add(ResourceEnum.WOOD);
         list.add(ResourceEnum.CLAY);
@@ -115,7 +118,7 @@ public class CardFactory {
      *
      * @return
      */
-    private List<ResourceEnum> getAllLuxuryResources() {
+    private static List<ResourceEnum> getAllLuxuryResources() {
         List<ResourceEnum> list = new ArrayList<>();
 
         list.add(ResourceEnum.PAPYRUS);
@@ -131,7 +134,7 @@ public class CardFactory {
      * @param resource the kind of resource you want to have
      * @return
      */
-    private List<ResourceEnum> getListOfResources(int amount, ResourceEnum resource) {
+    private static List<ResourceEnum> getListOfResources(int amount, ResourceEnum resource) {
         List<ResourceEnum> resources = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
