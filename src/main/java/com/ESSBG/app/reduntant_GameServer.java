@@ -1,6 +1,9 @@
-package com.ESSBG.app.Model;
+package com.ESSBG.app;
 
 import com.ESSBG.app.Model.Player.Player;
+import com.ESSBG.app.Model.ConcurrentCircularList;
+import com.ESSBG.app.Model.Game;
+import com.ESSBG.app.Model.Trashcan;
 import com.ESSBG.app.Model.Cards.*;
 import com.ESSBG.app.Model.Monument.*;
 import com.ESSBG.app.Network.*;
@@ -9,10 +12,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class GameServer {
+public class reduntant_GameServer {
     private IServer server;
     private Game game;
-    private GameNetMessageListener clientListener;
+    private GameServer clientListener;
 
     private LinkedBlockingQueue<JSONObject> msgQueue;
     private ConcurrentHashMap<Integer, Player> joinedUsers;
@@ -26,7 +29,7 @@ public class GameServer {
     private final int roundsPerAge = 6;
     private final int handSize = 7;
 
-    protected GameServer() {
+    protected reduntant_GameServer() {
         this.server = new Server();
         this.joinedUsers = new ConcurrentHashMap<>();
         this.confirmedStart = new ConcurrentHashMap<>();
@@ -46,7 +49,7 @@ public class GameServer {
     protected void start() {
         try {
             server.runServer();
-            (new Thread(new GameNetMessageListener(server, joinedUsers, players, confirmedStart))).start();
+            (new Thread(new GameServer())).start();
 
             // Main loop.
             while(true) {
