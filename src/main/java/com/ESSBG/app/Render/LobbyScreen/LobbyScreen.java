@@ -86,6 +86,8 @@ public class LobbyScreen implements Screen{
 
         sceneTable.add(lobbyTable).fill().expand();
 
+        // TODO add host button
+        
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.ESSBG.app.Render.GameScene;
 
+import java.io.InterruptedIOException;
+
+import com.ESSBG.app.Network.Client;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableMonument;
 import com.badlogic.gdx.Gdx;
@@ -27,6 +30,10 @@ public class GameScene implements Screen {
     private DrawableBoard board = new DrawableBoard();
 
     private Table pauseMenu;
+
+    private Client client;
+
+    public GameScene(Client client) {}
 
     /**
      * Takes in JSON data to be displayed by the view.
@@ -97,6 +104,15 @@ public class GameScene implements Screen {
 
         stage.act(delta);
         stage.draw();
+
+        if (client != null){
+            if (client.getMsgQueue().size() > 0){
+                try {
+                    JSONObject msg = client.getMsgQueue().take();
+                    System.out.println(msg);
+                } catch (InterruptedException e){}
+            }
+        }
     }
 
     @Override
