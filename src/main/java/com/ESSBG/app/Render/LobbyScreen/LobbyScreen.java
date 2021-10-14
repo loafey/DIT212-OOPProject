@@ -158,6 +158,9 @@ public class LobbyScreen implements Screen{
         stage.act(delta);
         stage.draw();
 
+        // This needs to be done as often as possible, 
+        // and since we want to avoid creating our own thread for it
+        // we can just call it in the render method as it is looped by LibGDX.
         messageHandler();
     }
     @Override
