@@ -128,14 +128,7 @@ public class LobbyScreen implements Screen{
         });
     }
 
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-        stage.act(delta);
-        stage.draw();
-
+    private void messageHandler(){
         if (client != null){
             if (client.getMsgQueue().size() > 0){
                 try {
@@ -155,6 +148,17 @@ public class LobbyScreen implements Screen{
                 } catch (InterruptedException e) {}
             }
         }
+    }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        stage.act(delta);
+        stage.draw();
+
+        messageHandler();
     }
     @Override
     public void resize(int width, int height) {
