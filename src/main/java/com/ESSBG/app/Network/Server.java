@@ -77,13 +77,11 @@ public class Server extends Base implements IServer {
         hashMap.values().forEach(socket -> {
             try {
                 socket.close();
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {}
         });
         try {
             socket.close();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
     }
 
     // Only for testing

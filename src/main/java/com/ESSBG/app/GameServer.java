@@ -8,7 +8,6 @@ import com.ESSBG.app.Model.ConcurrentCircularList;
 import com.ESSBG.app.Model.Game;
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.ColorEnum;
-import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Network.*;
 import org.json.*;
 
@@ -21,8 +20,8 @@ import org.json.*;
 public class GameServer implements Runnable {
     private IServer server;
     private LinkedBlockingQueue<JSONObject> msgQueue;
-    private ConcurrentCircularList<Player> players;
-    private ConcurrentHashMap<Integer, Player> joinedUsers;
+    private ConcurrentCircularList<Integer> players;
+    private ConcurrentHashMap<Integer, Integer> joinedUsers;
     private ConcurrentHashMap<Integer, Boolean> confirmedStart;
     private Game game;
 
@@ -74,6 +73,18 @@ public class GameServer implements Runnable {
             JSONObject data = js.getJSONObject("data");
             int msgNum = data.getInt("msgNum");
 
+            if (data.has("start")) {
+                joinedUsers.forEach((p, pid) -> {
+                    try {
+                        boolean result = server.sendData(p, new JSONObject("{\"start\": true}"));
+                        if (!result) {
+                            System.out.println("ERROR: Failed to send data to user " + p + "!");
+                        }
+                    } catch (IOException e) {}
+                });
+                return;
+            }
+
             // Change name routine
             if (data.has("name")) {
                 nameChangeRoutine(id, msgNum, data.getString("name"));
@@ -115,7 +126,7 @@ public class GameServer implements Runnable {
         // Get all the necessary info. Even more data!
         int cardIndex = cardData.getInt("cardIndex");
         String action = cardData.getString("action");
-        Player player = joinedUsers.get(id);
+        Integer player = joinedUsers.get(id);
         // TODO
         // List<Card> cardList = player.getCardList();
 
@@ -139,8 +150,8 @@ public class GameServer implements Runnable {
             // Dataspree!
             // TODO
             // Card selectedCard = player.getCardList().get(cardIndex);
-            Player leftNeighbor = players.getPrevious(player);
-            Player rightNeighbor = players.getNext(player);
+            Integer leftNeighbor = players.getPrevious(player);
+            Integer rightNeighbor = players.getNext(player);
 
             // TODO remove placeholder for real method
             boolean ok_buy_card = true;
@@ -168,11 +179,12 @@ public class GameServer implements Runnable {
     private void networkRoutine(int id, JSONObject js) {
         // Connection. True = Connect, False = Disconnect.
         if (js.getBoolean("data")) {
-            // TODO
-            // Player newPlayer = new Player(id);
-            // joinedUsers.put(id, newPlayer);
-            // confirmedStart.put(id, false);
-            // players.add(newPlayer);
+            System.out.println("Server: " + js);
+
+            Integer newPlayer = id;
+            joinedUsers.put(id, newPlayer);
+            confirmedStart.put(id, true);
+            players.add(newPlayer);
         } else {
             // Any connection error should remove.
             joinedUsers.remove(id);
@@ -251,10 +263,10 @@ public class GameServer implements Runnable {
     }
 
     private boolean playerNameChange(int id, String name) {
-        for (Player p : players) {
-            if (p.getName().equals(name)) {
+        for (Integer p : players) {
+            /*if (p.getName().equals(name)) {
                 return false;
-            }
+            }*/
         }
         // TODO
         // players.get(id).setName(name);
