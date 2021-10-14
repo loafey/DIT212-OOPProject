@@ -40,14 +40,14 @@ public class CardFactory {
      * @param handSize     The size of a hand
      * @return all cards
      */
-    //TODO funkar ej
-    public List<List<Card>> getPeriodCards(int age, int playerAmount, int handSize) {
+
+    private List<List<Card>> getPeriodCards(int age, int playerAmount, int handSize) {
         List<List<Card>> playerHands = new ArrayList<>();
         List<Card> allCards = generateCards(age);
-        for (int i=0; i<7; i++){
+        for (int i = 0; i < playerAmount; i++) {
             List<Card> tmp = new ArrayList<>();
-            for (int j=0; j<7; j++){
-                Card c = allCards.get(j+i*7);
+            for (int j = 0; j < handSize; j++) {
+                Card c = allCards.get(j + i * playerAmount);
                 tmp.add(c);
             }
             playerHands.add(tmp);
@@ -57,23 +57,39 @@ public class CardFactory {
 
     /**
      * Generates a shuffled list of 49 cards for a certain age
+     *
      * @param age
      * @return the shuffled list with 49 cards
      */
-    public List<Card> generateCards(int age) {
+    private List<Card> generateCards(int age) {
         List<Card> cards = new ArrayList<>();
         List<ResourceEnum> basicResources = getAllBasicResources();
         int nrOfResourcesOnCard = age;
         int nrOfWarPointsOnCard = age;
         int nrOfCoinsOnCard = 5;
+        List<ResourceEnum> dependingOnAgeCost;
+        List<ResourceEnum> greenCardsCost;
 
 
+        if (age > 1){
+            dependingOnAgeCost = getRandomMediumCost(age+1);
+        }
+        else{
+            dependingOnAgeCost = new ArrayList<>(noCost);
+        }
+
+        if (age == 1){
+            greenCardsCost = getRandomMediumCost(1);
+        }
+        else {
+            greenCardsCost = getRandomMediumCost(age + 1);
+        }
 
 
         // Basic resources, two of each kind (8 cards totally)
         for (ResourceEnum r : getAllBasicResources()) {
-            cards.add(new ResourceActionCard("Resource", new ArrayList<>(noCost), ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));
-            cards.add(new ResourceActionCard("Resource", new ArrayList<>(noCost), ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));
+            cards.add(new ResourceActionCard("Resource", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));
+            cards.add(new ResourceActionCard("Resource", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));
         }
         // Luxury resources, two of each kind (6 cards totally)
         for (ResourceEnum r : getAllLuxuryResources()) {
@@ -83,7 +99,7 @@ public class CardFactory {
 
         // War
         for (int i = 0; i < nrOfWarCards; i++) {
-            cards.add(new ResourceActionCard("War wagon", new ArrayList<>(noCost), ColorEnum.RED, new ResourceAction(getListOfResources(nrOfWarPointsOnCard, ResourceEnum.WAR))));
+            cards.add(new ResourceActionCard("War wagon", dependingOnAgeCost, ColorEnum.RED, new ResourceAction(getListOfResources(nrOfWarPointsOnCard, ResourceEnum.WAR))));
         }
 
         // Coins
@@ -91,22 +107,21 @@ public class CardFactory {
             cards.add(new ResourceActionCard("Treasure", new ArrayList<>(noCost), ColorEnum.YELLOW, new ResourceAction(getListOfResources(nrOfCoinsOnCard, ResourceEnum.COIN))));
         }
 
-
         // Victory points
         for (int i = 0; i < 3; i++) {
-            cards.add(new ResourceActionCard("Theater", new ArrayList<>(noCost), ColorEnum.BLUE, new ResourceAction(getListOfResources(age + 1, ResourceEnum.POINT))));
+            cards.add(new ResourceActionCard("Theater", dependingOnAgeCost, ColorEnum.BLUE, new ResourceAction(getListOfResources(age + 1, ResourceEnum.POINT))));
         }
         for (int i = 0; i < 2; i++) {
-            cards.add(new ResourceActionCard("Baths", new ArrayList<>(noCost), ColorEnum.BLUE, new ResourceAction(getListOfResources(age + 2, ResourceEnum.POINT))));
+            cards.add(new ResourceActionCard("Baths", dependingOnAgeCost, ColorEnum.BLUE, new ResourceAction(getListOfResources(age + 2, ResourceEnum.POINT))));
         }
 
         cards.add(new ResourceActionCard("Pawn shop", getListOfResources(1, ResourceEnum.STONE), ColorEnum.BLUE, new ResourceAction(getListOfResources(age + 1, ResourceEnum.POINT))));
 
 
         // Either resources
-        cards.add(new EitherResourceCard("Timber yard", new ArrayList<>(noCost), ColorEnum.BROWN, new EitherResourceAction(getListOfEitherResources(ResourceEnum.WOOD, ResourceEnum.STONE))));
-        cards.add(new EitherResourceCard("Clay pit", new ArrayList<>(noCost), ColorEnum.BROWN, new EitherResourceAction(getListOfEitherResources(ResourceEnum.CLAY, ResourceEnum.ORE))));
-        cards.add(new EitherResourceCard("Mine", new ArrayList<>(noCost), ColorEnum.BROWN, new EitherResourceAction(getListOfEitherResources(ResourceEnum.STONE, ResourceEnum.ORE))));
+        cards.add(new EitherResourceCard("Timber yard", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new EitherResourceAction(getListOfEitherResources(ResourceEnum.WOOD, ResourceEnum.STONE))));
+        cards.add(new EitherResourceCard("Clay pit", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new EitherResourceAction(getListOfEitherResources(ResourceEnum.CLAY, ResourceEnum.ORE))));
+        cards.add(new EitherResourceCard("Mine", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new EitherResourceAction(getListOfEitherResources(ResourceEnum.STONE, ResourceEnum.ORE))));
 
         cards.add(new EitherResourceCard("Caravansery", getListOfResources(2, ResourceEnum.WOOD), ColorEnum.YELLOW, new EitherResourceAction(getAllBasicResources())));
         cards.add(new EitherResourceCard("Caravansery", getListOfResources(2, ResourceEnum.WOOD), ColorEnum.YELLOW, new EitherResourceAction(getAllBasicResources())));
@@ -114,38 +129,36 @@ public class CardFactory {
 
 
         // Neighbor red resources
-        for (int i=0; i<nrOfNeighborRedCards/2; i++){
+        for (int i = 0; i < nrOfNeighborRedCards / 2; i++) {
             cards.add(new NeighborReductionCard("Trading post", new ArrayList<>(noCost), ColorEnum.YELLOW, new NeighborReductionAction(getAllBasicResources())));
             cards.add(new NeighborReductionCard("Market place", new ArrayList<>(noCost), ColorEnum.YELLOW, new NeighborReductionAction(getAllLuxuryResources())));
         }
 
         // Lib, lab, disp
-        for (int i=0; i<nrOfGreenCards/3; i++){
-            cards.add(new ResourceActionCard("Library", new ArrayList<>(noCost), ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Library))));
-            cards.add(new ResourceActionCard("Laboratory", new ArrayList<>(noCost), ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Laboratory))));
-            cards.add(new ResourceActionCard("Dispensary", new ArrayList<>(noCost), ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Dispensary))));
+        for (int i = 0; i < nrOfGreenCards / 3; i++) {
+            cards.add(new ResourceActionCard("Library", greenCardsCost, ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Library))));
+            cards.add(new ResourceActionCard("Laboratory", greenCardsCost, ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Laboratory))));
+            cards.add(new ResourceActionCard("Dispensary", greenCardsCost, ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Dispensary))));
         }
 
-        //shuffle(cards);
+        shuffle(cards);
         return cards;
     }
 
     /**
      * Get a list of specific resources
+     *
      * @param r1 one resource
      * @param r2 another resource
      * @return list of r1 and r2
      */
 
-    private List<ResourceEnum> getListOfEitherResources(ResourceEnum r1, ResourceEnum r2){
+    private List<ResourceEnum> getListOfEitherResources(ResourceEnum r1, ResourceEnum r2) {
         List<ResourceEnum> list = new ArrayList<>();
         list.add(r1);
         list.add(r2);
         return list;
     }
-
-
-
 
 
     /**
@@ -166,6 +179,18 @@ public class CardFactory {
         } else {
             return ColorEnum.BROWN;
         }
+    }
+
+    private List<ResourceEnum> getRandomMediumCost(int items){
+        Random r = new Random();
+        List<ResourceEnum> list = getAllBasicResources();
+        List<ResourceEnum> tmp = new ArrayList<>();
+
+        for (int i=0; i<items; i++){
+            tmp.add(list.get(r.nextInt(4)));
+        }
+
+        return tmp;
     }
 
     /**
@@ -212,4 +237,21 @@ public class CardFactory {
 
         return resources;
     }
+
+    /**
+     * Get the total number of cards intended before the cards are handed out to the players
+     * @return total amount of cards
+     */
+    public static int getNrOfTotalCards() {
+        return nrOfWarCards +
+                nrOfCoinCards +
+                nrOfEitherCards +
+                nrOfGreenCards +
+                nrOfNeighborRedCards +
+                nrOfBasicLuxuryResCards +
+                nrOfBasicResCards +
+                nrOfVicPointsCards;
+    }
+
+
 }
