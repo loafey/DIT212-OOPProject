@@ -3,6 +3,8 @@ package com.ESSBG.app.Render.LobbyScreen;
 import com.ESSBG.app.GameServer;
 import com.ESSBG.app.Model.Game;
 import com.ESSBG.app.Network.Client;
+import com.ESSBG.app.Render.ScreenManager;
+import com.ESSBG.app.Render.GameScene.GameScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import org.json.JSONObject;
 
 public class LobbyScreen implements Screen{
     private Stage stage;
@@ -33,6 +37,7 @@ public class LobbyScreen implements Screen{
     private Button hostButton;
 
     private Client client;
+
 
     @Override
     public void show() {
@@ -60,7 +65,7 @@ public class LobbyScreen implements Screen{
         joinButton = new Button(skin);
         joinButton.add(new Label("Connect", skin));
         connectTable.add(joinButton).fillX();
-        ipField = new TextField("", skin);
+        ipField = new TextField("127.0.0.1", skin);
         connectTable.add(ipField);
         hostButton = new Button(skin);
         hostButton.add("Host");
@@ -104,7 +109,23 @@ public class LobbyScreen implements Screen{
                 client.runClient();
             }
         });
-        
+
+        joinButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                client = new Client();
+                client.runClient(ipField.getText());
+            }
+        });
+
+        startButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                JSONObject data = new JSONObject("{\"start\": true}");
+                data.put("msgNum", 0);
+                client.sendData(data);
+            }
+        });
     }
 
     @Override
@@ -118,7 +139,19 @@ public class LobbyScreen implements Screen{
         if (client != null){
             if (client.getMsgQueue().size() > 0){
                 try {
-                    System.out.println(client.getMsgQueue().take());
+                    JSONObject message = client.getMsgQueue().take();
+                    String reason = message.getString("reason");
+                    if (reason.equals("net")){
+                        if (message.getBoolean("data")){
+                            System.out.println("Connected!");
+                        } else {
+                            System.out.println("Disconnected!");
+                        }
+                    } else if (reason.equals("game")) {
+                        if (message.getJSONObject("data").getBoolean("start")){
+                            ScreenManager.getInstance().setScreen(new GameScene(client));
+                        }
+                    }
                 } catch (InterruptedException e) {}
             }
         }
