@@ -11,15 +11,18 @@ public class NeighborReductionHandler implements INeighborReductionHandler {
     private INeighborReductionAction action;
 
     /**
-     * Constructor for a NeighborReductionHandler
+     * Constructor for NeighborReductionHandler
      * @param action
+     * @return NeighborReductionHandler
      */
     public NeighborReductionHandler(INeighborReductionAction action) {
         this.action = action;
     }
 
     /**
-     * Returns an updated state, which is calculated using the action.
+     * Updates the given state using the action.
+     * @param state
+     * @return PlayerState
      */
     @Override
     public PlayerState updateState(PlayerState state) {

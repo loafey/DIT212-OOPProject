@@ -12,6 +12,7 @@ public class EitherResourceAction implements IEitherAction {
     /**
      * Constructor for EitherResource
      * @param resources
+     * @return EitherResourceAction
      */
     public EitherResourceAction(List<ResourceEnum> resources) {
         this.resources = new ArrayList<>(resources);

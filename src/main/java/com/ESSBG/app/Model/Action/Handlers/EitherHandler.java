@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ESSBG.app.Model.Player.PlayerState;
+
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
@@ -12,12 +13,20 @@ public class EitherHandler implements IEitherHandler {
 
     private IEitherAction action;
 
+    /**
+     * Constructor for EitherHandler
+     * @param action
+     * @return EitherHandler
+     */
     public EitherHandler(IEitherAction action) {
         this.action = action;
     }
 
+    
     /**
-     * Returns an updated state, which is calculated using the action.
+     * Updated the given state with the use of the action.
+     * @param state
+     * @return PlayerState
      */
     @Override
     public PlayerState updateState(PlayerState state) {
