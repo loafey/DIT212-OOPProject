@@ -33,7 +33,6 @@ public class Game {
         Player p = players.get(playerIndex);
         trash.addCard(currentPeriodCards.get(playerIndex).remove(cardIndex));
         PlayerState pState = p.getState();
-
         pState.addCoins(2);
         p.setState(pState);
     }
@@ -41,25 +40,25 @@ public class Game {
     /**
      * Upgrades a player's monument to the next stage, removes a card from their hand and upgrades their playerState,
      * if the player has efficient resources to build the next stage of their monument.
+     *
      * @param playerIndex
      * @param cardIndex
      */
-    private void upgradeMonument(int playerIndex, int cardIndex){
+    private void upgradeMonument(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         PlayerState pState = p.getState();
         Monument m = p.getMonument();
         List<ResourceEnum> cost = m.getCostToBuildNextStage();
 
-        if(pState.canAfford(cost)){
+        if (pState.canAfford(cost)) {
             currentPeriodCards.get(playerIndex).remove(cardIndex);
 
             List<ResourceEnum> reward = m.getRewardForBuildingNextStage();
-            if (m.getName().equals("Alexandria") || m.getName().equals("Babylon")){
+            if (m.getName().equals("Alexandria") || m.getName().equals("Babylon")) {
                 EitherResourceAction action = new EitherResourceAction(reward);
                 EitherHandler handler = new EitherHandler(action);
                 handler.updateState(pState);
-            }
-            else {
+            } else {
                 ResourceAction resourceAction = new ResourceAction(reward);
                 ResourceHandler handler = new ResourceHandler(resourceAction);
                 handler.updateState(pState);
@@ -93,36 +92,33 @@ public class Game {
  */
 
 
-
-
-
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
         CardTypeEnum type = c.getCardTypeEnum();
 
         if (type == CardTypeEnum.EITHERRESOURCE) {
-            IEitherHandler a = new EitherHandler(((EitherResourceCard)c).getAction());
+            IEitherHandler a = new EitherHandler(((EitherResourceCard) c).getAction());
             PlayerState pState = a.updateState(p.getState());
             pState.addEitherCard((EitherResourceCard) c);
             p.setState(pState);
         } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
-            INeighborReductionHandler a = new NeighborReductionHandler(((NeighborReductionCard)c).getAction());
+            INeighborReductionHandler a = new NeighborReductionHandler(((NeighborReductionCard) c).getAction());
             PlayerState pState = a.updateState(p.getState());
             pState.addReductionCard((NeighborReductionCard) c);
             p.setState(pState);
         } else if (type == CardTypeEnum.RESOURCEACTION) {
-            IResourceHandler a = new ResourceHandler(((ResourceActionCard)c).getAction());
+            IResourceHandler a = new ResourceHandler(((ResourceActionCard) c).getAction());
             PlayerState pState = a.updateState(p.getState());
             pState.addResourceCard((ResourceActionCard) c);
             p.setState(pState);
         }
-    }   
+    }
 
     /**
      * Initializes cardDeck, periodCards, age, trashcan and monuments
      */
-    private void init(){
+    private void init() {
         monuments = MonumentFactory.getMonuments();
         players = InitializePlayers.getInitializedPlayers(players, monuments);
         currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
@@ -132,7 +128,7 @@ public class Game {
     /**
      * Moves the game to the next age and changes the cardDeck to the correct cards for that specific age
      */
-    private void startNextAge(){
+    private void startNextAge() {
         giveWarTokens(age);
         age++;
         currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
@@ -146,7 +142,7 @@ public class Game {
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
             Player next = players.getNext(p);
-        
+
             int pWarPoints = p.getState().getWarTokens();
             int nextWarPoints = next.getState().getWarTokens();
 

@@ -44,7 +44,7 @@ public class PlayerTest {
     }
 
 
-
+/*
     @Test
     public void buildStageOfMonument() {
         p.setMonument(new Alexandria());
@@ -105,6 +105,8 @@ public class PlayerTest {
         assertEquals(24, p.getState().getGuaranteedResources().size());
         assertEquals(3, p.getMonument().getStageBuilt());
     }
+
+ */
 
 
     @Test
