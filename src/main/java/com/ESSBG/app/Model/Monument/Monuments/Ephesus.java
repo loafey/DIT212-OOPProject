@@ -16,7 +16,7 @@ public class Ephesus extends Monument {
 
 
     @Override
-    public List<ResourceEnum> stage2Reward() {
+    public List<ResourceEnum> getStage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();
 
         int k=0;

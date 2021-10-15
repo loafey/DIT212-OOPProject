@@ -14,7 +14,7 @@ public class Babylon extends Monument {
     }
 
     @Override
-    public List<ResourceEnum> stage2Reward() {
+    public List<ResourceEnum> getStage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();
         newResources.add(ResourceEnum.Laboratory);
         newResources.add(ResourceEnum.Library);

@@ -3,12 +3,16 @@ package com.ESSBG.app.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ESSBG.app.Model.Action.EitherResourceAction;
 import com.ESSBG.app.Model.Action.Handlers.EitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
+import com.ESSBG.app.Model.Action.IAction;
+import com.ESSBG.app.Model.Action.IResourceAction;
+import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.Cards.*;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Monument.MonumentFactory;
@@ -34,6 +38,31 @@ public class Game {
         p.setState(pState);
     }
 
+    private void upgradeMonument(int playerIndex, int cardIndex){
+        Player p = players.get(playerIndex);
+        currentPeriodCards.get(playerIndex).remove(cardIndex);
+        PlayerState pState = p.getState();
+
+        Monument m = p.getMonument();
+        List<ResourceEnum> cost = m.getCostToBuildNextStage();
+
+        if(pState.canAfford(cost)){
+            List<ResourceEnum> reward = m.getRewardForBuildingNextStage();
+            if (m.getName().equals("Alexandria") || m.getName().equals("Babylon")){
+                EitherResourceAction action = new EitherResourceAction(reward);
+                EitherHandler handler = new EitherHandler(action);
+                handler.updateState(pState);
+            }
+            else {
+                ResourceAction resourceAction = new ResourceAction(reward);
+                ResourceHandler handler = new ResourceHandler(resourceAction);
+                handler.updateState(pState);
+            }
+
+            m.buildStage();
+        }
+    }
+/*
     private void upgradeMonument(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         currentPeriodCards.get(playerIndex).remove(cardIndex);
@@ -54,6 +83,12 @@ public class Game {
         p.setMonument(m);
         p.setState(pState);
     }
+
+ */
+
+
+
+
 
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);

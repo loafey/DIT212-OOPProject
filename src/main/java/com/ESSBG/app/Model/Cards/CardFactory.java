@@ -91,6 +91,7 @@ public class CardFactory {
             cards.add(new ResourceActionCard("Resource", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));
             cards.add(new ResourceActionCard("Resource", getListOfResources(age-1, ResourceEnum.COIN), ColorEnum.BROWN, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));
         }
+
         // Luxury resources, two of each kind (6 cards totally)
         for (ResourceEnum r : getAllLuxuryResources()) {
             cards.add(new ResourceActionCard("Resource", new ArrayList<>(noCost), ColorEnum.GRAY, new ResourceAction(getListOfResources(nrOfResourcesOnCard, r))));

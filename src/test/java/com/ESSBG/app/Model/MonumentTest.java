@@ -54,7 +54,7 @@ public class MonumentTest {
         tmp.add(ResourceEnum.ORE);
         tmp.add(ResourceEnum.WOOD);
         tmp.add(ResourceEnum.STONE);
-        assertEquals(tmp, monument.stage2Reward());
+        assertEquals(tmp, monument.getStage2Reward());
     }
 
 }

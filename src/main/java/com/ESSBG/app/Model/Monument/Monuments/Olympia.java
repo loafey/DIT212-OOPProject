@@ -16,12 +16,12 @@ public class Olympia extends Monument {
 
     // Modified, not how it's actually in the real game
     @Override
-    public List<ResourceEnum> stage2Reward() {
+    public List<ResourceEnum> getStage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();
 
         int k=0;
-        while (k<5) {
-            newResources.add(ResourceEnum.POINT);
+        while (k<9) {
+            newResources.add(ResourceEnum.COIN);
             k++;
         }
 

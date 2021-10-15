@@ -99,36 +99,13 @@ public class Player {
         return monument;
     }
 
-
-    private void getStage1Reward() {
-        List<ResourceEnum> list = this.getState().getGuaranteedResources();
-        for (int i = 0; i < 3; i++) {
-            list.add(ResourceEnum.POINT);
-        }
-
-        PlayerState s = this.getState();
-        s.setGuaranteedResources(list);
-        this.setState(s);
-    }
-
     //TODO generalisera för olika typer av monument så vi kan ha either och neighbour också
     private void getStage2reward(){
         List<ResourceEnum> list = this.getState().getGuaranteedResources();
-        List<ResourceEnum> newResources = monument.stage2Reward();
+        List<ResourceEnum> newResources = monument.getStage2Reward();
 
         for (ResourceEnum r : newResources){
             list.add(r);
-        }
-
-        PlayerState s = this.getState();
-        s.setGuaranteedResources(list);
-        this.setState(s);
-    }
-
-    private void getStage3Reward() {
-        List<ResourceEnum> list = this.getState().getGuaranteedResources();
-        for (int i = 0; i < 7; i++) {
-            list.add(ResourceEnum.POINT);
         }
 
         PlayerState s = this.getState();
@@ -142,28 +119,7 @@ public class Player {
      * if the player has efficient resources to do so
      * @return true if build successful, false if not
      */
-    public boolean buildStageOfMonument(){
 
-        if (this.hasEfficientResourcesToBuildNextStage() && monument.getStageBuilt() < 3){
-            monument.buildStage();
-
-            switch (monument.getStageBuilt()){
-                case 1:
-                    getStage1Reward();
-                    break;
-                case 2:
-                    getStage2reward();
-                    break;
-                case 3:
-                    getStage3Reward();
-            }
-
-            //player.discard(card); //player doesn't have discard anymore
-            return true;
-        }
-
-        return false;
-    }
 
     // TODO Kollar bara just nu igenom guaranteed resources + tar ej hänsyn till om spelaren köpt något innan, fixa
 

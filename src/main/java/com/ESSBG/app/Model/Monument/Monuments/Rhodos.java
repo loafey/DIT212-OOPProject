@@ -15,7 +15,7 @@ public class Rhodos extends Monument {
     }
 
     @Override
-    public List<ResourceEnum> stage2Reward() {
+    public List<ResourceEnum> getStage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();
         newResources.add(ResourceEnum.WAR);
         newResources.add(ResourceEnum.WAR);

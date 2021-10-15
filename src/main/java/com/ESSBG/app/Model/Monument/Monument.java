@@ -1,5 +1,8 @@
 package com.ESSBG.app.Model.Monument;
 
+import com.ESSBG.app.Model.Action.IAction;
+import com.ESSBG.app.Model.Action.ResourceAction;
+import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
@@ -7,11 +10,26 @@ import java.util.List;
 
 public abstract class Monument implements IMonument {
 
-    private final String name; /**The name of this monument */
-    private final ResourceEnum startingResource; /** The starting resource given to the player (top left corner on monument)*/
-    private int stageBuilt = 0; /** How many stages that have been built yet on the monument (max 3)*/
-    protected List<ResourceEnum> resourcesToBuildStage1;  /** The resources required to build stage 1 of this monument */
-    protected List<ResourceEnum> resourcesToBuildStage2;  /** The resources required to build stage 2 of this monument */
+    private final String name;
+    /**
+     * The name of this monument
+     */
+    private final ResourceEnum startingResource;
+    /**
+     * The starting resource given to the player (top left corner on monument)
+     */
+    private int stageBuilt = 0;
+    /**
+     * How many stages that have been built yet on the monument (max 3)
+     */
+    protected List<ResourceEnum> resourcesToBuildStage1;
+    /**
+     * The resources required to build stage 1 of this monument
+     */
+    protected List<ResourceEnum> resourcesToBuildStage2;
+    /**
+     * The resources required to build stage 2 of this monument
+     */
     protected List<ResourceEnum> resourcesToBuildStage3;  /** The resources required to build stage 3 of this monument */
 
 
@@ -20,6 +38,7 @@ public abstract class Monument implements IMonument {
 
     /**
      * Creates a Monument with a certain name and what starting resources it will give a player that has it.
+     *
      * @param name
      * @param startingResource
      */
@@ -30,12 +49,12 @@ public abstract class Monument implements IMonument {
         init();
     }
 
-    private void init(){
+    private void init() {
         initResourcesToBuildStage1();
         initResourcesToBuildStage2();
         initResourcesToBuildStage3();
 
-        if (resourcesToBuildStage1 == null || resourcesToBuildStage2 == null || resourcesToBuildStage3 == null){
+        if (resourcesToBuildStage1 == null || resourcesToBuildStage2 == null || resourcesToBuildStage3 == null) {
             throw new IllegalStateException("Monument " + name + " hasn't been created properly. Missing cost for building at least one state");
         }
     }
@@ -43,6 +62,7 @@ public abstract class Monument implements IMonument {
 
     /**
      * Returns this monument's name
+     *
      * @return name
      */
 
@@ -53,12 +73,13 @@ public abstract class Monument implements IMonument {
     /**
      * Upgrades this monument's stage
      */
-    public void buildStage(){
+    public void buildStage() {
         stageBuilt++;
     }
 
     /**
      * Gives the current stage of this monument
+     *
      * @return stageBuilt
      */
 
@@ -68,6 +89,7 @@ public abstract class Monument implements IMonument {
 
     /**
      * Gives this monument's starting resource for the player who will have it.
+     *
      * @return startingResource
      */
 
@@ -77,21 +99,50 @@ public abstract class Monument implements IMonument {
 
     /**
      * To be used in subclasses to initialize all stage's requirements for building
+     *
      * @param resource The resource required to build a certain stage
-     * @param amount How many units required of the resource
+     * @param amount   How many units required of the resource
      * @return
      */
 
-    protected List<ResourceEnum> initializeResources(ResourceEnum resource, int amount){
+    protected List<ResourceEnum> initializeResources(ResourceEnum resource, int amount) {
         List<ResourceEnum> list = new ArrayList<>();
-        for (int i=0; i<amount; i++){
+        for (int i = 0; i < amount; i++) {
             list.add(resource);
         }
         return list;
     }
 
+
+    public List<ResourceEnum> getCostToBuildNextStage(){
+        switch(stageBuilt){
+            case 0:
+                return getResourcesToBuildStage1();
+            case 1:
+                return getResourcesToBuildStage2();
+            case 2:
+                return getResourcesToBuildStage3();
+            default:
+                return null;
+        }
+    }
+
+    public List<ResourceEnum> getRewardForBuildingNextStage(){
+        switch(stageBuilt){
+            case 0:
+                return getStage1Reward();
+            case 1:
+                return getStage2Reward();
+            case 2:
+                return getStage3Reward();
+            default:
+                return null;
+        }
+    }
+
     /**
      * Gives the resources required to build stage 1
+     *
      * @return resourcesToBuildStage1
      */
     public List<ResourceEnum> getResourcesToBuildStage1() {
@@ -100,6 +151,7 @@ public abstract class Monument implements IMonument {
 
     /**
      * Gives the resources required to build stage 2
+     *
      * @return resourcesToBuildStage2
      */
     public List<ResourceEnum> getResourcesToBuildStage2() {
@@ -108,6 +160,7 @@ public abstract class Monument implements IMonument {
 
     /**
      * Gives the resources required to build stage 3
+     *
      * @return resourcesToBuildStage3
      */
     public List<ResourceEnum> getResourcesToBuildStage3() {
@@ -118,9 +171,27 @@ public abstract class Monument implements IMonument {
 
     /**
      * Gives the specific reward for building stage 2 of this monument
+     *
      * @return resourcesToBuildStage1
      */
-    public abstract List<ResourceEnum> stage2Reward();
+    public abstract List<ResourceEnum> getStage2Reward();
+
+
+    public List<ResourceEnum> getStage1Reward() {
+        List<ResourceEnum> list = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            list.add(ResourceEnum.POINT);
+        }
+        return list;
+    }
+
+    public List<ResourceEnum> getStage3Reward() {
+        List<ResourceEnum> list = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            list.add(ResourceEnum.POINT);
+        }
+        return list;
+    }
 
     /**
      * Initialize the resources required to build stage 1 of this monument
