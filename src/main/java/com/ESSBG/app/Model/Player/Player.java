@@ -113,12 +113,7 @@ public class Player {
         this.setState(s);
     }
 
-    //TODO se till att resurserna flyttas över till rätt ställe när de använts
-    /**
-     * Builds a stage of this player's monument and gives this player that certain stage's reward
-     * if the player has efficient resources to do so
-     * @return true if build successful, false if not
-     */
+
 
 
     // TODO Kollar bara just nu igenom guaranteed resources + tar ej hänsyn till om spelaren köpt något innan, fixa

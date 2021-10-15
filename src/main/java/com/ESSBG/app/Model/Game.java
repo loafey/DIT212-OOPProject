@@ -38,15 +38,21 @@ public class Game {
         p.setState(pState);
     }
 
+    /**
+     * Upgrades a player's monument to the next stage, removes a card from their hand and upgrades their playerState,
+     * if the player has efficient resources to build the next stage of their monument.
+     * @param playerIndex
+     * @param cardIndex
+     */
     private void upgradeMonument(int playerIndex, int cardIndex){
         Player p = players.get(playerIndex);
-        currentPeriodCards.get(playerIndex).remove(cardIndex);
         PlayerState pState = p.getState();
-
         Monument m = p.getMonument();
         List<ResourceEnum> cost = m.getCostToBuildNextStage();
 
         if(pState.canAfford(cost)){
+            currentPeriodCards.get(playerIndex).remove(cardIndex);
+
             List<ResourceEnum> reward = m.getRewardForBuildingNextStage();
             if (m.getName().equals("Alexandria") || m.getName().equals("Babylon")){
                 EitherResourceAction action = new EitherResourceAction(reward);
