@@ -20,6 +20,9 @@ import com.ESSBG.app.Model.Player.InitializePlayers;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.Player.PlayerState;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Game {
     // TODO change to private
     public CircularList<Player> players = new CircularList<>();
@@ -92,10 +95,6 @@ public class Game {
 
  */
 
-
-
-
-
     private void pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
@@ -161,8 +160,143 @@ public class Game {
         }
     }
 
-
     private Player calculateWinner() {
         return players.stream().reduce(players.get(0), (p1, p2) -> p1.getPoints() > p2.getPoints() ? p1 : p2);
+    }
+
+    private JSONObject getPlayerData(Integer playerID) {
+        Player p = players.get(playerID);
+        PlayerState pState = p.getState();
+
+        JSONObject data = new JSONObject();
+        data.put("msgNum", 0);
+        
+        // parse cards
+        for (EitherResourceCard c : pState.getPlayedEitherCards()){
+            JSONObject cardData = new JSONObject();
+
+            cardData.put("color", parseColor(c.getColor()));
+
+            for (ResourceEnum r : c.getCost()){
+                cardData.append("cost", r.toString());
+            }
+            for (ResourceEnum r : c.getAction().getList()){
+                cardData.append("resource", r.toString());
+            }
+
+            data.append("placedCards", cardData);
+        }
+        for (NeighborReductionCard c : pState.getPlayedReductionCards()) {
+            JSONObject cardData = new JSONObject();
+
+            cardData.put("color", parseColor(c.getColor()));
+
+            for (ResourceEnum r : c.getCost()){
+                cardData.append("cost", r.toString());
+            }
+            for (ResourceEnum r : c.getAction().getList()){
+                cardData.append("resource", r.toString());
+            }
+
+            data.append("placedCards", cardData);
+        }
+        for (ResourceActionCard c : pState.getPlayedResourceCards()) {
+            JSONObject cardData = new JSONObject();
+
+            cardData.put("color", parseColor(c.getColor()));
+
+            for (ResourceEnum r : c.getCost()){
+                cardData.append("cost", r.toString());
+            }
+            for (ResourceEnum r : c.getAction().getList()){
+                cardData.append("resource", r.toString());
+            }
+
+            data.append("placedCards", cardData);
+        }
+
+
+        // parse resources
+        JSONObject resources = new JSONObject("");
+        resources.put("war", pState.getWinPoints());
+        resources.put("coins", pState.getWarTokens());
+        data.put("resources", resources);
+
+        JSONObject monument = new JSONObject();
+        monument.put("unlocked", p.getMonument().getStageBuilt());
+
+        for(ResourceEnum re : p.getMonument().getCostToBuildNextStage()){
+            monument.append("upgradeCost", re.toString());
+        }
+
+        JSONArray list1 = new JSONArray();
+        for(ResourceEnum re : p.getMonument().getStage1Reward()){
+            list1.put(re.toString());
+        }
+        JSONArray list2 = new JSONArray();
+        for(ResourceEnum re : p.getMonument().getStage2Reward()){
+            list1.put(re.toString());
+        }
+        JSONArray list3 = new JSONArray();
+        for(ResourceEnum re : p.getMonument().getStage3Reward()){
+            list1.put(re.toString());
+        }
+        monument.append("cards", list1);
+        monument.append("cards", list2);
+        monument.append("cards", list3);
+
+        data.put("monument", monument);
+
+        return data;
+    }
+
+    private JSONObject parseColor(ColorEnum color) {
+        JSONObject colorData = new JSONObject();
+        switch (color) {
+            case BLUE:   
+                colorData.put("r", 0);
+                colorData.put("g", 0);
+                colorData.put("b", 1);
+                colorData.put("a", 1);
+            break;
+            case BROWN:  
+                colorData.put("r", 150.0/255);
+                colorData.put("g", 116.0/255);
+                colorData.put("b", 5.0/255);
+                colorData.put("a", 1);
+            break;
+            case GRAY:   
+                colorData.put("r", 141.0/255);
+                colorData.put("g", 141.0/255);
+                colorData.put("b", 141.0/255);
+                colorData.put("a", 1);
+            break;
+            case GREEN:  
+                colorData.put("r", 141.0/255);
+                colorData.put("g", 141.0/255);
+                colorData.put("b", 141.0/255);
+                colorData.put("a", 1);
+            break;
+            case PURPLE: 
+                colorData.put("r", 0);
+                colorData.put("g", 1);
+                colorData.put("b", 0);
+                colorData.put("a", 1);
+            break;
+            case RED:    
+                colorData.put("r", 1);
+                colorData.put("g", 0);
+                colorData.put("b", 0);
+                colorData.put("a", 1);
+            break;
+            case YELLOW: 
+                colorData.put("r", 255.0/255);
+                colorData.put("g", 187.0/255);
+                colorData.put("b", 0);
+                colorData.put("a", 1);
+            break;
+            default: break;
+        }
+        return colorData;
     }
 }
