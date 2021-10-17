@@ -77,7 +77,6 @@ public class Game {
         }
         return false;
     }
-<<<<<<< HEAD
 /*
     private void upgradeMonument(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
@@ -102,9 +101,6 @@ public class Game {
 
  */
 
-    private void pickCard(int playerIndex, int cardIndex) {
-=======
-
     /**
      * Assuming the player has efficient resources to build the structure of card,
      * add the resources given by that card to the player's list of resources
@@ -113,7 +109,6 @@ public class Game {
      */
 
     private boolean pickCard(int playerIndex, int cardIndex) {
->>>>>>> 43fe2cf4eb46f40c91377b0a0d04a860b8f79f1c
         Player p = players.get(playerIndex);
         Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
         CardTypeEnum type = c.getCardTypeEnum();
