@@ -19,12 +19,29 @@ public class MonumentTest {
     }
 
     @Test
+    public void testBuildStage(){
+        monument.buildStage();
+        assertEquals(1, monument.getStageBuilt());
+        monument.buildStage();
+        assertEquals(2, monument.getStageBuilt());
+        monument.buildStage();
+        assertEquals(3, monument.getStageBuilt());
+    }
+
+    @Test
+    public void testGetStageBuilt(){
+        assertEquals(0, monument.getStageBuilt());
+        monument.buildStage();
+        assertEquals(1, monument.getStageBuilt());
+    }
+
+    @Test
     public void testStartingResource(){
         assertEquals(ResourceEnum.GLASS, monument.getStartingResource());
     }
 
     @Test
-    public void testResourcesToBuildStage1(){
+    public void testGetResourcesToBuildStage1(){
         List<ResourceEnum> tmp = new ArrayList<>();
         tmp.add(ResourceEnum.STONE);
         tmp.add(ResourceEnum.STONE);
@@ -32,7 +49,7 @@ public class MonumentTest {
     }
 
     @Test
-    public void testResourcesToBuildStage2(){
+    public void testGetResourcesToBuildStage2(){
         List<ResourceEnum> tmp = new ArrayList<>();
         tmp.add(ResourceEnum.WOOD);
         tmp.add(ResourceEnum.WOOD);
@@ -48,7 +65,64 @@ public class MonumentTest {
     }
 
     @Test
-    public void testStage2Reward(){
+    public void getCostToBuildNextStage(){
+        // Before building any stage
+        List<ResourceEnum> cost = monument.getCostToBuildNextStage();
+        List<ResourceEnum> list = monument.getResourcesToBuildStage1();
+
+        assertEquals(cost,list);
+
+        // Building stage one
+        monument.buildStage();
+
+        List<ResourceEnum> cost2 = monument.getCostToBuildNextStage();
+        List<ResourceEnum> list2 = monument.getResourcesToBuildStage2();
+
+        assertEquals(cost2,list2);
+
+
+        // Building stage two
+        monument.buildStage();
+
+        List<ResourceEnum> cost3 = monument.getCostToBuildNextStage();
+        List<ResourceEnum> list3 = monument.getResourcesToBuildStage3();
+
+        assertEquals(cost3,list3);
+    }
+
+
+    @Test
+    public void getRewardForBuildingNextStage(){
+        // Before building any stage
+        List<ResourceEnum> cost = monument.getRewardForBuildingNextStage();
+        List<ResourceEnum> list = monument.getStage1Reward();
+
+        assertEquals(cost,list);
+
+        // Building stage one
+        monument.buildStage();
+
+        List<ResourceEnum> cost2 = monument.getRewardForBuildingNextStage();
+        List<ResourceEnum> list2 = monument.getStage2Reward();
+
+        assertEquals(cost2,list2);
+
+
+        // Building stage two
+        monument.buildStage();
+
+        List<ResourceEnum> cost3 = monument.getRewardForBuildingNextStage();
+        List<ResourceEnum> list3 = monument.getStage3Reward();
+
+        assertEquals(cost3,list3);
+    }
+
+
+
+
+
+    @Test
+    public void testGetStage2Reward(){
         List<ResourceEnum> tmp = new ArrayList<>();
         tmp.add(ResourceEnum.CLAY);
         tmp.add(ResourceEnum.ORE);
