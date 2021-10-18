@@ -5,8 +5,8 @@ import com.ESSBG.app.Model.Player.PlayerState;
 /**
  * Author: Sebastian Selander
  * 
- * An interface for handlers that do some either thing
+ * An interface for handlers that do has an effect dependent on neighbors
  */
-public interface IEitherHandler {
+public interface INeighborHandler {
     PlayerState updateState(PlayerState state);
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import com.ESSBG.app.Model.Action.EitherResourceAction;
 import com.ESSBG.app.Model.Action.Handlers.EitherHandler;
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
-import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
+import com.ESSBG.app.Model.Action.Handlers.INeighborHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
@@ -120,7 +120,7 @@ public class Game {
                 pState.addEitherCard((EitherResourceCard) c);
                 p.setState(pState);
             } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
-                INeighborReductionHandler a = new NeighborReductionHandler(((NeighborReductionCard) c).getAction());
+                INeighborHandler a = new NeighborReductionHandler(((NeighborReductionCard) c).getAction());
                 PlayerState pState = a.updateState(p.getState());
                 pState.addReductionCard((NeighborReductionCard) c);
                 p.setState(pState);

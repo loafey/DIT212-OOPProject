@@ -19,7 +19,7 @@ import org.junit.Test;
 public class NeighborReductionHandlerTest {
     
     PlayerState state;
-    INeighborReductionHandler handler;
+    INeighborHandler handler;
     INeighborReductionAction action;
     ArrayList<ResourceEnum> resourceEnumList;
 
