@@ -1,5 +1,6 @@
 package com.ESSBG.app.Model.Player;
 
+import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.EitherResourceCard;
 import com.ESSBG.app.Model.Cards.NeighborReductionCard;
 import com.ESSBG.app.Model.Cards.ResourceActionCard;
@@ -15,10 +16,7 @@ import java.util.stream.Collectors;
  * A class that holds a state of a player. Everything that can change for a player during the course of a game should be here. 
  */
 public class PlayerState {
-    // TODO change to one list
-    private List<EitherResourceCard> playedEitherCards;
-    private List<NeighborReductionCard> playedReductionCards;
-    private List<ResourceActionCard> playedResourceCards;
+    private List<Card> playedCards;     //the type of the card doesn't matter when it's played
     private List<ResourceEnum> guaranteedResources;
     private List<ArrayList<ResourceEnum>> eitherResources;
     private List<ResourceEnum> neighborReductions;
@@ -29,9 +27,7 @@ public class PlayerState {
      * Constructor for a PlayerState
      */
     public PlayerState() {
-        this.playedEitherCards = new ArrayList<>();
-        this.playedReductionCards = new ArrayList<>();
-        this.playedResourceCards = new ArrayList<>();
+        this.playedCards = new ArrayList<>();
         this.guaranteedResources = new ArrayList<>();
         this.eitherResources = new ArrayList<>();
         this.neighborReductions = new ArrayList<>();
@@ -44,9 +40,7 @@ public class PlayerState {
      * @param state
      */
     public PlayerState(PlayerState state){
-        this.playedEitherCards = state.getPlayedEitherCards();
-        this.playedReductionCards = state.getPlayedReductionCards();
-        this.playedResourceCards = state.getPlayedResourceCards();
+        this.playedCards = state.getPlayedCards();
         this.guaranteedResources = state.getGuaranteedResources();
         this.eitherResources = state.getEitherResources();
         this.neighborReductions = state.getNeighborReductions();
@@ -61,36 +55,18 @@ public class PlayerState {
         PlayerState that = (PlayerState) o;
         return winPoints == that.winPoints &&
                 losePoints == that.losePoints &&
-                playedEitherCards.equals(that.playedEitherCards) &&
-                playedReductionCards.equals(that.playedReductionCards) &&
-                playedResourceCards.equals(that.playedResourceCards) &&
+                playedCards.equals(that.playedCards) &&
                 guaranteedResources.equals(that.guaranteedResources) &&
                 eitherResources.equals(that.eitherResources) &&
                 neighborReductions.equals(that.neighborReductions);
     }
 
     /**
-     * Getter for playedEitherCards. playedEitherCards represent all played either cards
-     * @return List<EitherResourceCard>
+     * Getter for playedCards
+     * @return List<Card>
      */
-    public List<EitherResourceCard> getPlayedEitherCards() {
-        return new ArrayList<>(playedEitherCards);
-    }
-
-    /**
-     * Getter for playedReductionCards. playedReductionCards represent all played reduction cards
-     * @return List<NeighborReductionCard>
-     */
-    public List<NeighborReductionCard> getPlayedReductionCards() {
-        return new ArrayList<>(playedReductionCards);
-    }
-
-    /**
-     * Getter for playdResourceCards. playdResourceCards represent all played resource cards
-     * @return List<ResourceActionCard>
-     */
-    public List<ResourceActionCard> getPlayedResourceCards() {
-        return new ArrayList<>(playedResourceCards);
+    public List<Card> getPlayedCards(){
+        return new ArrayList<>(playedCards);
     }
 
     /**
@@ -145,28 +121,13 @@ public class PlayerState {
     }
 
     /**
-     * Setter for playedEitherCards. playedEitherCards represents played either cards
-     * @param playedEitherCards
+     * Setter for playedCards
+     * @param playedCards
      */
-    public void setPlayedEitherCards(List<EitherResourceCard> playedEitherCards) {
-        this.playedEitherCards = new ArrayList<>(playedEitherCards);
+    public void setPlayedCards(List<EitherResourceCard> playedCards) {
+        this.playedCards = new ArrayList<>(playedCards);
     }
 
-    /**
-     * Setter for playedReductionsCards. playedReductionsCards represents played reduction cards
-     * @param playedReduceCards
-     */
-    public void setPlayedReductionCards(List<NeighborReductionCard> playedReduceCards) {
-        this.playedReductionCards = new ArrayList<>(playedReduceCards);
-    }
-
-    /**
-     * Setter for playedResourceCards
-     * @param playedResourceCards
-     */
-    public void setPlayedResourceCards(List<ResourceActionCard> playedResourceCards) {
-        this.playedResourceCards = new ArrayList<>(playedResourceCards);
-    }
 
     /**
      * Setter for guaranteedResources
@@ -239,27 +200,11 @@ public class PlayerState {
     // ------------------------------------------------------
 
     /**
-     * Add a EitherResourceCard to the list of played Either cards.
+     * Add a Card to the list of played cards.
      * @param c
      */
-    public void addEitherCard(EitherResourceCard c){
-        playedEitherCards.add(c);
-    }
-
-    /**
-     * Add a ReduceNeighborResourceCard to the list of played reduce cards
-     * @param c
-     */
-    public void addReductionCard(NeighborReductionCard c){
-        playedReductionCards.add(c);
-    }
-
-    /**
-     * Add a ResourceCard to the list of played resource acards
-     * @param c
-     */
-    public void addResourceCard(ResourceActionCard c){
-        playedResourceCards.add(c);
+    public void addPlayedCard(Card c){
+        playedCards.add(c);
     }
 
     /**
