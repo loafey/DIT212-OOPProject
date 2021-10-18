@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Author: Sebastian Selander, Samuel Hammersberg
+ * 
+ * A class that holds a state of a player. Everything that can change for a player during the course of a game should be here. 
+ */
 public class PlayerState {
     // TODO change to one list
     private List<EitherResourceCard> playedEitherCards;
@@ -298,6 +303,11 @@ public class PlayerState {
         losePoints += amount;
     }
 
+    /**
+     * Check if a player can the cost of the argument
+     * @param cost
+     * @return true if player can afford, else false
+     */
     public boolean canAfford(List<ResourceEnum> cost){
         boolean richEnough = true;
         cost = new ArrayList<>(cost);
