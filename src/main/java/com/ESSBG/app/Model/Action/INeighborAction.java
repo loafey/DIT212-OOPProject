@@ -9,6 +9,6 @@ import java.util.List;
  * 
  * An interface that represent an action that affect state dependent on neighbor.
  */
-public interface INeighborAction {
-    List<ResourceEnum> getList();
+public interface INeighborAction extends IAction {
+    
 }

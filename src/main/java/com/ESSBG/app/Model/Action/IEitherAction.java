@@ -9,6 +9,6 @@ import java.util.List;
  * 
  * An interface that represent an action where one thing can be chosen.
  */
-public interface IEitherAction {
-    List<ResourceEnum> getList();
+public interface IEitherAction extends IAction {
+    
 }

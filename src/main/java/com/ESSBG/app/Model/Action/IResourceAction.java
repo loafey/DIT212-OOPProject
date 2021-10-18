@@ -9,6 +9,6 @@ import java.util.List;
  * 
  * An interface that represent an action that give resources.
  */
-public interface IResourceAction {
-    List<ResourceEnum> getList();
+public interface IResourceAction extends IAction {
+    
 }
