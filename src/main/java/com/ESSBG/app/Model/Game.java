@@ -204,22 +204,10 @@ public class Game {
             c.getCost().forEach((ResourceEnum r) -> {{
                 cardData.append("cost", r.toString());
             }});
-
-            CardTypeEnum type = c.getCardTypeEnum();
             cardData.put("resource", new JSONArray());
-            if (type == CardTypeEnum.EITHERRESOURCE) {
-                ((EitherResourceCard) c).getAction().getList().forEach((ResourceEnum r) -> {
-                    cardData.append("resource", r.toString());
-                });
-            } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
-                ((NeighborReductionCard) c).getAction().getList().forEach((ResourceEnum r) -> {
-                    cardData.append("resource", r.toString());
-                });
-            } else if (type == CardTypeEnum.RESOURCEACTION) {
-                ((ResourceActionCard) c).getAction().getList().forEach((ResourceEnum r) -> {
-                    cardData.append("resource", r.toString());
-                });
-            }
+            c.getAction().getList().forEach((ResourceEnum r) -> {
+                cardData.append("resource", r.toString());
+            });
 
             cardData.put("color", parseColor(c.getColor()));
             
@@ -228,36 +216,11 @@ public class Game {
         
         data.put("placedCards", new JSONArray());
         // parse placed cards
-        for (EitherResourceCard c : pState.getPlayedEitherCards()){
-            JSONObject cardData = new JSONObject();
-
-            cardData.put("color", parseColor(c.getColor()));
-
-            for (ResourceEnum r : c.getCost()){
-                cardData.append("cost", r.toString());
-            }
-            for (ResourceEnum r : c.getAction().getList()){
-                cardData.append("resource", r.toString());
-            }
-
-            data.append("placedCards", cardData);
-        }
-        for (NeighborReductionCard c : pState.getPlayedReductionCards()) {
-            JSONObject cardData = new JSONObject();
-
-            cardData.put("color", parseColor(c.getColor()));
-            
-
-            for (ResourceEnum r : c.getCost()){
-                cardData.append("cost", r.toString());
-            }
-            for (ResourceEnum r : c.getAction().getList()){
-                cardData.append("resource", r.toString());
-            }
-
-            data.append("placedCards", cardData);
-        }
-        for (ResourceActionCard c : pState.getPlayedResourceCards()) {
+        ArrayList<Card> allCards = new ArrayList<>();
+        allCards.addAll(pState.getPlayedEitherCards());
+        allCards.addAll(pState.getPlayedReductionCards());
+        allCards.addAll(pState.getPlayedResourceCards());
+        for (Card c : allCards) {
             JSONObject cardData = new JSONObject();
 
             cardData.put("color", parseColor(c.getColor()));
