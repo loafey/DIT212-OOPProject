@@ -1,9 +1,15 @@
 package com.ESSBG.app.Model.Cards;
 
 import com.ESSBG.app.Model.ResourceEnum;
+import com.ESSBG.app.Model.Action.IAction;
 
 import java.util.List;
 
+/**
+ * Author: Sebastian Selander, Emmie Berger
+ * 
+ * An abstract class that represent a card.
+ */
 public abstract class Card {
     private final String name;
     private final List<ResourceEnum> cost;
@@ -54,6 +60,12 @@ public abstract class Card {
     public CardTypeEnum getCardTypeEnum() {
         return cardTypeEnum;
     }
+
+    /**
+     * Get the action the card holds. The information about what action it is is lost, but not necessary for the Game class
+     * @return IAction
+     */
+    public abstract IAction getAction();
 
 
 }

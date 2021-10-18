@@ -1,26 +1,31 @@
 package com.ESSBG.app.Model.Action.Handlers;
 
-import com.ESSBG.app.Model.Action.INeighborReductionAction;
+import com.ESSBG.app.Model.Action.INeighborAction;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
+/**
+ * Author: Sebastian Selander
+ *
+ * A handler used to update a PlayerState. The action is specified when creating the handler.
+ * 
+ */
+public class NeighborReductionHandler implements INeighborHandler {
 
-public class NeighborReductionHandler implements INeighborReductionHandler {
-
-    private INeighborReductionAction action;
+    private INeighborAction action;
 
     /**
      * Constructor for NeighborReductionHandler
      * @param action
      * @return NeighborReductionHandler
      */
-    public NeighborReductionHandler(INeighborReductionAction action) {
+    public NeighborReductionHandler(INeighborAction action) {
         this.action = action;
     }
 
     /**
-     * Updates the given state using the action.
+     * Update the given state using the Action. The outcome depends on how the Action is constructed.
      * @param state
      * @return PlayerState
      */

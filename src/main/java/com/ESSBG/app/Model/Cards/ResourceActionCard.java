@@ -5,6 +5,11 @@ import java.util.List;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IResourceAction;
 
+/**
+ * Author: Sebastian Selander
+ * 
+ * A concrete card that holds a resource action.
+ */
 public class ResourceActionCard extends Card{
 
     private IResourceAction action;

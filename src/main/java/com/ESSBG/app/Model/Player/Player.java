@@ -3,7 +3,7 @@ package com.ESSBG.app.Model.Player;
 import java.util.*;
 
 import com.ESSBG.app.Model.Action.Handlers.IEitherHandler;
-import com.ESSBG.app.Model.Action.Handlers.INeighborReductionHandler;
+import com.ESSBG.app.Model.Action.Handlers.INeighborHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.ResourceEnum;
@@ -13,7 +13,7 @@ public class Player {
     private final String name;
     private Monument monument;
     private List<IEitherHandler> eitherActionHandlers;
-    private List<INeighborReductionHandler> neighborReductionHandlers;
+    private List<INeighborHandler> neighborReductionHandlers;
     private List<IResourceHandler> resourceActionHandlers;
     private PlayerState state;
 

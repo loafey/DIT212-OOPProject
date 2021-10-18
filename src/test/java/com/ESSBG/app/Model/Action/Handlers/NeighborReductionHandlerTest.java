@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ESSBG.app.Model.ResourceEnum;
-import com.ESSBG.app.Model.Action.INeighborReductionAction;
+import com.ESSBG.app.Model.Action.INeighborAction;
 import com.ESSBG.app.Model.Action.NeighborReductionAction;
 import com.ESSBG.app.Model.Cards.ColorEnum;
 import com.ESSBG.app.Model.Cards.NeighborReductionCard;
@@ -19,8 +19,8 @@ import org.junit.Test;
 public class NeighborReductionHandlerTest {
     
     PlayerState state;
-    INeighborReductionHandler handler;
-    INeighborReductionAction action;
+    INeighborHandler handler;
+    INeighborAction action;
     ArrayList<ResourceEnum> resourceEnumList;
 
     @Before

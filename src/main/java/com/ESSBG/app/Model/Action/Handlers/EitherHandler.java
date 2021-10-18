@@ -8,7 +8,12 @@ import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
-
+/**
+ * Author: Sebastian Selander
+ *
+ * A handler used to update a PlayerState. The action is specified when creating the handler.
+ * 
+ */
 public class EitherHandler implements IEitherHandler {
 
     private IEitherAction action;
@@ -24,7 +29,7 @@ public class EitherHandler implements IEitherHandler {
 
     
     /**
-     * Updated the given state with the use of the action.
+     * Update the given state using the Action. The outcome depends on how the Action is constructed.
      * @param state
      * @return PlayerState
      */

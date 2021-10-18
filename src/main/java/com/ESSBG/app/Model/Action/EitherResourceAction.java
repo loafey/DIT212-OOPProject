@@ -5,6 +5,11 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: Sebastian Selander
+ * 
+ * An action that gives a given set of resources where only one can be chosen from per turn.
+ */
 public class EitherResourceAction implements IEitherAction {
 
     private final List<ResourceEnum> resources;
