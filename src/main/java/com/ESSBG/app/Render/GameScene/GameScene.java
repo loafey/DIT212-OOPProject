@@ -33,7 +33,9 @@ public class GameScene implements Screen {
 
     private Client client;
 
-    public GameScene(Client client) {}
+    public GameScene(Client client) {
+        this.client = client;
+    }
 
     /**
      * Takes in JSON data to be displayed by the view.
@@ -100,11 +102,12 @@ public class GameScene implements Screen {
         stage.act(delta);
         stage.draw();
 
-        if (client != null){
+        if (client != null) {
             if (client.getMsgQueue().size() > 0){
                 try {
                     JSONObject msg = client.getMsgQueue().take();
-                    System.out.println(msg);
+                    System.out.println("Client: " + msg);
+                    update(msg.getJSONObject("data"));
                 } catch (InterruptedException e){}
             }
         }

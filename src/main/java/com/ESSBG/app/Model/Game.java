@@ -32,6 +32,13 @@ public class Game {
     private int age = 1;
     private final int handSize = 7;
 
+    public void startGame(ArrayList<Integer> playerIDS) {
+        for (Integer pid : playerIDS){
+            players.add(new Player(pid, new PlayerState()));
+        }
+        init();
+    }
+
     /**
      * Puts a player's card into the trash can
      * @param playerIndex
@@ -184,14 +191,44 @@ public class Game {
         return players.stream().reduce(players.get(0), (p1, p2) -> p1.getPoints() > p2.getPoints() ? p1 : p2);
     }
 
-    private JSONObject getPlayerData(Integer playerID) {
-        Player p = players.get(playerID);
+    public JSONObject getPlayerData(Integer playerIndex) {
+        Player p = players.get(playerIndex);
         PlayerState pState = p.getState();
 
         JSONObject data = new JSONObject();
         data.put("msgNum", 0);
+
+        data.put("handCards", new JSONArray());
+        // parse hand cards
+        for (Card c :  currentPeriodCards.get(playerIndex)) {
+            JSONObject cardData = new JSONObject();
+            c.getCost().forEach((ResourceEnum r) -> {{
+                cardData.append("cost", r.toString());
+            }});
+
+            CardTypeEnum type = c.getCardTypeEnum();
+            cardData.put("resource", new JSONArray());
+            if (type == CardTypeEnum.EITHERRESOURCE) {
+                ((EitherResourceCard) c).getAction().getList().forEach((ResourceEnum r) -> {
+                    cardData.append("resource", r.toString());
+                });
+            } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
+                ((NeighborReductionCard) c).getAction().getList().forEach((ResourceEnum r) -> {
+                    cardData.append("resource", r.toString());
+                });
+            } else if (type == CardTypeEnum.RESOURCEACTION) {
+                ((ResourceActionCard) c).getAction().getList().forEach((ResourceEnum r) -> {
+                    cardData.append("resource", r.toString());
+                });
+            }
+
+            cardData.put("color", parseColor(c.getColor()));
+            
+            data.append("handCards", cardData);
+        }
         
-        // parse cards
+        data.put("placedCards", new JSONArray());
+        // parse placed cards
         for (EitherResourceCard c : pState.getPlayedEitherCards()){
             JSONObject cardData = new JSONObject();
 
@@ -210,6 +247,7 @@ public class Game {
             JSONObject cardData = new JSONObject();
 
             cardData.put("color", parseColor(c.getColor()));
+            
 
             for (ResourceEnum r : c.getCost()){
                 cardData.append("cost", r.toString());
@@ -237,7 +275,7 @@ public class Game {
 
 
         // parse resources
-        JSONObject resources = new JSONObject("");
+        JSONObject resources = new JSONObject();
         resources.put("war", pState.getWinPoints());
         resources.put("coins", pState.getWarTokens());
         data.put("resources", resources);
@@ -255,11 +293,11 @@ public class Game {
         }
         JSONArray list2 = new JSONArray();
         for(ResourceEnum re : p.getMonument().getStage2Reward()){
-            list1.put(re.toString());
+            list2.put(re.toString());
         }
         JSONArray list3 = new JSONArray();
         for(ResourceEnum re : p.getMonument().getStage3Reward()){
-            list1.put(re.toString());
+            list3.put(re.toString());
         }
         monument.append("cards", list1);
         monument.append("cards", list2);
