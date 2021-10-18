@@ -123,17 +123,17 @@ public class Game {
             if (type == CardTypeEnum.EITHERRESOURCE) {
                 IEitherHandler a = new EitherHandler(((EitherResourceCard) c).getAction());
                 PlayerState pState = a.updateState(p.getState());
-                pState.addEitherCard((EitherResourceCard) c);
+                pState.addPlayedCard((EitherResourceCard) c);
                 p.setState(pState);
             } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
                 INeighborHandler a = new NeighborReductionHandler(((NeighborReductionCard) c).getAction());
                 PlayerState pState = a.updateState(p.getState());
-                pState.addReductionCard((NeighborReductionCard) c);
+                pState.addPlayedCard((NeighborReductionCard) c);
                 p.setState(pState);
             } else if (type == CardTypeEnum.RESOURCEACTION) {
                 IResourceHandler a = new ResourceHandler(((ResourceActionCard) c).getAction());
                 PlayerState pState = a.updateState(p.getState());
-                pState.addResourceCard((ResourceActionCard) c);
+                pState.addPlayedCard((ResourceActionCard) c);
                 p.setState(pState);
             }
             return true;
@@ -217,9 +217,7 @@ public class Game {
         data.put("placedCards", new JSONArray());
         // parse placed cards
         ArrayList<Card> allCards = new ArrayList<>();
-        allCards.addAll(pState.getPlayedEitherCards());
-        allCards.addAll(pState.getPlayedReductionCards());
-        allCards.addAll(pState.getPlayedResourceCards());
+        allCards.addAll(pState.getPlayedCards());
         for (Card c : allCards) {
             JSONObject cardData = new JSONObject();
 

@@ -27,7 +27,7 @@ public class NeighborReductionHandlerTest {
     public void setup(){
         NeighborReductionCard card = new NeighborReductionCard("Test", resourceEnumList, ColorEnum.BLUE, action);
         state = new PlayerState();
-        state.addReductionCard(card);
+        state.addPlayedCard(card);
         resourceEnumList = new ArrayList<>();
         resourceEnumList.add(ResourceEnum.CLAY);
         resourceEnumList.add(ResourceEnum.STONE);

@@ -46,9 +46,9 @@ public class PlayerStateTest {
     public void playerStateConstructor() {
         ArrayList<ResourceEnum> resourceEnums = new ArrayList<>();
         resourceEnums.add(ResourceEnum.STONE);
-        playerState.addEitherCard(eitherResourceCard);
-        playerState.addReductionCard(neighborReductionCard);
-        playerState.addResourceCard(resourceActionCard);
+        playerState.addPlayedCard(eitherResourceCard);
+        playerState.addPlayedCard(neighborReductionCard);
+        playerState.addPlayedCard(resourceActionCard);
         playerState.addGuaranteedResource(ResourceEnum.STONE);
         playerState.addEitherResource(resourceEnums);
         playerState.setNeighborReductions(resourceEnums);
@@ -59,21 +59,9 @@ public class PlayerStateTest {
     }
 
     @Test
-    public void addEitherCard() {
-        playerState.addEitherCard(eitherResourceCard);
-        assertEquals(eitherResourceCard, playerState.getPlayedEitherCards().get(0));
-    }
-
-    @Test
-    public void addReductionCard() {
-        playerState.addReductionCard(neighborReductionCard);
-        assertEquals(neighborReductionCard, playerState.getPlayedReductionCards().get(0));
-    }
-
-    @Test
-    public void addResourceCard() {
-        playerState.addResourceCard(resourceActionCard);
-        assertEquals(resourceActionCard, playerState.getPlayedResourceCards().get(0));
+    public void addCard() {
+        playerState.addPlayedCard(eitherResourceCard);
+        assertEquals(eitherResourceCard, playerState.getPlayedCards().get(0));
     }
 
     @Test
@@ -117,24 +105,10 @@ public class PlayerStateTest {
 
 
     @Test
-    public void setPlayedEitherCards() {
-        playerState.addEitherCard(eitherResourceCard);
-        playerState.setPlayedEitherCards(new ArrayList<>());
-        assertEquals(0, playerState.getPlayedEitherCards().size());
-    }
-
-    @Test
-    public void setPlayedReductionCards() {
-        playerState.addReductionCard(neighborReductionCard);
-        playerState.setPlayedReductionCards(new ArrayList<>());
-        assertEquals(0, playerState.getPlayedReductionCards().size());
-    }
-
-    @Test
-    public void setPlayedResourceCards() {
-        playerState.addResourceCard(resourceActionCard);
-        playerState.setPlayedResourceCards(new ArrayList<>());
-        assertEquals(0, playerState.getPlayedResourceCards().size());
+    public void setPlayedCards() {
+        playerState.addPlayedCard(eitherResourceCard);
+        playerState.setPlayedCards(new ArrayList<>());
+        assertEquals(0, playerState.getPlayedCards().size());
     }
 
     @Test
