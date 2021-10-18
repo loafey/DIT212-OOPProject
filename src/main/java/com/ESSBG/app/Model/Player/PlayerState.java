@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ESSBG.app.Model.ResourceEnum.*;
+
 /**
  * Author: Sebastian Selander, Samuel Hammersberg
  * 
@@ -99,7 +101,7 @@ public class PlayerState {
      */
     public int getCoins() {
         return guaranteedResources.stream()
-        .filter(c -> c == ResourceEnum.COIN)
+        .filter(c -> c == COIN)
         .collect(Collectors.toList())
         .size();    //save everything that is a coin in a new list and return its length
     }
@@ -228,7 +230,7 @@ public class PlayerState {
      */
     public void addCoins(int amount) {
         for (int i = 0; i < amount; i++){
-            guaranteedResources.add(ResourceEnum.COIN);
+            guaranteedResources.add(COIN);
         }
     }
 
@@ -281,5 +283,47 @@ public class PlayerState {
             } // currently eitherResources have no extra functionality compared to guaranteedResources.    
         }     // TODO can be solved using satisfiability. Kind of out of scope in this course and low on time.
         return cost.size() == 0;
+    }
+
+    /**
+     * Returns the total score for this player state
+     * @return
+     */
+    public int getTotalScore(){
+        int pPoints = getNrOfResources(POINT);
+        int pCoins = getNrOfResources(COIN) / 3;
+        int pWarPoints = winPoints - losePoints;
+        int pGreenPoints = getPointsFromGreenCards();
+
+        return pPoints + pCoins + pWarPoints + pGreenPoints;
+    }
+
+    /**
+     * Calculates the points earned from green cards (library, dispensary, laboratory) for this player state
+     * @return
+     */
+    public int getPointsFromGreenCards(){
+        int squaredPoints = getNrOfResources(Library) * getNrOfResources(Library) + getNrOfResources(Dispensary) * getNrOfResources(Dispensary) + getNrOfResources(Laboratory) * getNrOfResources(Laboratory);
+        int groupPoints = Math.min(getNrOfResources(Laboratory), (Math.min(getNrOfResources(Library), getNrOfResources(Dispensary))));
+
+        return squaredPoints + groupPoints;
+    }
+
+    /**
+     * Gives the amount of a specified resource in this playerstate's list of guaranteed resources
+     * @param r the resource to calculate the amount for
+     * @return the amount of the resource
+     */
+
+    public int getNrOfResources(ResourceEnum r){
+        int n = 0;
+
+        for (ResourceEnum resource : guaranteedResources){
+            if (resource.equals(r)){
+                n++;
+            }
+        }
+
+        return n;
     }
 }

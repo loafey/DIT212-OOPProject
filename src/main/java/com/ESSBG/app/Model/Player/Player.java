@@ -17,9 +17,7 @@ public class Player {
     private List<IResourceHandler> resourceActionHandlers;
     private PlayerState state;
 
-    public int getPoints(){
-        return 10;
-    }
+
 
     /**
      * The constructor for a Player. Creates a player with an id and a state.

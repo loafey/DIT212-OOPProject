@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ESSBG.app.Model.ResourceEnum.*;
 import static org.junit.Assert.*;
 
 public class PlayerStateTest {
@@ -84,7 +85,7 @@ public class PlayerStateTest {
         assertEquals(1337, playerState.getCoins());
         int coinCount = 0;
         for (ResourceEnum guaranteedResource : playerState.getGuaranteedResources()) {
-            if (guaranteedResource == ResourceEnum.COIN) {
+            if (guaranteedResource == COIN) {
                 coinCount++;
             }
         }
@@ -153,6 +154,96 @@ public class PlayerStateTest {
     public void setWarTokens() {
         playerState.setWarTokens(1337);
         assertEquals(1337, playerState.getWarTokens());
+    }
+
+    @Test
+    public void getNrOfResources(){
+        List<ResourceEnum> tmp = getMockList();
+
+        playerState.setGuaranteedResources(tmp);
+
+        assertEquals(2, playerState.getNrOfResources(COIN));
+        assertEquals(0, playerState.getNrOfResources(STONE));
+        assertEquals(1, playerState.getNrOfResources(Library));
+        assertEquals(3, playerState.getNrOfResources(WOOD));
+    }
+
+    @Test
+    public void getPointsFromGreenCards(){
+        List<ResourceEnum> tmp = getMockList();
+
+        playerState.setGuaranteedResources(tmp);
+
+        assertEquals(2, playerState.getPointsFromGreenCards());
+
+
+        playerState.addGuaranteedResource(Library);
+        playerState.addGuaranteedResource(Library);
+        playerState.addGuaranteedResource(Library);
+        playerState.addGuaranteedResource(Laboratory);
+        playerState.addGuaranteedResource(Laboratory);
+
+        assertEquals(1 + 16 + 1 + 4, playerState.getPointsFromGreenCards());
+
+        playerState.addGuaranteedResource(Dispensary);
+
+        assertEquals(2 + 16 + 4 + 4, playerState.getPointsFromGreenCards());
+    }
+
+    @Test
+    public void getTotalScore(){
+        playerState.addWinPoints(5);
+        playerState.addLosePoints(2);
+
+        playerState.setGuaranteedResources(getMockList2());
+
+        assertEquals(3+4+1+9+16, playerState.getTotalScore());
+
+        playerState.setGuaranteedResources(getMockList());
+        assertEquals(2+3+3, playerState.getTotalScore());
+
+    }
+
+    private List<ResourceEnum> getMockList(){
+        List<ResourceEnum> tmp = new ArrayList<>();
+        tmp.add(COIN);
+        tmp.add(COIN);
+        tmp.add(POINT);
+        tmp.add(POINT);
+        tmp.add(POINT);
+        tmp.add(WOOD);
+        tmp.add(WOOD);
+        tmp.add(WOOD);
+        tmp.add(Library);
+        tmp.add(Dispensary);
+        tmp.add(GLASS);
+
+        return tmp;
+    }
+
+    private List<ResourceEnum> getMockList2(){
+        List<ResourceEnum> tmp = new ArrayList<>();
+        tmp.add(Dispensary);
+        tmp.add(Dispensary);
+        tmp.add(Dispensary);
+        tmp.add(GLASS);
+        tmp.add(GLASS);
+        tmp.add(WOOD);
+        tmp.add(COIN);
+        tmp.add(COIN);
+        tmp.add(COIN);
+        tmp.add(COIN);
+        tmp.add(POINT);
+        tmp.add(POINT);
+        tmp.add(POINT);
+        tmp.add(POINT);
+        tmp.add(Library);
+        tmp.add(Library);
+        tmp.add(Library);
+        tmp.add(Library);
+
+
+        return tmp;
     }
 
 
