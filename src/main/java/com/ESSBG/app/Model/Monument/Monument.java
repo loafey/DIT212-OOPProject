@@ -1,6 +1,5 @@
 package com.ESSBG.app.Model.Monument;
 
-import com.ESSBG.app.Model.Action.IAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;

@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * Author: Sebastian Selander
  * 
- * An interface that represent an action where one thing can be chosen.
+ * An interface that represent an action that affect state dependent on neighbor.
  */
-public interface IEitherAction {
+public interface INeighborAction {
     List<ResourceEnum> getList();
 }

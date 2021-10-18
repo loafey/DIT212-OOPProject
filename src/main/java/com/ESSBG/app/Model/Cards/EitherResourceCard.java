@@ -5,6 +5,11 @@ import java.util.List;
 import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
+/**
+ * Author: Sebastian Selander
+ * 
+ * A concrete card that holds an either action.
+ */
 public class EitherResourceCard extends Card {
 
     private IEitherAction action;

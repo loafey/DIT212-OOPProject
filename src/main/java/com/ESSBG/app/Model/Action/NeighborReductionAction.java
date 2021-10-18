@@ -5,7 +5,12 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeighborReductionAction implements INeighborReductionAction {
+/**
+ * Author: Sebastian Selander
+ * 
+ * An action that reduces the cost of specified resources from neighbors.
+ */
+public class NeighborReductionAction implements INeighborAction {
 
     private final List<ResourceEnum> neighborReductions;
 

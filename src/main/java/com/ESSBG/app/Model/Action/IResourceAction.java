@@ -4,6 +4,11 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
-public interface IResourceAction extends IAction{
-
+/**
+ * Author: Sebastian Selander
+ * 
+ * An interface that represent an action that give resources.
+ */
+public interface IResourceAction {
+    List<ResourceEnum> getList();
 }

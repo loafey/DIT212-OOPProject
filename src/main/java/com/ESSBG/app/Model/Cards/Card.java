@@ -4,6 +4,11 @@ import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.List;
 
+/**
+ * Author: Sebastian Selander, Emmie Berger
+ * 
+ * An abstract class that represent a card.
+ */
 public abstract class Card {
     private final String name;
     private final List<ResourceEnum> cost;

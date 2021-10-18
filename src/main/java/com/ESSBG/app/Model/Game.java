@@ -10,7 +10,6 @@ import com.ESSBG.app.Model.Action.Handlers.INeighborHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
-import com.ESSBG.app.Model.Action.IAction;
 import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.Cards.*;

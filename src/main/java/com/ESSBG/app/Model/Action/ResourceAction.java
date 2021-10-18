@@ -5,6 +5,11 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: Sebastian Selander
+ * 
+ * An action that gives the specified resources.
+ */
 public class ResourceAction implements IResourceAction {
 
     private final List<ResourceEnum> resources;

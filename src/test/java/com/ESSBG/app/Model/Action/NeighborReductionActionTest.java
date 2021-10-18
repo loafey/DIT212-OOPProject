@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class NeighborReductionActionTest {
     
-    private INeighborReductionAction action;
+    private INeighborAction action;
     private List<ResourceEnum> resourceEnumList;
 
     @Before
