@@ -2,6 +2,8 @@ package com.ESSBG.app;
 
 import java.io.IOException;
 import java.util.concurrent.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.*;
 
 import com.ESSBG.app.Model.ConcurrentCircularList;
@@ -20,7 +22,6 @@ import org.json.*;
 public class GameServer implements Runnable {
     private IServer server;
     private LinkedBlockingQueue<JSONObject> msgQueue;
-    private ConcurrentCircularList<Integer> players;
     private ConcurrentHashMap<Integer, Integer> joinedUsers;
     private ConcurrentHashMap<Integer, Boolean> confirmedStart;
     private Game game;
@@ -28,7 +29,6 @@ public class GameServer implements Runnable {
     public GameServer() {
         this.server = new Server();
         this.joinedUsers = new ConcurrentHashMap<>();
-        this.players = new ConcurrentCircularList<>();
         this.confirmedStart = new ConcurrentHashMap<>();
         game = new Game();
     }
@@ -42,6 +42,17 @@ public class GameServer implements Runnable {
         while (!server.isSocketClosed()) {
             gameLogic();
         }
+    }
+
+    private void broadCastMessage (BiFunction<? super Integer, ? super Integer, JSONObject> message) {
+        joinedUsers.forEach((p, pIndex) -> {
+            try {
+                boolean result = server.sendData(p, message.apply(p,pIndex));
+                if (!result) {
+                    System.out.println("ERROR: Failed to send data to user " + p + "!");
+                }
+            } catch (IOException e) {}
+        });
     }
 
     /**
@@ -74,14 +85,17 @@ public class GameServer implements Runnable {
             int msgNum = data.getInt("msgNum");
 
             if (data.has("start")) {
-                joinedUsers.forEach((p, pid) -> {
-                    try {
-                        boolean result = server.sendData(p, new JSONObject("{\"start\": true}"));
-                        if (!result) {
-                            System.out.println("ERROR: Failed to send data to user " + p + "!");
-                        }
-                    } catch (IOException e) {}
+                ArrayList<Integer> pIDS = new ArrayList<>();
+                joinedUsers.forEach((p,pIndex) -> pIDS.add(p));
+                game.startGame(pIDS);
+
+                broadCastMessage((p, pIndex) -> {
+                    return new JSONObject("{\"start\": true}");
                 });
+                broadCastMessage((p, pIndex) -> {
+                    return game.getPlayerData(pIndex);
+                });
+
                 return;
             }
 
@@ -150,8 +164,8 @@ public class GameServer implements Runnable {
             // Dataspree!
             // TODO
             // Card selectedCard = player.getCardList().get(cardIndex);
-            Integer leftNeighbor = players.getPrevious(player);
-            Integer rightNeighbor = players.getNext(player);
+            //Integer leftNeighbor = players.getPrevious(player);
+            //Integer rightNeighbor = players.getNext(player);
 
             // TODO remove placeholder for real method
             boolean ok_buy_card = true;
@@ -181,15 +195,12 @@ public class GameServer implements Runnable {
         if (js.getBoolean("data")) {
             System.out.println("Server: " + js);
 
-            Integer newPlayer = id;
-            joinedUsers.put(id, newPlayer);
+            joinedUsers.put(id, joinedUsers.size());
             confirmedStart.put(id, true);
-            players.add(newPlayer);
         } else {
             // Any connection error should remove.
             joinedUsers.remove(id);
             confirmedStart.remove(id);
-            players.remove(id);
         }
     }
 
@@ -263,11 +274,7 @@ public class GameServer implements Runnable {
     }
 
     private boolean playerNameChange(int id, String name) {
-        for (Integer p : players) {
-            /*if (p.getName().equals(name)) {
-                return false;
-            }*/
-        }
+
         // TODO
         // players.get(id).setName(name);
         return true;

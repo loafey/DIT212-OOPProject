@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,9 +31,10 @@ public class DrawableBoard {
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         updateResources(skin, monument, data.getJSONObject("resources"));
         updateMonument(skin, monument, data.getJSONObject("monument"));
-        var leftNeighbourJson = data.getJSONObject("leftNeighbour");
-        var rightNeighbourJson = data.getJSONObject("rightNeighbour");
+        //var leftNeighbourJson = data.getJSONObject("leftNeighbour");
+        //var rightNeighbourJson = data.getJSONObject("rightNeighbour");
     }
+
 
     /**
      * Clears and redraws the monument with the new data
@@ -50,12 +52,25 @@ public class DrawableBoard {
         
         int count = 0;
         for (var i : data.getJSONArray("cards")){
-            JSONObject card = (JSONObject)i;
-            String type = card.getString("type");
-            int amount = card.getInt("amount");
+
+            JSONArray monumentContent = (JSONArray)i;
+            HashMap<Object, Integer> algo = new HashMap<>();
+
+            for (Object c : monumentContent) {
+                if (algo.containsKey(c)) {
+                    int val = algo.get(c) + 1;
+                    algo.replace(c, val);
+                } else {
+                    algo.put(c, 1);
+                }
+            }
+            String content = "";
+            for (Entry<Object, Integer> val : algo.entrySet()) {
+                content += val.getKey().toString() + ": " + val.getValue().toString(); 
+            }
 
             Button b = new Button(skin);
-            b.add(new Label(type + ": " + amount,skin));
+            b.add(new Label(content,skin));
             if (count < unlocked) {
                 b.setColor(new Color(0, 1, 0, 1));
             }
@@ -153,16 +168,19 @@ public class DrawableBoard {
         // Try to get the Resource info, and if it does not exist, try to to get action data instead.
         String cardText = "";
         if (cardData.has("resource")) {
-            JSONObject resource = cardData.getJSONObject("resource");
-            cardText += resource.getString("type") + " " + resource.getInt("amount");
+            JSONArray resource = cardData.getJSONArray("resource");
+            for (Object r : resource) {
+                cardText += (String)r + "\n";
+            }
         } else if(cardData.has("action")) {
             JSONObject action = cardData.getJSONObject("action");
-            // TODO interperit action data 
             cardText += "action";
         }
 
         Button card = new DrawableCard(skin, rotation, color);
-        card.add(new Label(cardText, skin));
+        Label cardLabel = new Label(cardText, skin);
+        cardLabel.setFontScale(0.9f, 0.9f);
+        card.add(cardLabel);
         return card;
     }
 }
