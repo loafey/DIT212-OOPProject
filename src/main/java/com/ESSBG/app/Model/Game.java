@@ -334,7 +334,7 @@ public class Game {
         return tmp;
     }
 
-    private void movePeriodCardsToNextPlayer(){
+    public void movePeriodCardsToNextPlayer(){
         currentPeriodCards = getRotatedCardsClockWise(currentPeriodCards);
     }
 
