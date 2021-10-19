@@ -15,7 +15,6 @@ import java.util.*;
 public class MonumentFactory {
     private List<Monument> monuments = new ArrayList<>();
 
-
     private MonumentFactory() {
         initMonumentList();
         Random r = new Random(getSeed());

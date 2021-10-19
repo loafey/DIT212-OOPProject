@@ -14,6 +14,7 @@ import java.util.Random;
 import static java.util.Collections.shuffle;
 
 public class CardFactory {
+
     // Only for testing purposes
     public static final int nrOfWarCards = 8;
     public static final int nrOfCoinCards = 3;
