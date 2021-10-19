@@ -189,7 +189,11 @@ public class Game {
         return players.stream().reduce(players.get(0), (p1, p2) -> p1.getState().getTotalScore() > p2.getState().getTotalScore() ? p1 : p2);
     }
 
-    public JSONObject getPlayerData(Integer playerIndex) {
+    public boolean playerPickCard (int playerIndex, int cardIndex) {
+        return pickCard(playerIndex, cardIndex);
+    }
+
+    public JSONObject getPlayerData(int playerIndex) {
         Player p = players.get(playerIndex);
         PlayerState pState = p.getState();
 

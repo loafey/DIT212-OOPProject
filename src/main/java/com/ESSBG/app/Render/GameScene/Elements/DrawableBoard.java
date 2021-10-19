@@ -17,6 +17,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class DrawableBoard {
+    private Skin skin;
+    private Table handTable;
+    private Table placedCards;
+    private Table monument;
+
+    private GameController controller;
+
+    public DrawableBoard(GameController controller, Skin skin, Table handTable, Table placedCards, Table monument){
+        this.skin = skin;
+        this.handTable = handTable;
+        this.placedCards = placedCards;
+        this.monument = monument;
+        this.controller = controller;
+    }
+    
     /**
      * Updates the board 
      * @param data The data to be displayed
@@ -26,13 +41,17 @@ public class DrawableBoard {
      * @param placedCards The table where cards you have placed should be displayed
      * @param monument The table for the monument
      */
-    public void updateBoard(JSONObject data, GameController controller, Skin skin, Table handTable, Table placedCards, Table monument) {
+    public void updateBoard(JSONObject data) {
         updateHand(skin, controller, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         updateResources(skin, monument, data.getJSONObject("resources"));
         updateMonument(skin, monument, data.getJSONObject("monument"));
         //var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         //var rightNeighbourJson = data.getJSONObject("rightNeighbour");
+    }
+
+    public void hideHandCards(){
+        handTable.clear();
     }
 
 

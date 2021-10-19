@@ -5,6 +5,7 @@ import java.util.concurrent.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.*;
+import java.util.Map.Entry;
 
 import com.ESSBG.app.Model.ConcurrentCircularList;
 import com.ESSBG.app.Model.Game;
@@ -140,20 +141,7 @@ public class GameServer implements Runnable {
         // Get all the necessary info. Even more data!
         int cardIndex = cardData.getInt("cardIndex");
         String action = cardData.getString("action");
-        Integer player = joinedUsers.get(id);
-        // TODO
-        // List<Card> cardList = player.getCardList();
 
-        // TODO
-        // Check if index is allowed.
-        // if (0 < cardIndex || cardIndex >= player.getCardList().size()) {
-        // server.sendData(id, replyMaker(msgNum, false, "Select a valid card!"));
-        // return;
-        // }
-
-        // discard, place, monument
-        // We have to check whether player has enough resources
-        // to upgrade monument or buy card.
         if (action.equals("discard")) {
             // TODO
             // discardAction(id, msgNum, cardList, cardIndex);
@@ -161,14 +149,7 @@ public class GameServer implements Runnable {
         }
 
         if (action.equals("monument") || action.equals("place")) {
-            // Dataspree!
-            // TODO
-            // Card selectedCard = player.getCardList().get(cardIndex);
-            //Integer leftNeighbor = players.getPrevious(player);
-            //Integer rightNeighbor = players.getNext(player);
-
-            // TODO remove placeholder for real method
-            boolean ok_buy_card = true;
+            boolean ok_buy_card = game.playerPickCard(joinedUsers.get(id), cardIndex);
             // Check if player can buy this card.
 
             if (!ok_buy_card) {
@@ -176,11 +157,27 @@ public class GameServer implements Runnable {
                 return;
             }
             server.sendData(id, replyMaker(msgNum, true));
+            confirmedStart.replace(id, true);
 
             // Confirm user to this round.
             confirmedStart.put(id, true);
 
             // Delete players resources
+        }
+        boolean allFinished = true;
+        for (Entry<Integer, Boolean> e :  confirmedStart.entrySet()) {
+            allFinished &= e.getValue();
+        }
+
+        if(allFinished){
+            broadCastMessage((Integer p, Integer pid) -> {
+                JSONObject data = game.getPlayerData(pid);
+                return data;
+            });
+
+            confirmedStart.forEach((p, _r) -> {
+                confirmedStart.replace(p, false);
+            });
         }
     }
 
@@ -196,7 +193,7 @@ public class GameServer implements Runnable {
             System.out.println("Server: " + js);
 
             joinedUsers.put(id, joinedUsers.size());
-            confirmedStart.put(id, true);
+            confirmedStart.put(id, false);
         } else {
             // Any connection error should remove.
             joinedUsers.remove(id);
