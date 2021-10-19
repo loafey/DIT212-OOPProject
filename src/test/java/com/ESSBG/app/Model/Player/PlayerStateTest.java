@@ -17,6 +17,9 @@ import java.util.List;
 import static com.ESSBG.app.Model.ResourceEnum.*;
 import static org.junit.Assert.*;
 
+/**
+ * @author Gabriel Hagström
+ */
 public class PlayerStateTest {
 
     PlayerState playerState;

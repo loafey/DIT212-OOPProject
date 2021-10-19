@@ -11,6 +11,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Gabriel Hagström
+ */
 public class PlayerTest {
     Player p;
 

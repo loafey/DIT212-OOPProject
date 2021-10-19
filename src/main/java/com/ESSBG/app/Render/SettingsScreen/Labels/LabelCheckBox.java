@@ -3,6 +3,7 @@ package com.ESSBG.app.Render.SettingsScreen.Labels;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 
 /**
+ * @author Gabriel Hagström
  * The LabelCheckBox class is a representation of a Label and a Checkbox grouped as one.
  */
 public class LabelCheckBox extends Table {

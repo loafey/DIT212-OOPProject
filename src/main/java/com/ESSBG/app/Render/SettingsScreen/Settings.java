@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 
 /**
+ * @author Gabriel Hagström
  * The Settings class represent the settings file, all interaction with the settings file should be through this class.
  */
 public class Settings {

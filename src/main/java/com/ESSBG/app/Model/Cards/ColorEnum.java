@@ -1,6 +1,7 @@
 package com.ESSBG.app.Model.Cards;
 
 /**
+ * @author Gabriel Hagström, Emmie berger
  * Describes the color of a card
  */
 public enum ColorEnum {

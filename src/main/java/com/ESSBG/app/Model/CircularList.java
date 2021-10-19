@@ -2,6 +2,9 @@ package com.ESSBG.app.Model;
 
 import java.util.ArrayList;
 
+/**
+ * @author Emmie berger, Gabriel Hagström
+ */
 public class CircularList<T> extends ArrayList<T>{
 
     public CircularList(){

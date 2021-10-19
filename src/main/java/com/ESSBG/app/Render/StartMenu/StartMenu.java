@@ -15,6 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.*;
 
+/**
+ * @author Gabriel Hagström
+ */
 public class StartMenu implements Screen {
 
     private Stage stage;
