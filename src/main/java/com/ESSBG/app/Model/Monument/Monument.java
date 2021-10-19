@@ -1,13 +1,17 @@
 package com.ESSBG.app.Model.Monument;
 
-import com.ESSBG.app.Model.Action.ResourceAction;
-import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Monument implements IMonument {
+/**
+ * Author: Emmie Berger
+ *
+ * A class that represents a monument in the game
+ */
+
+public abstract class Monument {
 
     private final String name;
     /**

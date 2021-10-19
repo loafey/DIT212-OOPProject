@@ -7,6 +7,12 @@ import com.ESSBG.app.Model.ResourceEnum;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: Emmie Berger
+ *
+ * A class that represents the Monument of Gizah
+ */
+
 public class Gizah extends Monument {
 
     public Gizah() {
