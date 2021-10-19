@@ -260,10 +260,12 @@ public class PlayerState {
         cost = new ArrayList<>(cost);
         List<ResourceEnum> guaranteed = getGuaranteedResources();
         List<ArrayList<ResourceEnum>> eithers = getEitherResources(); 
-        for (ResourceEnum r : cost){
+        for (int i = 0; i < cost.size(); i++){
+            ResourceEnum r = cost.get(i);
             if(guaranteed.contains(r)) {
                 guaranteed.remove(r);
                 cost.remove(r);
+                i--;
             } else {
                 richEnough = false;
                 break;
@@ -272,12 +274,14 @@ public class PlayerState {
         if (richEnough) {
             return true;
         } else {
-            for (ResourceEnum r : cost) {
+            for (int ri = 0; ri < cost.size(); ri++){
+                ResourceEnum r = cost.get(ri);
                 for (int i = 0; i < eithers.size(); i++){
                     if (eithers.get(i).contains(r)) {
                         eithers.remove(i);
                         i--;
                         cost.remove(r);
+                        ri--;
                     }
                 }
             } // currently eitherResources have no extra functionality compared to guaranteedResources.    
