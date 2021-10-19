@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static com.ESSBG.app.Model.ResourceEnum.*;
 
 /**
- * Author: Sebastian Selander, Samuel Hammersberg
+ * Author: Sebastian Selander, Samuel Hammersberg, Emmie Berger
  * 
  * A class that holds a state of a player. Everything that can change for a player during the course of a game should be here. 
  */

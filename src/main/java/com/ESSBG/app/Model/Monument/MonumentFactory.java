@@ -4,6 +4,13 @@ import com.ESSBG.app.Model.Monument.Monuments.*;
 
 import java.util.*;
 
+/**
+ * Author: Emmie Berger
+ *
+ * A factory class for Monument.
+ * Produces a list of each type of monument available in the game (one object of each subclass to Monument)
+ */
+
 public class MonumentFactory {
     private List<Monument> monuments = new ArrayList<>();
 
