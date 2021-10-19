@@ -10,7 +10,6 @@ import com.ESSBG.app.Model.Action.Handlers.INeighborHandler;
 import com.ESSBG.app.Model.Action.Handlers.IResourceHandler;
 import com.ESSBG.app.Model.Action.Handlers.NeighborReductionHandler;
 import com.ESSBG.app.Model.Action.Handlers.ResourceHandler;
-import com.ESSBG.app.Model.Action.IResourceAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.Cards.*;
 import com.ESSBG.app.Model.Monument.Monument;
@@ -178,16 +177,16 @@ public class Game {
             // TODO make immutable
             if (pWarPoints > nextWarPoints) {
                 p.getState().addWinPoints(winPoints);
-                next.getState().addLosePoints(winPoints);
+                next.getState().addLosePoints(1);
             } else if (pWarPoints < nextWarPoints) {
                 next.getState().addWinPoints(winPoints);
-                p.getState().addLosePoints(winPoints);
+                p.getState().addLosePoints(1);
             }
         }
     }
 
     private Player calculateWinner() {
-        return players.stream().reduce(players.get(0), (p1, p2) -> p1.getPoints() > p2.getPoints() ? p1 : p2);
+        return players.stream().reduce(players.get(0), (p1, p2) -> p1.getState().getTotalScore() > p2.getState().getTotalScore() ? p1 : p2);
     }
 
     public JSONObject getPlayerData(Integer playerIndex) {
@@ -317,4 +316,6 @@ public class Game {
         }
         return colorData;
     }
+
+
 }
