@@ -11,8 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static java.util.Collections.shuffle;
-
 public class CardFactory {
 
     // Only for testing purposes

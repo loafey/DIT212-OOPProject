@@ -1,7 +1,6 @@
 package com.ESSBG.app.Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Emmie berger, Gabriel Hagström

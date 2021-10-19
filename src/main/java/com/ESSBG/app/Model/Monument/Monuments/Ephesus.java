@@ -1,8 +1,6 @@
 package com.ESSBG.app.Model.Monument.Monuments;
 
 import com.ESSBG.app.Model.Monument.Monument;
-import com.ESSBG.app.Model.Player.Player;
-import com.ESSBG.app.Model.Player.PlayerState;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
