@@ -27,7 +27,7 @@ public class GameScene implements Screen {
 
     private GameController gameController;
 
-    private DrawableBoard board = new DrawableBoard();
+    private DrawableBoard board;
 
     private Table pauseMenu;
 
@@ -42,7 +42,7 @@ public class GameScene implements Screen {
      * @param data The data in question
      */
     public void update(JSONObject data) {
-        board.updateBoard(data, gameController, skin, handCardContainer, placedCardContainer, monument);
+        board.updateBoard(data);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class GameScene implements Screen {
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
         skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
-        gameController = new GameController();
+        gameController = new GameController(client);
 
         sceneTable = new Table();
         handCardContainer = new Table();
@@ -86,6 +86,8 @@ public class GameScene implements Screen {
         sceneTable.add(pauseButton);
         sceneTable.setVisible(true);
 
+        board = new DrawableBoard(gameController, skin, handCardContainer, placedCardContainer, monument);
+
         stage.addActor(sceneTable);
     }
 
@@ -105,9 +107,15 @@ public class GameScene implements Screen {
         if (client != null) {
             if (client.getMsgQueue().size() > 0){
                 try {
-                    JSONObject msg = client.getMsgQueue().take();
-                    System.out.println("Client: " + msg);
-                    update(msg.getJSONObject("data"));
+                    JSONObject msg = client.getMsgQueue().take().getJSONObject("data");
+                    if (msg.has("reply") && msg.getBoolean("reply")){
+                        board.hideHandCards();
+                    }
+                    if(msg.has("placedCards")) {
+                        update(msg);
+                    } else {
+                        System.out.println("\n----------------\nClient: " + msg + "\n----------------\n");
+                    }
                 } catch (InterruptedException e){}
             }
         }
