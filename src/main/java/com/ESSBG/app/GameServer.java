@@ -149,7 +149,9 @@ public class GameServer implements Runnable {
         }
 
         if (action.equals("monument") || action.equals("place")) {
+            System.out.println("Crash 1");
             boolean ok_buy_card = game.playerPickCard(joinedUsers.get(id), cardIndex);
+            System.out.println("Crash 2");
             // Check if player can buy this card.
 
             if (!ok_buy_card) {

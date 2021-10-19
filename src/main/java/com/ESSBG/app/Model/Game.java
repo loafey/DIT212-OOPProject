@@ -115,26 +115,25 @@ public class Game {
 
     private boolean pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
-        Card c = currentPeriodCards.get(playerIndex).remove(cardIndex);
-        CardTypeEnum type = c.getCardTypeEnum();
 
-        if (p.getState().canAfford(c.getCost())) {
+        Card c = currentPeriodCards.get(playerIndex).get(cardIndex);
+
+        CardTypeEnum type = c.getCardTypeEnum();
+        PlayerState pState = p.getState();
+        if (pState.canAfford(c.getCost())) {
             if (type == CardTypeEnum.EITHERRESOURCE) {
                 IEitherHandler a = new EitherHandler(((EitherResourceCard) c).getAction());
-                PlayerState pState = a.updateState(p.getState());
-                pState.addPlayedCard((EitherResourceCard) c);
-                p.setState(pState);
+                pState = a.updateState(pState);
             } else if (type == CardTypeEnum.NEIGHBORREDUCTION) {
                 INeighborHandler a = new NeighborReductionHandler(((NeighborReductionCard) c).getAction());
-                PlayerState pState = a.updateState(p.getState());
-                pState.addPlayedCard((NeighborReductionCard) c);
-                p.setState(pState);
+                pState = a.updateState(pState);
             } else if (type == CardTypeEnum.RESOURCEACTION) {
                 IResourceHandler a = new ResourceHandler(((ResourceActionCard) c).getAction());
-                PlayerState pState = a.updateState(p.getState());
-                pState.addPlayedCard((ResourceActionCard) c);
-                p.setState(pState);
+                pState = a.updateState(pState);
             }
+            pState.addPlayedCard(c);
+            p.setState(pState);
+            currentPeriodCards.get(playerIndex).remove(cardIndex);
             return true;
         }
         return false;
