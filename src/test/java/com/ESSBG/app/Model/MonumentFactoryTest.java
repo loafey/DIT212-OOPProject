@@ -37,20 +37,4 @@ public class MonumentFactoryTest {
 
         assertTrue(noDuplicates);
     }
-
-    @Test
-    public void testShuffle(){
-        List<Monument> tmp1 = MonumentFactory.getMonuments();
-        List<Monument> tmp2 = MonumentFactory.getMonuments();
-
-        int elementsThatDiffer = 0;
-
-        for (int i=0; i<tmp1.size(); i++){
-            if (!tmp1.get(i).getName().equals(tmp2.get(i).getName())){
-                elementsThatDiffer++;
-            }
-        }
-
-        assertTrue(elementsThatDiffer > 3);
-    }
 }

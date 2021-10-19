@@ -4,7 +4,9 @@ import com.ESSBG.app.Model.Action.EitherResourceAction;
 import com.ESSBG.app.Model.Action.NeighborReductionAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.ResourceEnum;
+import com.ESSBG.app.Model.ShuffleableList;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -62,7 +64,7 @@ public class CardFactory {
      * @return the shuffled list with 49 cards
      */
     private List<Card> generateCards(int age) {
-        List<Card> cards = new ArrayList<>();
+        ArrayList<Card> cards = new ArrayList<>();
         List<ResourceEnum> basicResources = getAllBasicResources();
         int nrOfResourcesOnCard = age;
         int nrOfWarPointsOnCard = age;
@@ -142,9 +144,13 @@ public class CardFactory {
             cards.add(new ResourceActionCard("Dispensary", greenCardsCost, ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Dispensary))));
         }
 
-        shuffle(cards);
-        return cards;
+        ShuffleableList shuffleableList = new ShuffleableList(cards);
+        shuffleableList.shuffle();
+
+        return shuffleableList.getList();
     }
+
+
 
     /**
      * Get a list of specific resources
