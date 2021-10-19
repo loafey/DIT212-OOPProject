@@ -143,7 +143,7 @@ public class Game {
     /**
      * Initializes cardDeck, periodCards, age, trashcan and monuments
      */
-    private void init() {
+    public void init() {
         monuments = MonumentFactory.getMonuments();
         players = InitializePlayers.getInitializedPlayers(players, monuments);
         currentPeriodCards = CardFactory.generateHands(age, players.size(), handSize);
@@ -322,4 +322,23 @@ public class Game {
     }
 
 
+    public List<List<Card>> getRotatedCardsClockWise(List<List<Card>> cards){
+        List<List<Card>> tmp = new ArrayList<>();
+
+        tmp.add(cards.get(cards.size()-1));
+
+        for (int i=0; i<cards.size()-1; i++){
+            tmp.add(cards.get(i));
+        }
+
+        return tmp;
+    }
+
+    private void movePeriodCardsToNextPlayer(){
+        currentPeriodCards = getRotatedCardsClockWise(currentPeriodCards);
+    }
+
+    public List<List<Card>> getCurrentPeriodCards() {
+        return currentPeriodCards;
+    }
 }
