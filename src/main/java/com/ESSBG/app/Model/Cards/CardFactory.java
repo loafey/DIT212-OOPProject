@@ -144,6 +144,7 @@ public class CardFactory {
             cards.add(new ResourceActionCard("Dispensary", greenCardsCost, ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Dispensary))));
         }
 
+
         ShuffleableList shuffleableList = new ShuffleableList(cards);
         shuffleableList.shuffle();
 

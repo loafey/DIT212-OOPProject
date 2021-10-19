@@ -12,6 +12,7 @@ public class ShuffleableList <T> extends ArrayList<T> {
         this.list = list;
     }
 
+
     /**
      * Generates an int based on today's date to be sued for generating random numbers
      * @return

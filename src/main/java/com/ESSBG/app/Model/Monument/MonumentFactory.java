@@ -16,6 +16,7 @@ import java.util.*;
 public class MonumentFactory {
     private ArrayList<Monument> monuments = new ArrayList<>();
 
+
     private MonumentFactory() {
         initMonumentList();
         ShuffleableList shuffleableList = new ShuffleableList(monuments);

@@ -12,6 +12,7 @@ import java.util.List;
 public class MonumentFactoryTest {
     List<Monument> monuments;
 
+
     @Before
     public void init(){
         monuments = MonumentFactory.getMonuments();
