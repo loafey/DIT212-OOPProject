@@ -40,6 +40,7 @@ public class MonumentFactory {
      * @param list
      * @param <T>
      */
+    //TODO fix random
     private <T> void shuffle(List<T> list) {
         Random random = new Random();
         int size = list.size();

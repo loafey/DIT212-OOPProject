@@ -1,12 +1,15 @@
 package com.ESSBG.app.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CircularList<T> extends ArrayList<T>{
 
     public CircularList(){
         super();
     }
+
+
 
     public T getNext(T t){
         int i = super.indexOf(t);
