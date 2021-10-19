@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 /**
+ * @author Gabriel Hagström
  * ScreenManager is a singleton that have the ability to change the current screen or get the instance of the current screen.
  */
 public class ScreenManager {

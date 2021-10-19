@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 
 
 /**
+ * @author Gabriel Hagström
  * The LabelTextField class is a representation of a Label and a TextField grouped as one.
  */
 public class LabelTextField extends Table {

@@ -8,6 +8,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
+/**
+ * @author Gabriel Hagström, Samuel Hammersberg
+ */
 public class MainScreen implements ApplicationListener {
 
 

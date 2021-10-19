@@ -17,10 +17,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
+ * @author Gabriel Hagström
  * SettingsScreen is the view for the settings menu.
  */
 public class SettingsScreen implements Screen {
-    private static final boolean DEBUG = false; // TODO DISABLE THIS
+    private static final boolean DEBUG = false;
     private final Stage stage;
     private final Settings settings;
     private final Skin skin;
@@ -159,17 +160,6 @@ public class SettingsScreen implements Screen {
         applyButton = new TextButton("Apply settings", skin);
         mainTable.add(backButton).pad(10, 0, 10, 0);
         mainTable.add(applyButton).pad(10, 0, 10, 0);
-        if (DEBUG) { //TODO delete this when done with settings
-            TextButton deleteSaveFile = new TextButton("Clear Save File", skin);
-            deleteSaveFile.addListener(new ClickListener() {
-                @Override
-                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    super.touchUp(event, x, y, pointer, button);
-                    settings.clearSaveFile();
-                }
-            });
-            mainTable.add(deleteSaveFile);
-        }
 
     }
 

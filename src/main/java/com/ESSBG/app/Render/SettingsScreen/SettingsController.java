@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 /**
+ * @author Gabriel Hagström
  * SettingsController is the controller between {@link SettingsScreen} and {@link Settings} when we are in the {@link StartMenu}
  */
 public class SettingsController implements SettingsScreenController {

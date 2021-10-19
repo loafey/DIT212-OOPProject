@@ -1,6 +1,7 @@
 package com.ESSBG.app.Model;
 
 /**
+ * @author Sebastian Selander, Emmie berger, Gabriel Hagström
  * Represents the different types of resources/ assets available in the game
  */
 public enum ResourceEnum  {
