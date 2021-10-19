@@ -170,6 +170,7 @@ public class GameServer implements Runnable {
         }
 
         if(allFinished){
+            game.movePeriodCardsToNextPlayer();
             broadCastMessage((Integer p, Integer pid) -> {
                 JSONObject data = game.getPlayerData(pid);
                 return data;
