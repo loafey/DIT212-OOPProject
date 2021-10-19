@@ -317,6 +317,7 @@ public class Game {
         return colorData;
     }
 
+
     public List<List<Card>> getRotatedCardsClockWise(List<List<Card>> cards){
         List<List<Card>> tmp = new ArrayList<>();
 

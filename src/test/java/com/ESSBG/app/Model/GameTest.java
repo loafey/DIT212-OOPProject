@@ -40,6 +40,7 @@ public class GameTest {
     }
 
 
+
     @Test
     public void getRotatedCardsClockWise(){
         List<List<Card>> list = getMockCards();
