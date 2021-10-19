@@ -1,7 +1,6 @@
 package com.ESSBG.app.Model.Monument;
 
 import com.ESSBG.app.Model.Monument.Monuments.*;
-import com.ESSBG.app.Model.ShuffleableList;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -14,14 +13,26 @@ import java.util.*;
  */
 
 public class MonumentFactory {
-    private ArrayList<Monument> monuments = new ArrayList<>();
+    private List<Monument> monuments = new ArrayList<>();
 
 
     private MonumentFactory() {
         initMonumentList();
-        ShuffleableList shuffleableList = new ShuffleableList(monuments);
-        shuffleableList.shuffle();
-        monuments = shuffleableList.getList();
+        Random r = new Random(getSeed());
+        Collections.shuffle(monuments,r);
+    }
+
+    /**
+     * Generates an int based on today's date to be used for generating random numbers
+     * @return
+     */
+    private int getSeed() {
+        LocalDate d = java.time.LocalDate.now();
+        int seed = 0;
+        seed += d.getYear();
+        seed += d.getMonthValue();
+        seed += d.getDayOfMonth();
+        return seed;
     }
 
 

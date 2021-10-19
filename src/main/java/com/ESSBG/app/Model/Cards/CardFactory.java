@@ -4,10 +4,10 @@ import com.ESSBG.app.Model.Action.EitherResourceAction;
 import com.ESSBG.app.Model.Action.NeighborReductionAction;
 import com.ESSBG.app.Model.Action.ResourceAction;
 import com.ESSBG.app.Model.ResourceEnum;
-import com.ESSBG.app.Model.ShuffleableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -64,7 +64,7 @@ public class CardFactory {
      * @return the shuffled list with 49 cards
      */
     private List<Card> generateCards(int age) {
-        ArrayList<Card> cards = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
         List<ResourceEnum> basicResources = getAllBasicResources();
         int nrOfResourcesOnCard = age;
         int nrOfWarPointsOnCard = age;
@@ -144,11 +144,22 @@ public class CardFactory {
             cards.add(new ResourceActionCard("Dispensary", greenCardsCost, ColorEnum.GREEN, new ResourceAction(getListOfResources(1, ResourceEnum.Dispensary))));
         }
 
+        Random r = new Random(getSeed());
+        Collections.shuffle(cards,r);
+        return cards;
+    }
 
-        ShuffleableList shuffleableList = new ShuffleableList(cards);
-        shuffleableList.shuffle();
-
-        return shuffleableList.getList();
+    /**
+     * Generates an int based on today's date to be used for generating random numbers
+     * @return
+     */
+    private int getSeed() {
+        LocalDate d = java.time.LocalDate.now();
+        int seed = 0;
+        seed += d.getYear();
+        seed += d.getMonthValue();
+        seed += d.getDayOfMonth();
+        return seed;
     }
 
 
