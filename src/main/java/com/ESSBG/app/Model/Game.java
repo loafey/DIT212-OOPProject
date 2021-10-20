@@ -320,7 +320,11 @@ public class Game {
         return colorData;
     }
 
-
+    /**
+     * Takes a list of list of cards and rotates them clockwise
+     * @param cards the list of list of cards
+     * @return a rotated copy of the list
+     */
     public List<List<Card>> getRotatedCardsClockWise(List<List<Card>> cards){
         List<List<Card>> tmp = new ArrayList<>();
 
@@ -333,8 +337,35 @@ public class Game {
         return tmp;
     }
 
+    /**
+     * Takes a list of list of cards and rotates them counterclockwise
+     * @param cards the list of list of cards
+     * @return a rotated copy of the list
+     */
+    public List<List<Card>> getRotatedCardsCounterClockWise(List<List<Card>> cards){
+        List<List<Card>> tmp = new ArrayList<>();
+
+        for (int i=1; i<cards.size(); i++){
+            tmp.add(cards.get(i));
+        }
+
+        tmp.add(cards.get(0));
+
+        return tmp;
+    }
+
+    /**
+     * Rotate all player hands to their neighbors.
+     * If the age is an odd number, rotate clockwise.
+     * If the age is an even number, rotate counterclockwise.
+     */
     public void movePeriodCardsToNextPlayer(){
-        currentPeriodCards = getRotatedCardsClockWise(currentPeriodCards);
+        if (age % 2 != 0) {
+            currentPeriodCards = getRotatedCardsClockWise(currentPeriodCards);
+        }
+        else {
+            currentPeriodCards = getRotatedCardsCounterClockWise(currentPeriodCards);
+        }
     }
 
     public List<List<Card>> getCurrentPeriodCards() {

@@ -58,6 +58,23 @@ public class GameTest {
         assertEquals(list, expectedListAfterRotation);
     }
 
+    @Test
+    public void getRotatedCardsCounterClockwise(){
+        List<List<Card>> list = getMockCards();
+        List<Card> A = list.get(0);
+        List<Card> B = list.get(1);
+        List<Card> C = list.get(2);
+
+        List<List<Card>> expectedListAfterRotation = new ArrayList<>();
+        expectedListAfterRotation.add(B);
+        expectedListAfterRotation.add(C);
+        expectedListAfterRotation.add(A);
+
+        list = game.getRotatedCardsCounterClockWise(list);
+
+        assertEquals(list, expectedListAfterRotation);
+    }
+
     private List<List<Card>> getMockCards(){
         List<List<Card>> tmp = new ArrayList<>();
         List<Card> tmpA = new ArrayList<>();
