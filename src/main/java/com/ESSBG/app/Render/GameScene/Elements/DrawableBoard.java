@@ -189,7 +189,7 @@ public class DrawableBoard {
 
         Button card = new DrawableCard(skin, rotation, color);
         Label cardLabel = new Label(cardText, skin);
-        cardLabel.setFontScale(0.9f, 0.9f);
+        cardLabel.setFontScale(0.5f, 0.5f);
         card.add(cardLabel);
         return card;
     }

@@ -86,7 +86,7 @@ public class GameScene implements Screen {
         sceneTable.setVisible(true);
 
 
-        gameController = new GameController(client);
+        gameController = new GameController(client, skin);
         board = new DrawableBoard(gameController, skin, handCardContainer, placedCardContainer, monument);
 
         stage.addActor(sceneTable);
@@ -113,6 +113,7 @@ public class GameScene implements Screen {
                         board.hideHandCards();
                     }
                     if(msg.has("placedCards")) {
+                        System.out.println(msg);
                         update(msg);
                     } else {
                         System.out.println("\n----------------\nClient: " + msg + "\n----------------\n");

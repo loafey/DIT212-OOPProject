@@ -42,7 +42,7 @@ public class Game {
      * @param playerIndex
      * @param cardIndex
      */
-    private void trashCard(int playerIndex, int cardIndex) {
+    public void trashCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         trash.addCard(currentPeriodCards.get(playerIndex).remove(cardIndex));
         PlayerState pState = p.getState();
@@ -57,7 +57,7 @@ public class Game {
      * @param playerIndex
      * @param cardIndex
      */
-    private boolean upgradeMonument(int playerIndex, int cardIndex) {
+    public boolean upgradeMonument(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
         PlayerState pState = p.getState();
         Monument m = p.getMonument();
@@ -82,29 +82,6 @@ public class Game {
         }
         return false;
     }
-/*
-    private void upgradeMonument(int playerIndex, int cardIndex) {
-        Player p = players.get(playerIndex);
-        currentPeriodCards.get(playerIndex).remove(cardIndex);
-        PlayerState pState = p.getState();
-
-        Monument m = p.getMonument();
-        List<ResourceEnum> cost = new ArrayList<>(); //smelliest of codes but its what we got to work with
-        switch (m.getStageBuilt()) {
-            case 1 : cost = m.getResourcesToBuildStage1(); break;
-            case 2 : cost = m.getResourcesToBuildStage2(); break;
-            case 3 : cost = m.getResourcesToBuildStage3(); break;
-            default: break;
-        }
-
-        if (pState.canAfford(cost)){
-            m.buildStage();
-        }
-        p.setMonument(m);
-        p.setState(pState);
-    }
-
- */
 
     /**
      * Assuming the player has efficient resources to build the structure of card,
@@ -238,8 +215,8 @@ public class Game {
 
         // parse resources
         JSONObject resources = new JSONObject();
-        resources.put("war", pState.getWinPoints());
-        resources.put("coins", pState.getWarTokens());
+        resources.put("war", pState.getWarTokens());
+        resources.put("coins", pState.getCoins());
         data.put("resources", resources);
 
         JSONObject monument = new JSONObject();

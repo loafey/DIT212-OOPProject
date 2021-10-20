@@ -90,12 +90,8 @@ public class GameServer implements Runnable {
                 joinedUsers.forEach((p,pIndex) -> pIDS.add(p));
                 game.startGame(pIDS);
 
-                broadCastMessage((p, pIndex) -> {
-                    return new JSONObject("{\"start\": true}");
-                });
-                broadCastMessage((p, pIndex) -> {
-                    return game.getPlayerData(pIndex);
-                });
+                broadCastMessage((p, pIndex) -> new JSONObject("{\"start\": true}"));
+                broadCastMessage((p, pIndex) -> game.getPlayerData(pIndex));
 
                 return;
             }
@@ -143,28 +139,24 @@ public class GameServer implements Runnable {
         String action = cardData.getString("action");
 
         if (action.equals("discard")) {
-            // TODO
-            // discardAction(id, msgNum, cardList, cardIndex);
-            return;
-        }
-
-        if (action.equals("monument") || action.equals("place")) {
-            System.out.println("Crash 1");
-            boolean ok_buy_card = game.playerPickCard(joinedUsers.get(id), cardIndex);
-            System.out.println("Crash 2");
-            // Check if player can buy this card.
-
-            if (!ok_buy_card) {
+            game.trashCard(joinedUsers.get(id), cardIndex);
+            confirmedStart.replace(id, true);
+        } else if (action.equals("monument")) {
+            boolean worked = game.upgradeMonument(joinedUsers.get(id), cardIndex);
+            if (!worked) {
                 server.sendData(id, replyMaker(msgNum, false, "Not enough resources!"));
                 return;
             }
             server.sendData(id, replyMaker(msgNum, true));
             confirmedStart.replace(id, true);
-
-            // Confirm user to this round.
-            confirmedStart.put(id, true);
-
-            // Delete players resources
+        } else if (action.equals("place")) {
+            boolean worked = game.playerPickCard(joinedUsers.get(id), cardIndex);
+            if (!worked) {
+                server.sendData(id, replyMaker(msgNum, false, "Not enough resources!"));
+                return;
+            }
+            server.sendData(id, replyMaker(msgNum, true));
+            confirmedStart.replace(id, true);
         }
         boolean allFinished = true;
         for (Entry<Integer, Boolean> e :  confirmedStart.entrySet()) {
@@ -218,28 +210,6 @@ public class GameServer implements Runnable {
             e.printStackTrace();
         }
         return false;
-    }
-
-    /**
-     * logic what to do if user want to discard the card.
-     */
-    private void discardAction(int playerID, int msgNum, List<Card> cardList, int cardIndex) {
-        // 2 Coins, and for each yellow 1 coin..
-        cardList.remove(cardIndex);
-        int nickelBack = 2;
-        for (Card c : cardList) {
-            if (c.getColor() == ColorEnum.YELLOW) {
-                nickelBack++;
-            }
-        }
-        // TODO
-        // joinedUsers.get(playerID).addCoins(nickelBack);
-        try {
-            server.sendData(playerID, replyMaker(msgNum, true));
-            confirmedStart.put(playerID, true);
-        } catch (NoSuchElementException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
