@@ -2,12 +2,10 @@ package com.ESSBG.app.Render.GameScene.Elements;
 
 import com.ESSBG.app.Render.GameScene.GameController;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
