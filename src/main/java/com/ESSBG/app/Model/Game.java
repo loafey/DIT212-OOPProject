@@ -89,7 +89,6 @@ public class Game {
      * @param playerIndex
      * @param cardIndex
      */
-
     private boolean pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
 
@@ -158,6 +157,18 @@ public class Game {
                 next.getState().addWinPoints(winPoints);
                 p.getState().addLosePoints(1);
             }
+        }
+    }
+
+    public void checkIfNewAgeTime() {
+        int deckSize = 0;
+        for (List<Card> cards : currentPeriodCards) {
+            if (cards.size() > deckSize) {
+                deckSize = cards.size();
+            }
+        }
+        if (deckSize < 2) {
+            startNextAge();
         }
     }
 

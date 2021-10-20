@@ -96,12 +96,6 @@ public class GameServer implements Runnable {
                 return;
             }
 
-            // Change name routine
-            if (data.has("name")) {
-                nameChangeRoutine(id, msgNum, data.getString("name"));
-                return;
-            }
-
             if (hasAlreadyConfirmedStart(id, msgNum)) {
                 return;
             }
@@ -164,6 +158,7 @@ public class GameServer implements Runnable {
         }
 
         if(allFinished){
+            game.checkIfNewAgeTime();
             game.movePeriodCardsToNextPlayer();
             broadCastMessage((Integer p, Integer pid) -> {
                 JSONObject data = game.getPlayerData(pid);
@@ -226,27 +221,5 @@ public class GameServer implements Runnable {
 
     private JSONObject replyMaker(int msgNum, boolean reply) {
         return new JSONObject().put("msgNum", msgNum).put("reply", reply);
-    }
-
-    /**
-     * Changes name of said player if the name doesn't already exist.
-     */
-    private void nameChangeRoutine(int id, int msgNum, String name) {
-        try {
-            if (playerNameChange(id, name)) {
-                server.sendData(id, replyMaker(msgNum, true));
-            } else {
-                server.sendData(id, replyMaker(msgNum, false, "Name already taken."));
-            }
-        } catch (NoSuchElementException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private boolean playerNameChange(int id, String name) {
-
-        // TODO
-        // players.get(id).setName(name);
-        return true;
     }
 }
