@@ -1,6 +1,9 @@
 package com.ESSBG.app.Render.GameScene;
 
 import com.ESSBG.app.Network.Client;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import org.json.JSONObject;
 
@@ -11,11 +14,20 @@ public class GameController {
         this.client = client;
     }
 
+    public void assignCardButton(Button card,int cardIndex) {
+        card.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                cardAction(cardIndex);
+            }
+        });
+    }
+
     /**
      * 
      * @param cardIndex
      */
-    public void cardAction(int cardIndex){
+    private void cardAction(int cardIndex){
         JSONObject actionData = new JSONObject();
         actionData.put("msgNum", 0);
 

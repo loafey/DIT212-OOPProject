@@ -160,14 +160,7 @@ public class DrawableBoard {
             Button card = GenerateCard(skin, (JSONObject) cardData, -5f);
             handTable.add(card).width(84).height(128);
 
-            // The index must be copied so it exists in the same scope as the new object.
-            int clone = index;
-            card.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    gameController.cardAction(clone);
-                }
-            });
+            gameController.assignCardButton(card, index);
             index++;
         }
     }
