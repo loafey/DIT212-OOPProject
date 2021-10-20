@@ -198,6 +198,7 @@ public class Game {
             c.getAction().getList().forEach((ResourceEnum r) -> {
                 cardData.append("resource", r.toString());
             });
+            cardData.put("cardType", c.getCardTypeEnum());
 
             cardData.put("color", parseColor(c.getColor()));
             
@@ -219,6 +220,7 @@ public class Game {
             for (ResourceEnum r : c.getAction().getList()){
                 cardData.append("resource", r.toString());
             }
+            cardData.put("cardType", c.getCardTypeEnum().toString());
 
             data.append("placedCards", cardData);
         }

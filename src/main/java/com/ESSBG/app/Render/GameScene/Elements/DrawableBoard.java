@@ -176,11 +176,17 @@ public class DrawableBoard {
                 colorString.getFloat("a"));
 
         // Try to get the Resource info, and if it does not exist, try to to get action data instead.
+        System.out.println(cardData.getString("cardType"));
+        boolean neighbourReduction = cardData.getString("cardType").equals("NEIGHBORREDUCTION");
+        boolean eitherAction = cardData.getString("cardType").equals("EITHERACTION");
         String cardText = "";
         if (cardData.has("resource")) {
             JSONArray resource = cardData.getJSONArray("resource");
             for (Object r : resource) {
-                cardText += (String)r + "\n";
+                if (neighbourReduction) cardText += "<";
+                cardText += (String)r + (eitherAction ? "/" : "");
+                if (neighbourReduction) cardText += ">";
+                cardText += "\n";
             }
         } else if(cardData.has("action")) {
             JSONObject action = cardData.getJSONObject("action");
