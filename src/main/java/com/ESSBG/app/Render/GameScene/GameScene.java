@@ -50,7 +50,6 @@ public class GameScene implements Screen {
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
         skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
-        gameController = new GameController(client);
 
         sceneTable = new Table();
         handCardContainer = new Table();
@@ -86,6 +85,8 @@ public class GameScene implements Screen {
         sceneTable.add(pauseButton);
         sceneTable.setVisible(true);
 
+
+        gameController = new GameController(client);
         board = new DrawableBoard(gameController, skin, handCardContainer, placedCardContainer, monument);
 
         stage.addActor(sceneTable);
