@@ -13,17 +13,18 @@ import java.util.stream.Collectors;
 import static com.ESSBG.app.Model.ResourceEnum.*;
 
 /**
- * Author: Sebastian Selander, Samuel Hammersberg, Emmie Berger
+ * @author Sebastian Selander, Samuel Hammersberg, Emmie Berger
  * 
  * A class that holds a state of a player. Everything that can change for a player during the course of a game should be here. 
  */
 public class PlayerState {
-    private List<Card> playedCards;     //the type of the card doesn't matter when it's played
+    private List<Card> playedCards; //the type of the card doesn't matter when it has been played
     private List<ResourceEnum> guaranteedResources;
     private List<ArrayList<ResourceEnum>> eitherResources;
     private List<ResourceEnum> neighborReductions;
     private int winPoints;
     private int losePoints;
+
 
     /**
      * Constructor for a PlayerState
@@ -101,9 +102,9 @@ public class PlayerState {
      */
     public int getCoins() {
         return guaranteedResources.stream()
-        .filter(c -> c == COIN)
+        .filter(c -> c == ResourceEnum.COIN)
         .collect(Collectors.toList())
-        .size();    //save everything that is a coin in a new list and return its length
+        .size(); //save everything that is a coin in a new list and return its length
     }
 
     /**

@@ -6,7 +6,7 @@ import com.ESSBG.app.Model.Action.IAction;
 import java.util.List;
 
 /**
- * Author: Sebastian Selander, Emmie Berger
+ * @author Sebastian Selander, Emmie Berger
  * 
  * An abstract class that represent a card.
  */
