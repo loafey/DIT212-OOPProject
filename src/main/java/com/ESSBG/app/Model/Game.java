@@ -191,6 +191,7 @@ public class Game {
         // parse hand cards
         for (Card c :  currentPeriodCards.get(playerIndex)) {
             JSONObject cardData = new JSONObject();
+            cardData.put("cost", new JSONArray());
             c.getCost().forEach((ResourceEnum r) -> {{
                 cardData.append("cost", r.toString());
             }});

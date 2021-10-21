@@ -54,6 +54,7 @@ public class GameScene implements Screen {
         sceneTable = new Table();
         handCardContainer = new Table();
         placedCardContainer = new Table();
+        placedCardContainer.bottom();
         playerTable = new Table();
         monument = new DrawableMonument(skin);
 
@@ -113,7 +114,6 @@ public class GameScene implements Screen {
                         board.hideHandCards();
                     }
                     if(msg.has("placedCards")) {
-                        System.out.println(msg);
                         update(msg);
                     } else {
                         System.out.println("\n----------------\nClient: " + msg + "\n----------------\n");
