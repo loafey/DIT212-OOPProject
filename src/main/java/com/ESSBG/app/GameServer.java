@@ -134,6 +134,7 @@ public class GameServer implements Runnable {
 
         if (action.equals("discard")) {
             game.trashCard(joinedUsers.get(id), cardIndex);
+            server.sendData(id, replyMaker(msgNum, true));
             confirmedStart.replace(id, true);
         } else if (action.equals("monument")) {
             boolean worked = game.upgradeMonument(joinedUsers.get(id), cardIndex);
