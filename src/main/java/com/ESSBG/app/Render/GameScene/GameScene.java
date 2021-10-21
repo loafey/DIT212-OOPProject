@@ -115,8 +115,6 @@ public class GameScene implements Screen {
                     }
                     if(msg.has("placedCards")) {
                         update(msg);
-                    } else {
-                        System.out.println("\n----------------\nClient: " + msg + "\n----------------\n");
                     }
                 } catch (InterruptedException e){}
             }
