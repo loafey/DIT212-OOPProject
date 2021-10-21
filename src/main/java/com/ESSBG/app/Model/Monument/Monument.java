@@ -210,6 +210,7 @@ public abstract class Monument {
         return list;
     }
 
+
     /**
      * Initialize the resources required to build stage 1 of this monument
      */
