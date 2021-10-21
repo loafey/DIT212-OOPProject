@@ -43,8 +43,8 @@ public class DrawableBoard {
     public void updateBoard(JSONObject data) {
         updateHand(skin, controller, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
-        updateResources(skin, monument, data.getJSONObject("resources"));
         updateMonument(skin, monument, data.getJSONObject("monument"));
+        updateResources(skin, monument, data.getJSONObject("resources"));
         //var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         //var rightNeighbourJson = data.getJSONObject("rightNeighbour");
     }
