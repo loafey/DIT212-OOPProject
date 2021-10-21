@@ -124,7 +124,7 @@ public class DrawableBoard {
         // placing them in the ArrayList that corresponds to their color.
         HashMap<Color, ArrayList<Button>> sortedCards = new HashMap<>();
         cards.forEach(cardData -> {
-            Button card = GenerateCard(skin, (JSONObject) cardData, 0f);
+            Button card = GenerateCard(skin, (JSONObject) cardData, 0f, false);
             Color color = card.getColor();
 
             if (!sortedCards.containsKey(color)) {
@@ -156,7 +156,7 @@ public class DrawableBoard {
         handTable.clear();
         int index = 0;
         for (Object cardData : handCards){
-            Button card = GenerateCard(skin, (JSONObject) cardData, -5f);
+            Button card = GenerateCard(skin, (JSONObject) cardData, -5f, true);
             handTable.add(card).width(84).height(128);
 
             gameController.assignCardButton(card, index);
@@ -171,7 +171,7 @@ public class DrawableBoard {
      * @param rotation The rotation of the card
      * @return
      */
-    private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation) {
+    private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation, boolean displayCost) {
         JSONObject colorString = cardData.getJSONObject("color");
         Color color = new Color(colorString.getFloat("r"), colorString.getFloat("g"), colorString.getFloat("b"),
                 colorString.getFloat("a"));
@@ -193,7 +193,7 @@ public class DrawableBoard {
             cardText += "action";
         }
 
-        if (!cardData.getJSONArray("cost").isEmpty()){
+        if (displayCost && !cardData.getJSONArray("cost").isEmpty()){
             cardText += "\nCost:\n";
             for (Object c : cardData.getJSONArray("cost")){
                 cardText += ((String) c) + "\n";

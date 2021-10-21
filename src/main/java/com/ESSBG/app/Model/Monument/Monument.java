@@ -112,6 +112,10 @@ public abstract class Monument {
         return list;
     }
 
+    /**
+     * Returns the cost to build the next stage of this monument
+     * @return the cost for building next stage
+     */
 
     public List<ResourceEnum> getCostToBuildNextStage(){
         switch(stageBuilt){
@@ -125,6 +129,11 @@ public abstract class Monument {
                 return null;
         }
     }
+
+    /**
+     * Returns the reward to build the next stage of this monument
+     * @return the reward for building next stage
+     */
 
     public List<ResourceEnum> getRewardForBuildingNextStage(){
         switch(stageBuilt){
