@@ -82,7 +82,6 @@ public class GameController {
         data.put("cardIndex",cardIndex);
         data.put("action", actionType);
         actionData.put("card", data);
-        System.out.println(data);
         client.sendData(actionData);
     }
 }

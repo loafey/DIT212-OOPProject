@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.lwjgl.Sys;
 
 public class DrawableBoard {
     private Skin skin;
@@ -176,7 +177,6 @@ public class DrawableBoard {
                 colorString.getFloat("a"));
 
         // Try to get the Resource info, and if it does not exist, try to to get action data instead.
-        System.out.println(cardData.getString("cardType"));
         boolean neighbourReduction = cardData.getString("cardType").equals("NEIGHBORREDUCTION");
         boolean eitherAction = cardData.getString("cardType").equals("EITHERACTION");
         String cardText = "";
@@ -191,6 +191,13 @@ public class DrawableBoard {
         } else if(cardData.has("action")) {
             JSONObject action = cardData.getJSONObject("action");
             cardText += "action";
+        }
+
+        if (!cardData.getJSONArray("cost").isEmpty()){
+            cardText += "\nCost:\n";
+            for (Object c : cardData.getJSONArray("cost")){
+                cardText += ((String) c) + "\n";
+            }
         }
 
         Button card = new DrawableCard(skin, rotation, color);
