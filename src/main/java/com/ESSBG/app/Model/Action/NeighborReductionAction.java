@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  * 
  * An action that reduces the cost of specified resources from neighbors.
  */

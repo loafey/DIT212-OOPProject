@@ -6,7 +6,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.INeighborAction;
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  * 
  * A concrete card that holds a neighbor action.
  */

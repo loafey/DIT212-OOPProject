@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  * 
  * An action that gives a given set of resources where only one can be chosen from per turn.
  */
