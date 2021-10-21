@@ -6,7 +6,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  * 
  * A concrete card that holds an either action.
  */

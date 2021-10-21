@@ -199,8 +199,9 @@ public class CardFactory {
         }
     }
 
+
     private List<ResourceEnum> getRandomMediumCost(int items){
-        Random r = new Random();
+        Random r = new Random(getSeed());
         List<ResourceEnum> list = getAllBasicResources();
         List<ResourceEnum> tmp = new ArrayList<>();
 

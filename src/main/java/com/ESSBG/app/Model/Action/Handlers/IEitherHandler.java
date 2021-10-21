@@ -3,7 +3,7 @@ package com.ESSBG.app.Model.Action.Handlers;
 import com.ESSBG.app.Model.Player.PlayerState;
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  * 
  * An interface for handlers that do some either thing
  */

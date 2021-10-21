@@ -2,7 +2,7 @@ package com.ESSBG.app.Model.Action;
 
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  * 
  * An interface that represent an action that affect state dependent on neighbor.
  */

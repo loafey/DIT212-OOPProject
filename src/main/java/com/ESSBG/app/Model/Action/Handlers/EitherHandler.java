@@ -9,7 +9,7 @@ import com.ESSBG.app.Model.ResourceEnum;
 import com.ESSBG.app.Model.Action.IEitherAction;
 
 /**
- * Author: Sebastian Selander
+ * @author Sebastian Selander
  *
  * A handler used to update a PlayerState. The action is specified when creating the handler.
  * 
