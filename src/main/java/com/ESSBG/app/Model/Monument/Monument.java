@@ -56,10 +56,6 @@ public abstract class Monument {
         initResourcesToBuildStage1();
         initResourcesToBuildStage2();
         initResourcesToBuildStage3();
-
-        if (resourcesToBuildStage1 == null || resourcesToBuildStage2 == null || resourcesToBuildStage3 == null) {
-            throw new IllegalStateException("Monument " + name + " hasn't been created properly. Missing cost for building at least one state");
-        }
     }
 
 
@@ -170,16 +166,13 @@ public abstract class Monument {
         return resourcesToBuildStage3;
     }
 
-    // Has to be specified for each monument
+
 
     /**
-     * Gives the specific reward for building stage 2 of this monument
+     * Gives the specific reward for building stage 1 of this monument
      *
      * @return resourcesToBuildStage1
      */
-    public abstract List<ResourceEnum> getStage2Reward();
-
-
     public List<ResourceEnum> getStage1Reward() {
         List<ResourceEnum> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -188,6 +181,18 @@ public abstract class Monument {
         return list;
     }
 
+    /**
+     * Gives the specific reward for building stage 2 of this monument
+     *
+     * @return resourcesToBuildStage2
+     */
+    public abstract List<ResourceEnum> getStage2Reward();
+
+    /**
+     * Gives the specific reward for building stage 3 of this monument
+     *
+     * @return resourcesToBuildStage3
+     */
     public List<ResourceEnum> getStage3Reward() {
         List<ResourceEnum> list = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
