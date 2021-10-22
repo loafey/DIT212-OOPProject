@@ -96,21 +96,7 @@ public abstract class Monument {
         return startingResource;
     }
 
-    /**
-     * To be used in subclasses to initialize all stage's requirements for building
-     *
-     * @param resource The resource required to build a certain stage
-     * @param amount   How many units required of the resource
-     * @return
-     */
 
-    protected List<ResourceEnum> initializeResources(ResourceEnum resource, int amount) {
-        List<ResourceEnum> list = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            list.add(resource);
-        }
-        return list;
-    }
 
     /**
      * Returns the cost to build the next stage of this monument
@@ -210,6 +196,20 @@ public abstract class Monument {
         return list;
     }
 
+    /**
+     * To be used in subclasses to initialize all stage's requirements for building
+     *
+     * @param resource The resource required to build a certain stage
+     * @param amount   How many units required of the resource
+     * @return
+     */
+    protected List<ResourceEnum> initializeResources(ResourceEnum resource, int amount) {
+        List<ResourceEnum> list = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            list.add(resource);
+        }
+        return list;
+    }
     /**
      * Initialize the resources required to build stage 1 of this monument
      */
