@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import org.json.JSONObject;
 
+/**
+ * Author: Samuel Hammersberg
+ */
 public class GameController {
     private Client client;
     private Skin skin;
@@ -19,6 +22,11 @@ public class GameController {
         this.skin = skin;
     }
 
+    /**
+     * Assigns the click action of the passed in button to cardAction (See GameController.java).
+     * @param card
+     * @param cardIndex
+     */
     public void assignCardButton(Button card,int cardIndex) {
         card.addListener(new ClickListener() {
             @Override
@@ -29,7 +37,9 @@ public class GameController {
     }
 
     /**
-     * 
+     * When a card is pressed, clear the content of the card,
+     * and instead display three buttons,
+     * a place button, a discard button, and a monument upgrade button.
      * @param cardIndex
      */
     private void cardAction(int cardIndex, Button card){

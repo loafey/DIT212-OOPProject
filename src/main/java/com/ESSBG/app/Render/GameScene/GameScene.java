@@ -119,6 +119,12 @@ public class GameScene implements Screen {
         stage.act(delta);
         stage.draw();
 
+        pollClient();
+    }
+
+    // TODO should really be moved to GameController, 
+    // and should preferably use observer pattern instead.
+    private void pollClient() {
         if (client != null) {
             if (client.getMsgQueue().size() > 0){
                 try {

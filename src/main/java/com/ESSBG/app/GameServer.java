@@ -46,7 +46,13 @@ public class GameServer implements Runnable {
         }
     }
 
-    private void broadCastMessage(BiFunction<? super Integer, ? super Integer, JSONObject> message) {
+    /**
+     * Sends a message to all players. 
+     * The message is created from the passed in function, 
+     * allowing for unique messages based on player id and player index.
+     * @param message
+     */
+    private void broadcastMessage(BiFunction<? super Integer, ? super Integer, JSONObject> message) {
         joinedUsers.forEach((p, pIndex) -> {
             try {
                 boolean result = server.sendData(p, message.apply(p, pIndex));
@@ -92,8 +98,8 @@ public class GameServer implements Runnable {
                 joinedUsers.forEach((p, pIndex) -> pIDS.add(p));
                 game.startGame(pIDS);
 
-                broadCastMessage((p, pIndex) -> new JSONObject("{\"start\": true}"));
-                broadCastMessage((p, pIndex) -> game.getPlayerData(pIndex));
+                broadcastMessage((p, pIndex) -> new JSONObject("{\"start\": true}"));
+                broadcastMessage((p, pIndex) -> game.getPlayerData(pIndex));
 
                 return;
             }
@@ -147,7 +153,7 @@ public class GameServer implements Runnable {
             server.sendData(id, replyMaker(msgNum, true));
             confirmedStart.replace(id, true);
         } else if (action.equals("place")) {
-            boolean worked = game.playerPickCard(joinedUsers.get(id), cardIndex);
+            boolean worked = game.pickCard(joinedUsers.get(id), cardIndex);
             if (!worked) {
                 server.sendData(id, replyMaker(msgNum, false, "Not enough resources!"));
                 return;
@@ -163,14 +169,14 @@ public class GameServer implements Runnable {
         if (allFinished) {
             game.tryProgress();
 
-            if (game.passedAllAges()) {
-                broadCastMessage((p, pid) -> {
+            if (game.getAge() > 3) {
+                broadcastMessage((p, pid) -> {
                     JSONObject data = game.getScoreboard();
                     return data;
                 });
             } else {
                 game.movePeriodCardsToNextPlayer();
-                broadCastMessage((p, pid) -> {
+                broadcastMessage((p, pid) -> {
                     JSONObject data = game.getPlayerData(pid);
                     return data;
                 });

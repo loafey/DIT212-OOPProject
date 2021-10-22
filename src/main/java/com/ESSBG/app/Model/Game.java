@@ -21,8 +21,10 @@ import com.ESSBG.app.Model.Player.PlayerState;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Author: Samuel Hammersberg, Sebastian Selander, Emmie Berger
+ */
 public class Game {
-    // TODO change to private
     public CircularList<Player> players = new CircularList<>();
     private List<List<Card>> currentPeriodCards;
     private Trashcan trash;
@@ -30,6 +32,11 @@ public class Game {
     private int age = 1;
     private final int handSize = 7;
 
+
+    /**
+     * "Starts" the game and adds the list of player ids as players.
+     * @param playerIDS
+     */
     public void startGame(ArrayList<Integer> playerIDS) {
         for (Integer pid : playerIDS){
             players.add(new Player(pid, new PlayerState()));
@@ -89,7 +96,7 @@ public class Game {
      * @param playerIndex
      * @param cardIndex
      */
-    private boolean pickCard(int playerIndex, int cardIndex) {
+    public boolean pickCard(int playerIndex, int cardIndex) {
         Player p = players.get(playerIndex);
 
         Card c = currentPeriodCards.get(playerIndex).get(cardIndex);
@@ -160,10 +167,19 @@ public class Game {
         }
     }
 
-    public boolean passedAllAges () {
-        return age > 3;
+    /**
+     * Returns the current age
+     * @return
+     */
+    public int getAge() {
+        return age;
     }
 
+    /** 
+     * Check if all decks have a size of 1 or less, 
+     * and if so proceed to the next set of decks, otherwise
+     * do nothing.
+    */
     public void tryProgress() {
         int deckSize = 0;
         for (List<Card> cards : currentPeriodCards) {
@@ -176,6 +192,10 @@ public class Game {
         }
     }
 
+    /**
+     * Returns an unsorted list of all player names and their scores.
+     * @return
+     */
     public JSONObject getScoreboard() {
         JSONObject data = new JSONObject();
         players.forEach(p -> {
@@ -187,14 +207,13 @@ public class Game {
         return data;
     }
 
-    private Player calculateWinner() {
-        return players.stream().reduce(players.get(0), (p1, p2) -> p1.getState().getTotalScore() > p2.getState().getTotalScore() ? p1 : p2);
-    }
-
-    public boolean playerPickCard (int playerIndex, int cardIndex) {
-        return pickCard(playerIndex, cardIndex);
-    }
-
+    /**
+     * Returns a JSONObject containing the data of player at said index.
+     * Requires the class holding the model to have their own list of players
+     * with matching indicies.
+     * @param playerIndex
+     * @return
+     */
     public JSONObject getPlayerData(int playerIndex) {
         Player p = players.get(playerIndex);
         PlayerState pState = p.getState();
@@ -276,6 +295,11 @@ public class Game {
         return data;
     }
 
+    /**
+     * Parses a ColorEnum, returning a JSONObject with the rgba fields.
+     * @param color
+     * @return
+     */
     private JSONObject parseColor(ColorEnum color) {
         JSONObject colorData = new JSONObject();
         switch (color) {
