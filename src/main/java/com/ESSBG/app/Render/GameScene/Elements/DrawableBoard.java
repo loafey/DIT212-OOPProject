@@ -165,7 +165,7 @@ public class DrawableBoard {
     }
 
     /**
-     * Generates a card
+     * Generates a card with fitting content.
      * @param skin The skin to be used
      * @param cardData The cards data
      * @param rotation The rotation of the card
@@ -188,9 +188,6 @@ public class DrawableBoard {
                 if (neighbourReduction) cardText += ">";
                 cardText += "\n";
             }
-        } else if(cardData.has("action")) {
-            JSONObject action = cardData.getJSONObject("action");
-            cardText += "action";
         }
 
         if (displayCost && !cardData.getJSONArray("cost").isEmpty()){
