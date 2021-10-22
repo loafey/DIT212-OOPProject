@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GameScene implements Screen {
@@ -35,6 +36,20 @@ public class GameScene implements Screen {
 
     public GameScene(Client client) {
         this.client = client;
+    }
+
+    public void displayScores(JSONObject data) {
+        JSONArray scoreList = data.getJSONArray("scores");
+        sceneTable.clear();
+        
+        String scoreText = "Name: \t| Score:\n";
+        for (Object so : scoreList) {
+            JSONObject sdata = (JSONObject)so;
+            scoreText += sdata.getString("name") + "\t" + sdata.getInt("score") + "\n";
+        }
+
+        sceneTable.center();
+        sceneTable.add(new Label(scoreText, skin));
     }
 
     /**
@@ -63,10 +78,8 @@ public class GameScene implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
-        sceneTable.setDebug(true);
         sceneTable.setFillParent(true);
 
-        playerTable.setDebug(true);
         playerTable.add(placedCardContainer);
         playerTable.row();
         playerTable.add(handCardContainer);
@@ -113,8 +126,11 @@ public class GameScene implements Screen {
                     if (msg.has("reply") && msg.getBoolean("reply")){
                         board.hideHandCards();
                     }
-                    if(msg.has("placedCards")) {
+                    if (msg.has("placedCards")) {
                         update(msg);
+                    } 
+                    if (msg.has("scores")){
+                        displayScores(msg);
                     }
                 } catch (InterruptedException e){}
             }

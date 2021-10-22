@@ -160,7 +160,11 @@ public class Game {
         }
     }
 
-    public void checkIfNewAgeTime() {
+    public boolean passedAllAges () {
+        return age > 3;
+    }
+
+    public void tryProgress() {
         int deckSize = 0;
         for (List<Card> cards : currentPeriodCards) {
             if (cards.size() > deckSize) {
@@ -170,6 +174,17 @@ public class Game {
         if (deckSize < 2) {
             startNextAge();
         }
+    }
+
+    public JSONObject getScoreboard() {
+        JSONObject data = new JSONObject();
+        players.forEach(p -> {
+            JSONObject score = new JSONObject();
+            score.put("name", p.getName());
+            score.put("score", p.getState().getTotalScore());
+            data.append("scores",score);
+        });
+        return data;
     }
 
     private Player calculateWinner() {
@@ -229,7 +244,7 @@ public class Game {
 
         // parse resources
         JSONObject resources = new JSONObject();
-        resources.put("war", pState.getWarTokens());
+        resources.put("war", pState.getWinPoints());
         resources.put("coins", pState.getCoins());
         data.put("resources", resources);
 

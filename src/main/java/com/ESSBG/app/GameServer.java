@@ -15,7 +15,7 @@ import com.ESSBG.app.Network.*;
 import org.json.*;
 
 /**
- * Author: Björn Rosengren
+ * Author: Björn Rosengren, Samuel Hammersberg
  *
  * For the game to be able to read messages from the networking interface
  * without blocking the main thread.
@@ -39,20 +39,22 @@ public class GameServer implements Runnable {
         try {
             server.runServer();
             this.msgQueue = server.getMsgQueue();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
         while (!server.isSocketClosed()) {
             gameLogic();
         }
     }
 
-    private void broadCastMessage (BiFunction<? super Integer, ? super Integer, JSONObject> message) {
+    private void broadCastMessage(BiFunction<? super Integer, ? super Integer, JSONObject> message) {
         joinedUsers.forEach((p, pIndex) -> {
             try {
-                boolean result = server.sendData(p, message.apply(p,pIndex));
+                boolean result = server.sendData(p, message.apply(p, pIndex));
                 if (!result) {
                     System.out.println("ERROR: Failed to send data to user " + p + "!");
                 }
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         });
     }
 
@@ -87,7 +89,7 @@ public class GameServer implements Runnable {
 
             if (data.has("start")) {
                 ArrayList<Integer> pIDS = new ArrayList<>();
-                joinedUsers.forEach((p,pIndex) -> pIDS.add(p));
+                joinedUsers.forEach((p, pIndex) -> pIDS.add(p));
                 game.startGame(pIDS);
 
                 broadCastMessage((p, pIndex) -> new JSONObject("{\"start\": true}"));
@@ -154,21 +156,29 @@ public class GameServer implements Runnable {
             confirmedStart.replace(id, true);
         }
         boolean allFinished = true;
-        for (Entry<Integer, Boolean> e :  confirmedStart.entrySet()) {
+        for (Entry<Integer, Boolean> e : confirmedStart.entrySet()) {
             allFinished &= e.getValue();
         }
 
-        if(allFinished){
-            game.checkIfNewAgeTime();
-            game.movePeriodCardsToNextPlayer();
-            broadCastMessage((Integer p, Integer pid) -> {
-                JSONObject data = game.getPlayerData(pid);
-                return data;
-            });
+        if (allFinished) {
+            game.tryProgress();
 
-            confirmedStart.forEach((p, _r) -> {
-                confirmedStart.replace(p, false);
-            });
+            if (game.passedAllAges()) {
+                broadCastMessage((p, pid) -> {
+                    JSONObject data = game.getScoreboard();
+                    return data;
+                });
+            } else {
+                game.movePeriodCardsToNextPlayer();
+                broadCastMessage((p, pid) -> {
+                    JSONObject data = game.getPlayerData(pid);
+                    return data;
+                });
+
+                confirmedStart.forEach((p, _r) -> {
+                    confirmedStart.replace(p, false);
+                });
+            }
         }
     }
 
