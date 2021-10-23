@@ -2,7 +2,7 @@ package com.ESSBG.app.Render.GameScene;
 
 import java.io.InterruptedIOException;
 
-import com.ESSBG.app.Network.Client;
+import com.ESSBG.app.Network.IClient;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableMonument;
 import com.badlogic.gdx.Gdx;
@@ -11,9 +11,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.*;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class GameScene implements Screen {
     private Stage stage;
@@ -32,10 +29,10 @@ public class GameScene implements Screen {
 
     private Table pauseMenu;
 
-    private Client client;
+    private IClient IClient;
 
-    public GameScene(Client client) {
-        this.client = client;
+    public GameScene(IClient IClient) {
+        this.IClient = IClient;
     }
 
     @Override
@@ -80,7 +77,7 @@ public class GameScene implements Screen {
 
         board = new DrawableBoard(gameController, skin, handCardContainer, placedCardContainer, monument);
 
-        gameController = new GameController(client, skin, board, sceneTable);
+        gameController = new GameController(IClient, skin, board, sceneTable);
 
         stage.addActor(sceneTable);
     }

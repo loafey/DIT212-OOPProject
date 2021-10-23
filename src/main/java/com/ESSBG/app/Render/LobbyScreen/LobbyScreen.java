@@ -1,7 +1,10 @@
 package com.ESSBG.app.Render.LobbyScreen;
 
+import java.io.IOException;
+
 import com.ESSBG.app.GameServer;
 import com.ESSBG.app.Model.Game;
+import com.ESSBG.app.Network.IClient;
 import com.ESSBG.app.Network.Client;
 import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.GameScene.GameScene;
@@ -36,7 +39,7 @@ public class LobbyScreen implements Screen{
     private Button leaveButton;
     private Button hostButton;
 
-    private Client client;
+    private IClient client;
 
 
     @Override
@@ -123,7 +126,9 @@ public class LobbyScreen implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 JSONObject data = new JSONObject("{\"start\": true}");
                 data.put("msgNum", 0);
-                client.sendData(data);
+                try {
+                    client.sendData(data);
+                } catch (IOException e) {}
             }
         });
     }

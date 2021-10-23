@@ -1,6 +1,8 @@
 package com.ESSBG.app.Render.GameScene;
 
-import com.ESSBG.app.Network.Client;
+import java.io.IOException;
+
+import com.ESSBG.app.Network.IClient;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -17,12 +19,12 @@ import org.json.JSONObject;
  * Author: Samuel Hammersberg
  */
 public class GameController {
-    private Client client;
+    private IClient client;
     private Skin skin;
     private DrawableBoard board;
     private Table sceneTable;
 
-    public GameController (Client client, Skin skin, DrawableBoard board, Table sceneTable) {
+    public GameController (IClient client, Skin skin, DrawableBoard board, Table sceneTable) {
         this.client = client;
         this.skin = skin;
         this.board = board;
@@ -99,7 +101,9 @@ public class GameController {
         data.put("cardIndex",cardIndex);
         data.put("action", actionType);
         actionData.put("card", data);
-        client.sendData(actionData);
+        try {
+            client.sendData(actionData);
+        } catch (IOException e) {}
     }
 
     public void displayScores(JSONObject data) {
