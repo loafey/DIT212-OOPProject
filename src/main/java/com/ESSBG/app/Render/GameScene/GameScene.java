@@ -38,28 +38,6 @@ public class GameScene implements Screen {
         this.client = client;
     }
 
-    public void displayScores(JSONObject data) {
-        JSONArray scoreList = data.getJSONArray("scores");
-        sceneTable.clear();
-        
-        String scoreText = "Name: \t| Score:\n";
-        for (Object so : scoreList) {
-            JSONObject sdata = (JSONObject)so;
-            scoreText += sdata.getString("name") + "\t" + sdata.getInt("score") + "\n";
-        }
-
-        sceneTable.center();
-        sceneTable.add(new Label(scoreText, skin));
-    }
-
-    /**
-     * Takes in JSON data to be displayed by the view.
-     * @param data The data in question
-     */
-    public void update(JSONObject data) {
-        board.updateBoard(data);
-    }
-
     @Override
     public void show() {
         Viewport vp = new ScreenViewport();
@@ -100,8 +78,9 @@ public class GameScene implements Screen {
         sceneTable.setVisible(true);
 
 
-        gameController = new GameController(client, skin);
         board = new DrawableBoard(gameController, skin, handCardContainer, placedCardContainer, monument);
+
+        gameController = new GameController(client, skin, board, sceneTable);
 
         stage.addActor(sceneTable);
     }
@@ -119,28 +98,7 @@ public class GameScene implements Screen {
         stage.act(delta);
         stage.draw();
 
-        pollClient();
-    }
-
-    // TODO should really be moved to GameController, 
-    // and should preferably use observer pattern instead.
-    private void pollClient() {
-        if (client != null) {
-            if (client.getMsgQueue().size() > 0){
-                try {
-                    JSONObject msg = client.getMsgQueue().take().getJSONObject("data");
-                    if (msg.has("reply") && msg.getBoolean("reply")){
-                        board.hideHandCards();
-                    }
-                    if (msg.has("placedCards")) {
-                        update(msg);
-                    } 
-                    if (msg.has("scores")){
-                        displayScores(msg);
-                    }
-                } catch (InterruptedException e){}
-            }
-        }
+        gameController.pollClient();
     }
 
     @Override

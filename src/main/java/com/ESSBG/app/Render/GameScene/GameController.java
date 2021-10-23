@@ -1,13 +1,16 @@
 package com.ESSBG.app.Render.GameScene;
 
 import com.ESSBG.app.Network.Client;
+import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -16,10 +19,14 @@ import org.json.JSONObject;
 public class GameController {
     private Client client;
     private Skin skin;
+    private DrawableBoard board;
+    private Table sceneTable;
 
-    public GameController (Client client, Skin skin) {
+    public GameController (Client client, Skin skin, DrawableBoard board, Table sceneTable) {
         this.client = client;
         this.skin = skin;
+        this.board = board;
+        this.sceneTable = sceneTable;
     }
 
     /**
@@ -93,5 +100,39 @@ public class GameController {
         data.put("action", actionType);
         actionData.put("card", data);
         client.sendData(actionData);
+    }
+
+    public void displayScores(JSONObject data) {
+        JSONArray scoreList = data.getJSONArray("scores");
+        sceneTable.clear();
+        
+        String scoreText = "Name: \t| Score:\n";
+        for (Object so : scoreList) {
+            JSONObject sdata = (JSONObject)so;
+            scoreText += sdata.getString("name") + "\t" + sdata.getInt("score") + "\n";
+        }
+
+        sceneTable.center();
+        sceneTable.add(new Label(scoreText, skin));
+    }
+
+    // TODO should preferably use observer pattern instead.
+    public void pollClient() {
+        if (client != null) {
+            if (client.getMsgQueue().size() > 0){
+                try {
+                    JSONObject msg = client.getMsgQueue().take().getJSONObject("data");
+                    if (msg.has("reply") && msg.getBoolean("reply")){
+                        board.hideHandCards();
+                    }
+                    if (msg.has("placedCards")) {
+                        board.updateBoard(msg);
+                    } 
+                    if (msg.has("scores")){
+                        displayScores(msg);
+                    }
+                } catch (InterruptedException e){}
+            }
+        }
     }
 }
