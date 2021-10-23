@@ -7,12 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -31,7 +28,6 @@ public class SettingsScreen implements Screen {
     private final Table leftSubTable;
     private final Table rightSubTable;
     private final Table middleSubTable;
-    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     private TextButton backButton;
     private TextButton applyButton;
@@ -62,7 +58,6 @@ public class SettingsScreen implements Screen {
         rightTableSetup(rightSubTable);
     }
 
-
     /**
      * @param e the event to be attached to the back button
      */
@@ -87,8 +82,6 @@ public class SettingsScreen implements Screen {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-//        renderCellBorder(mainTable, 10);
-
         stage.act(delta);
         stage.draw();
     }
@@ -110,7 +103,6 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void hide() {
-        shapeRenderer.dispose();
         titleFont.dispose();
         skin.dispose();
         stage.dispose();
@@ -121,29 +113,6 @@ public class SettingsScreen implements Screen {
         // this is not needed in this view, but must be implemented
     }
 
-    private void renderCellBorder(Table table, float lineWidth) {
-        shapeRenderer.setColor(Color.BLACK);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        float yHeight = 0;
-        float previousY = 0;
-        float x;
-        for (int rowIndex = table.getRows()-1; rowIndex >= 0; rowIndex--) {
-            if (rowIndex + 1 < table.getRows()) {
-                previousY += table.getRowHeight(rowIndex+1);
-            }
-            x = table.getX();
-            yHeight += table.getRowHeight(rowIndex);
-            for (int colIndex = 0; colIndex < table.getColumns()+1; colIndex++) {
-                if (colIndex != 0) {
-                    x += table.getColumnWidth(colIndex-1);
-                }
-                float xIncludingLineWidth = x - lineWidth/2;
-                shapeRenderer.rect(xIncludingLineWidth, previousY, lineWidth, yHeight);
-            }
-        }
-        shapeRenderer.end();
-    }
 
     private void mainTableSetup(Table table) {
         table.setDebug(DEBUG);
