@@ -2,15 +2,16 @@ package com.ESSBG.app.Render.SettingsScreen;
 
 import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.StartMenu.StartMenu;
+import com.ESSBG.app.Render.StartMenu.StartMenuController;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 /**
  * @author Gabriel Hagström
- * SettingsController is the controller between {@link SettingsScreen} and {@link Settings} when we are in the {@link StartMenu}
+ * SettingsController is the controller between {@link SettingsScreen} and {@link Settings} when we are in the {@link SettingsScreen}
  */
-public class SettingsController implements SettingsScreenController {
+public class SettingsController {
 
     private final Settings settings;
     private final SettingsScreen screen;
@@ -29,39 +30,36 @@ public class SettingsController implements SettingsScreenController {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Adds applyButtonListener and backButtonListener to the screen buttons.
+     * Adds all the listeners to the {@link SettingsScreen}
      */
-    @Override
-    public void addListeners() {
+    private void addListeners() {
         screen.addApplyButtonListener(applyButton());
         screen.addBackButtonListener(backButton());
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * The listener changes screen to {@link StartMenu}.
+     * Returns the clickListener that handles what happen when the user press the back button in {@link SettingsScreen}.
+     *
+     * @return the clickListener for the back button in {@link SettingsScreen}
      */
-    @Override
-    public ClickListener backButton() {
+    private ClickListener backButton() {
         return new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                ScreenManager.getInstance().setScreen(new StartMenu());
+                StartMenu startMenu = new StartMenu();
+                new StartMenuController(startMenu);
+                ScreenManager.getInstance().setScreen(startMenu);
             }
         };
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * The listener retrieves data from {@link SettingsScreen} and saves it to the settings file.
+     * Returns the clickListener that handles what happen when the user press the apply button in {@link SettingsScreen}.
+     *
+     * @return the clickListener for the apply button in {@link SettingsScreen}
      */
-    @Override
-    public ClickListener applyButton() {
+    private ClickListener applyButton() {
         return new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
