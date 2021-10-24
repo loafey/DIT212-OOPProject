@@ -1,28 +1,16 @@
 package com.ESSBG.app.Render.LobbyScreen;
 
-import java.io.IOException;
-
-import com.ESSBG.app.GameServer;
-import com.ESSBG.app.Model.Game;
-import com.ESSBG.app.Network.IClient;
-import com.ESSBG.app.Network.Client;
-import com.ESSBG.app.Render.ScreenManager;
-import com.ESSBG.app.Render.GameScene.GameScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import org.json.JSONObject;
 
 public class LobbyScreen implements Screen{
     private Stage stage;
@@ -39,7 +27,7 @@ public class LobbyScreen implements Screen{
     private Button leaveButton;
     private Button hostButton;
 
-    private IClient client;
+    private LobbyScreenController lobbyScreenController;
 
     public LobbyScreen (){
         Viewport vp = new ScreenViewport();
@@ -98,63 +86,11 @@ public class LobbyScreen implements Screen{
 
         sceneTable.add(lobbyTable).fill().expand();
 
-        // TODO add host button
-        hostButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                new Thread(new GameServer ()).start();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {}
-                client = new Client();
-                client.runClient();
-            }
-        });
-
-        joinButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                client = new Client();
-                client.runClient(ipField.getText());
-            }
-        });
-
-        startButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                JSONObject data = new JSONObject("{\"start\": true}");
-                data.put("msgNum", 0);
-                try {
-                    client.sendData(data);
-                } catch (IOException e) {}
-            }
-        });
+        lobbyScreenController = new LobbyScreenController(hostButton, startButton, leaveButton,startButton, ipField);
     }
 
     @Override
     public void show() {
-    }
-
-    private void messageHandler(){
-        if (client != null){
-            if (client.getMsgQueue().size() > 0){
-                try {
-                    JSONObject message = client.getMsgQueue().take();
-                    String reason = message.getString("reason");
-                    if (reason.equals("net")){
-                        if (message.getBoolean("data")){
-                            System.out.println("Connected!");
-                        } else {
-                            System.out.println("Disconnected!");
-                        }
-                    } else if (reason.equals("game")) {
-                        if (message.getJSONObject("data").getBoolean("start")){
-                            ScreenManager.getInstance().setScreen(new GameScene(client));
-                        }
-                    }
-                } catch (InterruptedException e) {}
-            }
-        }
     }
 
     @Override
@@ -165,10 +101,7 @@ public class LobbyScreen implements Screen{
         stage.act(delta);
         stage.draw();
 
-        // This needs to be done as often as possible, 
-        // and since we want to avoid creating our own thread for it
-        // we can just call it in the render method as it is looped by LibGDX.
-        messageHandler();
+        lobbyScreenController.pollClient();
     }
     @Override
     public void resize(int width, int height) {
