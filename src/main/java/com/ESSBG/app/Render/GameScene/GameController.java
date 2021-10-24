@@ -18,7 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Author: Samuel Hammersberg
+ * @author: Samuel Hammersberg
  */
 public class GameController {
     private IClient client;

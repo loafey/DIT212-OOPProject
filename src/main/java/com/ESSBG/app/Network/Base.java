@@ -5,7 +5,7 @@ import java.net.Socket;
 import org.json.JSONObject;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * Baseclass to reduce copy paste, easier testing.
  *

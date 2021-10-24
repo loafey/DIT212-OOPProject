@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.*;
 /**
- * Author: Samuel Hammersberg
+ * @author: Samuel Hammersberg
  */
 public class GameScene implements Screen {
     private Stage stage;

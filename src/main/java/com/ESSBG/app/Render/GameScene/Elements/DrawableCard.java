@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * Author: Samuel Hammersberg
+ * @author: Samuel Hammersberg
  */
 public class DrawableCard extends Button {
     private float scaleGoal = 1f;

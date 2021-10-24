@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.io.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * The "main" part of the server.
  *

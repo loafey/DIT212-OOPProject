@@ -22,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Author: Samuel Hammersberg, Sebastian Selander, Emmie Berger
+ * @author: Samuel Hammersberg, Sebastian Selander, Emmie Berger
  */
 public class Game {
     public CircularList<Player> players = new CircularList<>();

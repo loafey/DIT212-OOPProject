@@ -3,7 +3,7 @@ package com.ESSBG.app.Network;
 import org.json.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * To produce easy passable statements for the networking module. These types
  * are to help where to route the data.

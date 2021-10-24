@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * This class is only for detaching itself from the main-thread to let the
  * client receive messages from the server. It might work without threading, but

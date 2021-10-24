@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
 import org.json.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * Baseclass to reduce copy paste, easier testing.
  */

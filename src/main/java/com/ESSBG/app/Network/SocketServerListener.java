@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 import org.json.JSONObject;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * "Attaches" itself to each client to be able to listen what the client are
  * telling us. If we didn't have threading, everything would be blocked due to

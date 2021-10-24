@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 import org.json.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * Order of Operation: <br>
  * 1: IClient c = new Client(); <br>

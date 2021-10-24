@@ -6,7 +6,7 @@ import org.json.*;
 import java.io.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * Order of Operation:<br>
  * 1: IServer s = new Server(); <br>

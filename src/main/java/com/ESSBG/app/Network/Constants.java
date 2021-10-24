@@ -1,7 +1,7 @@
 package com.ESSBG.app.Network;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * A constant interface to be able to customize without knowing what the code
  * does.

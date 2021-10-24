@@ -11,7 +11,7 @@ import com.ESSBG.app.Network.*;
 import org.json.*;
 
 /**
- * Author: Björn Rosengren, Samuel Hammersberg
+ * @author: Björn Rosengren, Samuel Hammersberg
  *
  * For the game to be able to read messages from the networking interface
  * without blocking the main thread.

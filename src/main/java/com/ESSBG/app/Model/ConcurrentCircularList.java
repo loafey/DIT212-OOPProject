@@ -3,7 +3,7 @@ package com.ESSBG.app.Model;
 import java.util.concurrent.locks.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * Wrapper class to make the circular list free from race conditions.
  */

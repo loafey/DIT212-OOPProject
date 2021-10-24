@@ -7,7 +7,7 @@ import java.util.concurrent.locks.*;
 import java.io.*;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * The client class. This client connects to the server and if it is connected,
  * it will detach the listener part due to its blocking nature and listen to

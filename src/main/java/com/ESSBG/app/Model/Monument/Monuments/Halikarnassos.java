@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: Emmie Berger
+ * @author: Emmie Berger
  *
  * A class that represents the Monument of Halikarnassos
  */

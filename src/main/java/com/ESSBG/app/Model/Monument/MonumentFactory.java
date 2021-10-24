@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * Author: Emmie Berger
+ * @author: Emmie Berger
  *
  * A factory class for Monument.
  * Produces a list of each type of monument available in the game (one object of each subclass to Monument)

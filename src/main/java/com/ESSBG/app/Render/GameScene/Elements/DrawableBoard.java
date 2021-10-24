@@ -14,7 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Author: Samuel Hammersberg
+ * @author: Samuel Hammersberg
  */
 public class DrawableBoard {
     private Skin skin;

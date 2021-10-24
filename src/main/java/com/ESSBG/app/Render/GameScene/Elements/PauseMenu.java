@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 /**
- * Author: Samuel Hammersberg
+ * @author: Samuel Hammersberg
  */
 public class PauseMenu extends Window {
     private Button resumeButton;

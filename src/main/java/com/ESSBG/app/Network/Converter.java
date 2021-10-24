@@ -1,7 +1,7 @@
 package com.ESSBG.app.Network;
 
 /**
- * Author: Björn Rosengren
+ * @author: Björn Rosengren
  *
  * Convert int to bytestring or bytestring to int. To be able to use n-bytes to
  * represent the length of a message. All messages should contain n-bytes header
