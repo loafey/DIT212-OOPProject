@@ -1,6 +1,5 @@
 package com.ESSBG.app.Render.GameScene.Elements;
 
-import com.ESSBG.app.Render.GameScene.GameController;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,8 +12,10 @@ import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.lwjgl.Sys;
 
+/**
+ * Author: Samuel Hammersberg
+ */
 public class DrawableBoard {
     private Skin skin;
     private Table handTable;

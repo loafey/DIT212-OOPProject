@@ -4,6 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * Author: Samuel Hammersberg
+ */
 public class DrawableMonument extends Table {
     /**
      * A Monument
