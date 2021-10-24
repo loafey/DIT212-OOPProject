@@ -47,7 +47,7 @@ public class LobbyScreenController {
         });
     }
 
-    // TODO should really be done using an observer pattern.
+    // should really be done using an observer pattern.
     public void pollClient() {
         if (client != null) {
             if (client.getMsgQueue().size() > 0) {

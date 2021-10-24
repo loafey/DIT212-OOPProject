@@ -97,7 +97,6 @@ public class Player {
         return monument;
     }
 
-    //TODO generalisera för olika typer av monument så vi kan ha either och neighbour också
     private void getStage2reward(){
         List<ResourceEnum> list = this.getState().getGuaranteedResources();
         List<ResourceEnum> newResources = monument.getStage2Reward();
@@ -114,7 +113,6 @@ public class Player {
 
 
 
-    // TODO Kollar bara just nu igenom guaranteed resources + tar ej hänsyn till om spelaren köpt något innan, fixa
 
     /**
      * Determine if the player can build next stage of their Monument

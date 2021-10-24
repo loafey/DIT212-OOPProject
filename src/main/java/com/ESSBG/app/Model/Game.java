@@ -156,7 +156,6 @@ public class Game {
             int pWarPoints = p.getState().getWarTokens();
             int nextWarPoints = next.getState().getWarTokens();
 
-            // TODO make immutable
             if (pWarPoints > nextWarPoints) {
                 p.getState().addWinPoints(winPoints);
                 next.getState().addLosePoints(1);

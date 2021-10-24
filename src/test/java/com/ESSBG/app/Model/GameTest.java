@@ -10,7 +10,6 @@ import com.ESSBG.app.Model.Cards.EitherResourceCard;
 import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.Player.Player;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

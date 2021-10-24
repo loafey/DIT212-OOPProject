@@ -143,7 +143,7 @@ public class GameController {
         });
     }
 
-    // TODO should preferably use observer pattern instead.
+    // should preferably use observer pattern instead.
     public void pollClient() {
         if (client != null) {
             if (client.getMsgQueue().size() > 0) {
