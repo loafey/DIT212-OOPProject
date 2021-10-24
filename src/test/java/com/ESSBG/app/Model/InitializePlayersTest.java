@@ -35,7 +35,6 @@ public class InitializePlayersTest {
         }
     }
 
-    //TODO vrf funkar det inte???
     @Test
     public void testPlayerStateAndResources(){
         for (Player p : players){

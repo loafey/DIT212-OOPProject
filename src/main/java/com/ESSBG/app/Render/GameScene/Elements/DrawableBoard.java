@@ -62,7 +62,6 @@ public class DrawableBoard {
      */
     private void updateHand(Skin skin, Table handTable, JSONArray handCards) {
         handTable.clear();
-        int index = 0;
 
         cards = new ArrayList<>();
 
@@ -71,7 +70,6 @@ public class DrawableBoard {
             handTable.add(card).width(84).height(128);
 
             cards.add(card);
-            index++;
         }
 
     }

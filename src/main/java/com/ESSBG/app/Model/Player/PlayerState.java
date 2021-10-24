@@ -2,8 +2,6 @@ package com.ESSBG.app.Model.Player;
 
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.EitherResourceCard;
-import com.ESSBG.app.Model.Cards.NeighborReductionCard;
-import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import com.ESSBG.app.Model.ResourceEnum;
 
 import java.util.ArrayList;
@@ -286,7 +284,7 @@ public class PlayerState {
                     }
                 }
             } // currently eitherResources have no extra functionality compared to guaranteedResources.    
-        }     // TODO can be solved using satisfiability. Kind of out of scope in this course and low on time.
+        }     // can be solved using satisfiability. Kind of out of scope in this course and low on time.
         return cost.size() == 0;
     }
 

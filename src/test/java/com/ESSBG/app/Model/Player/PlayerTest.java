@@ -4,10 +4,8 @@ import com.ESSBG.app.Model.Monument.Monument;
 import com.ESSBG.app.Model.Monument.Monuments.Alexandria;
 import com.ESSBG.app.Model.ResourceEnum;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.List;
 
 import static org.junit.Assert.*;
 

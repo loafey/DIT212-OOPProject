@@ -3,7 +3,6 @@ package com.ESSBG.app.Model.Card;
 import com.ESSBG.app.Model.Cards.Card;
 import com.ESSBG.app.Model.Cards.CardFactory;
 import com.ESSBG.app.Model.Cards.ColorEnum;
-import com.ESSBG.app.Model.Cards.ResourceActionCard;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class CardFactoryTest {
     List<List<Card>> cardList;

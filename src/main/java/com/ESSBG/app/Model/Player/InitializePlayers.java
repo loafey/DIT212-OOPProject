@@ -1,7 +1,6 @@
 package com.ESSBG.app.Model.Player;
 
 import com.ESSBG.app.Model.CircularList;
-import com.ESSBG.app.Model.ConcurrentCircularList;
 import com.ESSBG.app.Model.Monument.Monument;
 
 import java.util.List;
