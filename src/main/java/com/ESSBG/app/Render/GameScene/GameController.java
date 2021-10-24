@@ -59,6 +59,9 @@ public class GameController {
      * @param cardIndex
      */
     private void cardAction(int cardIndex, Button card) {
+        // remove the preexisting click action
+        // otherwise you can theoretically create an infinite amount of these buttons.
+        card.clearListeners();
         Button placeButton = new Button(skin);
         Label placeText = new Label("Place", skin);
         placeText.setFontScale(0.5f);
@@ -100,6 +103,7 @@ public class GameController {
         card.add(monumentButton);
     }
 
+    // Creates a JSON message and sends it to the server through the client.
     private void action(int cardIndex, String actionType) {
         JSONObject actionData = new JSONObject();
         actionData.put("msgNum", 0);
@@ -157,7 +161,6 @@ public class GameController {
                                 assignCardButton(card, i);
                                 i++;
                             }
-                            ;
                         }
                         if (data.has("scores")) {
                             displayScores(data);
