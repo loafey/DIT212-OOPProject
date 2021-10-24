@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -27,7 +28,7 @@ public class GameController {
     private DrawableBoard board;
     private Table sceneTable;
 
-    public GameController (IClient client, Skin skin, DrawableBoard board, Table sceneTable) {
+    public GameController(IClient client, Skin skin, DrawableBoard board, Table sceneTable) {
         this.client = client;
         this.skin = skin;
         this.board = board;
@@ -35,11 +36,13 @@ public class GameController {
     }
 
     /**
-     * Assigns the click action of the passed in button to cardAction (See GameController.java).
+     * Assigns the click action of the passed in button to cardAction (See
+     * GameController.java).
+     * 
      * @param card
      * @param cardIndex
      */
-    public void assignCardButton(Button card,int cardIndex) {
+    public void assignCardButton(Button card, int cardIndex) {
         card.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -49,12 +52,13 @@ public class GameController {
     }
 
     /**
-     * When a card is pressed, clear the content of the card,
-     * and instead display three buttons,
-     * a place button, a discard button, and a monument upgrade button.
+     * When a card is pressed, clear the content of the card, and instead display
+     * three buttons, a place button, a discard button, and a monument upgrade
+     * button.
+     * 
      * @param cardIndex
      */
-    private void cardAction(int cardIndex, Button card){
+    private void cardAction(int cardIndex, Button card) {
         Button placeButton = new Button(skin);
         Label placeText = new Label("Place", skin);
         placeText.setFontScale(0.5f);
@@ -96,26 +100,27 @@ public class GameController {
         card.add(monumentButton);
     }
 
-    private void action(int cardIndex, String actionType){
+    private void action(int cardIndex, String actionType) {
         JSONObject actionData = new JSONObject();
         actionData.put("msgNum", 0);
 
         JSONObject data = new JSONObject();
-        data.put("cardIndex",cardIndex);
+        data.put("cardIndex", cardIndex);
         data.put("action", actionType);
         actionData.put("card", data);
         try {
             client.sendData(actionData);
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
     }
 
     public void displayScores(JSONObject data) {
         JSONArray scoreList = data.getJSONArray("scores");
         sceneTable.clear();
-        
+
         String scoreText = "Name: \t| Score:\n";
         for (Object so : scoreList) {
-            JSONObject sdata = (JSONObject)so;
+            JSONObject sdata = (JSONObject) so;
             scoreText += sdata.getString("name") + "\t" + sdata.getInt("score") + "\n";
         }
 
@@ -124,12 +129,11 @@ public class GameController {
         sceneTable.row();
 
         Button backButton = new Button(skin);
-        backButton.add(new Label("Back",skin));
+        backButton.add(new Label("Back", skin));
         sceneTable.add(backButton);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                client.stopClient();
                 ScreenManager.getInstance().setScreen(new StartMenu());
             }
         });
@@ -138,24 +142,33 @@ public class GameController {
     // TODO should preferably use observer pattern instead.
     public void pollClient() {
         if (client != null) {
-            if (client.getMsgQueue().size() > 0){
+            if (client.getMsgQueue().size() > 0) {
                 try {
-                    JSONObject msg = client.getMsgQueue().take().getJSONObject("data");
-                    if (msg.has("reply") && msg.getBoolean("reply")){
-                        board.hideHandCards();
+                    JSONObject msg = client.getMsgQueue().take();
+                    if (msg.getString("reason").equals("game")){
+                        JSONObject data = msg.getJSONObject("data");
+                        if (data.has("reply") && data.getBoolean("reply")) {
+                            board.hideHandCards();
+                        }
+                        if (data.has("placedCards")) {
+                            board.updateBoard(data);
+                            int i = 0;
+                            for (Button card : board.getCards()) {
+                                assignCardButton(card, i);
+                                i++;
+                            }
+                            ;
+                        }
+                        if (data.has("scores")) {
+                            displayScores(data);
+                        }
+                    } else if (msg.getString("reason").equals("net")){
+                        if (!msg.getBoolean("data")) {
+                            client.stopClient();
+                        }
                     }
-                    if (msg.has("placedCards")) {
-                        board.updateBoard(msg);
-                        int i = 0;
-                        for (Button card : board.getCards()){
-                            assignCardButton(card, i); 
-                            i++;
-                        };
-                    } 
-                    if (msg.has("scores")){
-                        displayScores(msg);
-                    }
-                } catch (InterruptedException e){}
+
+                } catch (InterruptedException e) {}
             }
         }
     }
