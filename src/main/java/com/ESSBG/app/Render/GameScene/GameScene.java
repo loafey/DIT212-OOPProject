@@ -28,12 +28,7 @@ public class GameScene implements Screen {
 
     private DrawableBoard board;
 
-    private Table pauseMenu;
-
-    private IClient client;
-
     public GameScene(IClient client) {
-        this.client = client;
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
         skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
