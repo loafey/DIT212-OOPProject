@@ -11,6 +11,7 @@ import java.util.List;
  * A class that represents a monument in the game
  */
 
+
 public abstract class Monument {
     /**
      * The name of this monument

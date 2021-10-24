@@ -12,6 +12,7 @@ import java.util.*;
  * Produces a list of each type of monument available in the game (one object of each subclass to Monument)
  */
 
+
 public class MonumentFactory {
     private List<Monument> monuments = new ArrayList<>();
 
