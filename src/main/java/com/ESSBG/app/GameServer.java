@@ -174,6 +174,9 @@ public class GameServer implements Runnable {
                     JSONObject data = game.getScoreboard();
                     return data;
                 });
+                // Stop server
+                // Should be done more gracefully perhaps.
+                server.stopServer();
             } else {
                 game.movePeriodCardsToNextPlayer();
                 broadcastMessage((p, pid) -> {
