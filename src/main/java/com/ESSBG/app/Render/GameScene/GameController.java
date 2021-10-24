@@ -7,6 +7,7 @@ import com.ESSBG.app.Render.MainScreen;
 import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
 import com.ESSBG.app.Render.StartMenu.StartMenu;
+import com.ESSBG.app.Render.StartMenu.StartMenuController;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -138,7 +139,9 @@ public class GameController {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ScreenManager.getInstance().setScreen(new StartMenu());
+                StartMenu sm = new StartMenu();
+                new StartMenuController(sm);
+                ScreenManager.getInstance().setScreen(sm);
             }
         });
     }

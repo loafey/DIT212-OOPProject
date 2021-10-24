@@ -28,6 +28,7 @@ public class StartMenu implements Screen {
         stage = new Stage(vp);
         table = new Table();
         skin = new Skin(Gdx.files.internal("Assets/Skins/MainMenu/StartMenuSkin.json"));
+
         Gdx.input.setInputProcessor(stage);
 
         // Label setup
