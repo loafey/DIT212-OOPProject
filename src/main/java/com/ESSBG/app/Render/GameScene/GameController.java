@@ -3,7 +3,10 @@ package com.ESSBG.app.Render.GameScene;
 import java.io.IOException;
 
 import com.ESSBG.app.Network.IClient;
+import com.ESSBG.app.Render.MainScreen;
+import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
+import com.ESSBG.app.Render.StartMenu.StartMenu;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -118,6 +121,18 @@ public class GameController {
 
         sceneTable.center();
         sceneTable.add(new Label(scoreText, skin));
+        sceneTable.row();
+
+        Button backButton = new Button(skin);
+        backButton.add(new Label("Back",skin));
+        sceneTable.add(backButton);
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                client.stopClient();
+                ScreenManager.getInstance().setScreen(new StartMenu());
+            }
+        });
     }
 
     // TODO should preferably use observer pattern instead.
