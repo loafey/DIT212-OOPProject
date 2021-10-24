@@ -18,11 +18,6 @@ public class Alexandria extends Monument {
     }
 
 
-    /**
-     * Add Alexandria's stage 2 reward to it's player's list of either resources
-     * @return
-     */
-
     @Override
     public List<ResourceEnum> getStage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();

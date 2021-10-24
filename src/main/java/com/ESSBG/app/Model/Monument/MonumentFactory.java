@@ -12,6 +12,7 @@ import java.util.*;
  * Produces a list of each type of monument available in the game (one object of each subclass to Monument)
  */
 
+
 public class MonumentFactory {
     private List<Monument> monuments = new ArrayList<>();
 
@@ -55,7 +56,6 @@ public class MonumentFactory {
      *
      * @return a shuffled list of all monuments
      */
-
     public static List<Monument> getMonuments() {
         MonumentFactory m = new MonumentFactory();
         return m.monuments;
