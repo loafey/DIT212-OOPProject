@@ -12,32 +12,34 @@ import java.util.List;
  */
 
 public abstract class Monument {
-
-    private final String name;
     /**
      * The name of this monument
      */
-    private final ResourceEnum startingResource;
+    private final String name;
+
     /**
      * The starting resource given to the player (top left corner on monument)
      */
-    private int stageBuilt = 0;
+    private final ResourceEnum startingResource;
     /**
      * How many stages that have been built yet on the monument (max 3)
      */
-    protected List<ResourceEnum> resourcesToBuildStage1;
+    private int stageBuilt = 0;
+
     /**
      * The resources required to build stage 1 of this monument
      */
-    protected List<ResourceEnum> resourcesToBuildStage2;
+    protected List<ResourceEnum> resourcesToBuildStage1;
+
     /**
      * The resources required to build stage 2 of this monument
      */
-    protected List<ResourceEnum> resourcesToBuildStage3;  /** The resources required to build stage 3 of this monument */
+    protected List<ResourceEnum> resourcesToBuildStage2;
 
-
-    //private final List<IResource> monAction; //placeholder, need to find a way to generalise all actions
-    //private int monUnlock;
+    /**
+     * The resources required to build stage 3 of this monument
+     * */
+    protected List<ResourceEnum> resourcesToBuildStage3;
 
     /**
      * Creates a Monument with a certain name and what starting resources it will give a player that has it.
@@ -45,7 +47,6 @@ public abstract class Monument {
      * @param name
      * @param startingResource
      */
-
     public Monument(String name, ResourceEnum startingResource) {
         this.name = name;
         this.startingResource = startingResource;
@@ -58,13 +59,11 @@ public abstract class Monument {
         initResourcesToBuildStage3();
     }
 
-
     /**
      * Returns this monument's name
      *
      * @return name
      */
-
     public String getName() {
         return name;
     }
@@ -81,7 +80,6 @@ public abstract class Monument {
      *
      * @return stageBuilt
      */
-
     public int getStageBuilt() {
         return stageBuilt;
     }
@@ -91,18 +89,15 @@ public abstract class Monument {
      *
      * @return startingResource
      */
-
     public ResourceEnum getStartingResource() {
         return startingResource;
     }
-
 
 
     /**
      * Returns the cost to build the next stage of this monument
      * @return the cost for building next stage
      */
-
     public List<ResourceEnum> getCostToBuildNextStage(){
         switch(stageBuilt){
             case 0:
@@ -120,7 +115,6 @@ public abstract class Monument {
      * Returns the reward to build the next stage of this monument
      * @return the reward for building next stage
      */
-
     public List<ResourceEnum> getRewardForBuildingNextStage(){
         switch(stageBuilt){
             case 0:

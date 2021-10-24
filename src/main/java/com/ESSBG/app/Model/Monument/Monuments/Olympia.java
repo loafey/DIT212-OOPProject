@@ -19,7 +19,7 @@ public class Olympia extends Monument {
     }
 
 
-    // Modified, not how it's actually in the real game
+
     @Override
     public List<ResourceEnum> getStage2Reward() {
         ArrayList<ResourceEnum> newResources = new ArrayList<>();

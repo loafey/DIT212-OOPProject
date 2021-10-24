@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Author: Emmie Berger
- * <p>
+ *
  * A factory class for Monument.
  * Produces a list of each type of monument available in the game (one object of each subclass to Monument)
  */
@@ -23,7 +23,7 @@ public class MonumentFactory {
 
     /**
      * Generates an int based on today's date to be used for generating random numbers
-     * @return
+     * @return an integer based on today's date
      */
     private int getSeed() {
         LocalDate d = java.time.LocalDate.now();
@@ -53,7 +53,7 @@ public class MonumentFactory {
     /**
      * Gives a shuffled list of all monuments (one of each kind)
      *
-     * @return
+     * @return a shuffled list of all monuments
      */
 
     public static List<Monument> getMonuments() {
