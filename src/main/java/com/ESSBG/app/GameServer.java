@@ -19,6 +19,7 @@ import org.json.*;
 public class GameServer implements Runnable {
     private IServer server;
     private LinkedBlockingQueue<JSONObject> msgQueue;
+    // Represents their ID + model index.
     private ConcurrentHashMap<Integer, Integer> joinedUsers;
     private ConcurrentHashMap<Integer, Boolean> confirmedStart;
     private Game game;
@@ -166,7 +167,7 @@ public class GameServer implements Runnable {
             game.tryProgress();
 
             if (game.getAge() > 3) {
-                broadcastMessage((p, pid) -> {
+                broadcastMessage((p, pindex) -> {
                     JSONObject data = game.getScoreboard();
                     return data;
                 });
@@ -175,8 +176,8 @@ public class GameServer implements Runnable {
                 server.stopServer();
             } else {
                 game.movePeriodCardsToNextPlayer();
-                broadcastMessage((p, pid) -> {
-                    JSONObject data = game.getPlayerData(pid);
+                broadcastMessage((p, pindex) -> {
+                    JSONObject data = game.getPlayerData(pindex);
                     return data;
                 });
 

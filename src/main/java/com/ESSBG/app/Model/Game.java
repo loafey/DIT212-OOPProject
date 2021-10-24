@@ -219,6 +219,7 @@ public class Game {
         PlayerState pState = p.getState();
 
         JSONObject data = new JSONObject();
+        data.put("name", p.getName());
         data.put("msgNum", 0);
 
         data.put("handCards", new JSONArray());

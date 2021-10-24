@@ -43,7 +43,7 @@ public class DrawableBoard {
     public void updateBoard(JSONObject data) {
         updateHand(skin, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
-        updateMonument(skin, monument, data.getJSONObject("monument"));
+        updateMonument(skin, monument, data.getJSONObject("monument"), data.getString("name"));
         updateResources(skin, monument, data.getJSONObject("resources"));
         //var leftNeighbourJson = data.getJSONObject("leftNeighbour");
         //var rightNeighbourJson = data.getJSONObject("rightNeighbour");
@@ -83,7 +83,7 @@ public class DrawableBoard {
      * @param monument The table for the monument
      * @param data The data to be displayed
      */
-    private void updateMonument(Skin skin, Table monument, JSONObject data) {
+    private void updateMonument(Skin skin, Table monument, JSONObject data, String name) {
         monument.clear();
         monument.row();
         
@@ -120,6 +120,8 @@ public class DrawableBoard {
             count++;
         }
         monument.add(cardTable);
+        monument.row();
+        monument.add(new Label("ID: " + name, skin));
     }
 
     /**
