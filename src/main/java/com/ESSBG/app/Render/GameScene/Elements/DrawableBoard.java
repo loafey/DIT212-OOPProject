@@ -51,7 +51,6 @@ public class DrawableBoard {
     /**
      * Updates the cards displayed in your hand
      * @param skin The skin to be used
-     * @param gameController A GameController so the buttons can be linked up to appropriate actions when clicked.
      * @param handTable The table to contain the cards
      * @param handCards The card data to be displayed
      */
@@ -147,7 +146,6 @@ public class DrawableBoard {
     /**
      * Displays the cards you have placed.
      * @param skin The skin to be used
-     * @param monument The table for the monument
      * @param cards The cards to be displayed
      */
     private void updatePlacedCards(Skin skin, Table placedCardsTable, JSONArray cards) {
