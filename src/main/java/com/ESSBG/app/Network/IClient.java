@@ -2,7 +2,6 @@ package com.ESSBG.app.Network;
 
 import java.io.IOException;
 import java.util.concurrent.*;
-import org.json.*;
 
 /**
  * Author: Björn Rosengren
@@ -43,12 +42,11 @@ public interface IClient {
     /**
      * Sends the agreed structure between server and client of the jsonobject.
      *
-     * @param jsonobj the agreed structure between server and client of the
-     *                jsonobject.
+     * @param data the agreed structure between server and client of the dataobject.
      * @return IF FALSE, something went very wrong with networking. Probably loss of
      *         connection, rip.
      */
-    boolean sendData(JSONObject jsonobj) throws IOException;
+    boolean sendData(HashMapWithTypes data) throws IOException;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message
@@ -58,5 +56,5 @@ public interface IClient {
      *         {"reason":"net", "data": bool} <br>
      *         => bool ? "Connected or Want to connect" : "Disconnected"
      */
-    LinkedBlockingQueue<JSONObject> getMsgQueue();
+    LinkedBlockingQueue<HashMapWithTypes> getMsgQueue();
 }

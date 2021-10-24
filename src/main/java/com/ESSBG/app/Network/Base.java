@@ -2,7 +2,6 @@ package com.ESSBG.app.Network;
 
 import java.io.*;
 import java.net.Socket;
-import org.json.JSONObject;
 
 /**
  * Author: Björn Rosengren
@@ -19,8 +18,10 @@ import org.json.JSONObject;
  * many bytes.
  */
 abstract class Base {
-    protected void sendData(Socket clientSocket, JSONObject jsonobj) throws IOException, IllegalArgumentException {
-        byte[] b = jsonobj.toString().getBytes(Constants.encoding);
+    private final static ModelNetSerde serde = ModelNetSerde.getInstance();
+
+    protected void sendData(Socket clientSocket, HashMapWithTypes data) throws IOException, IllegalArgumentException {
+        byte[] b = serde.serialize(data).getBytes(Constants.encoding);
         OutputStream clientStream = clientSocket.getOutputStream();
         clientStream.write(Converter.intToByteArray(4, b.length));
         clientStream.write(b);

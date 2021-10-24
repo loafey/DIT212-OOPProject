@@ -4,7 +4,6 @@ import java.net.*;
 import java.io.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
-import org.json.*;
 
 /**
  * Author: Björn Rosengren
@@ -12,12 +11,13 @@ import org.json.*;
  * Baseclass to reduce copy paste, easier testing.
  */
 public abstract class SocketBaseListener implements Runnable {
+    private final static ModelNetSerde serde = ModelNetSerde.getInstance();
     protected Socket socket;
-    protected LinkedBlockingQueue<JSONObject> msgQueue;
+    protected LinkedBlockingQueue<HashMapWithTypes> msgQueue;
     protected Lock lock;
     protected static volatile int numberOfActiveThreads = 0;
 
-    protected SocketBaseListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
+    protected SocketBaseListener(Socket socket, Lock lock, LinkedBlockingQueue<HashMapWithTypes> msgQueue) {
         this.socket = socket;
         this.lock = lock;
         this.msgQueue = msgQueue;
@@ -28,7 +28,7 @@ public abstract class SocketBaseListener implements Runnable {
      *
      * @return JSONOBject
      */
-    protected JSONObject recvAll() {
+    protected HashMapWithTypes recvAll() {
         try {
             InputStream stream = socket.getInputStream();
 
@@ -54,7 +54,7 @@ public abstract class SocketBaseListener implements Runnable {
             String msg = new String(stream.readNBytes(msgLen));
             // IF message has been read correctly. Let socket have infinite timeout.
             socket.setSoTimeout(0);
-            return new JSONObject(msg);
+            return serde.parse(msg);
         } catch (SocketException e) {
             // Don't care
         } catch (IOException e) {

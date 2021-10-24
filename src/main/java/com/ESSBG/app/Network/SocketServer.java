@@ -3,7 +3,6 @@ package com.ESSBG.app.Network;
 import java.net.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
-import org.json.JSONObject;
 
 /**
  * Author: Björn Rosengren
@@ -12,14 +11,14 @@ import org.json.JSONObject;
  * run just serving new players to connect and "attach" a server for the player.
  */
 public class SocketServer implements Runnable {
-    private LinkedBlockingQueue<JSONObject> msgQueue;
+    private LinkedBlockingQueue<HashMapWithTypes> msgQueue;
     private ConcurrentHashMap<Integer, Socket> hashMap;
     private ServerSocket socket;
     private volatile int[] maxplayersAtIndexZero;
     private Lock lock = new ReentrantLock(true);
 
     protected SocketServer(ServerSocket socket, ConcurrentHashMap<Integer, Socket> hashMap,
-            LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayersAtIndexZero) {
+            LinkedBlockingQueue<HashMapWithTypes> msgQueue, int[] maxplayersAtIndexZero) {
         this.socket = socket;
         this.hashMap = hashMap;
         this.maxplayersAtIndexZero = maxplayersAtIndexZero;

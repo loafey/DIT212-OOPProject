@@ -1,6 +1,5 @@
 package com.ESSBG.app.Network;
 
-import org.json.*;
 import java.net.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
@@ -14,7 +13,7 @@ import java.io.*;
  * each message the server sends.
  */
 public class Client extends Base implements IClient {
-    private LinkedBlockingQueue<JSONObject> msgQueue;
+    private LinkedBlockingQueue<HashMapWithTypes> msgQueue;
     private Socket serverSocket;
     private Thread thread;
     private Lock lock;
@@ -39,7 +38,7 @@ public class Client extends Base implements IClient {
             }
             // Recreate the world
             lock = new ReentrantLock(true);
-            msgQueue = new LinkedBlockingQueue<JSONObject>();
+            msgQueue = new LinkedBlockingQueue<HashMapWithTypes>();
             serverSocket = new Socket(InetAddress.getByName(ipAddress), Constants.PORT);
             thread = new Thread(new SocketClientListener(serverSocket, lock, msgQueue));
             thread.start();
@@ -50,12 +49,12 @@ public class Client extends Base implements IClient {
     }
 
     @Override
-    public boolean sendData(JSONObject jsonobj) {
+    public boolean sendData(HashMapWithTypes data) {
         if (serverSocket == null || serverSocket.isClosed()) {
             return false;
         }
         try {
-            super.sendData(serverSocket, jsonobj);
+            super.sendData(serverSocket, data);
             return true;
         } catch (IOException ignore_since_false_is_the_same) {
         } catch (IllegalArgumentException e) {
@@ -65,7 +64,7 @@ public class Client extends Base implements IClient {
     }
 
     @Override
-    public LinkedBlockingQueue<JSONObject> getMsgQueue() {
+    public LinkedBlockingQueue<HashMapWithTypes> getMsgQueue() {
         return msgQueue;
     }
 
@@ -77,6 +76,7 @@ public class Client extends Base implements IClient {
         }
     }
 
+    // Read last multiline comment at the bottom in Server.java
     // Only for testing!
     protected boolean isListenerRunning() {
         return thread.isAlive();
