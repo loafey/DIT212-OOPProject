@@ -34,11 +34,6 @@ public class DrawableBoard {
     /**
      * Updates the board 
      * @param data The data to be displayed
-     * @param controller A GameController so the buttons can be linked up to appropriate actions when clicked.
-     * @param skin The skin to be used
-     * @param handTable The table where cards in your hand should be displayed
-     * @param placedCards The table where cards you have placed should be displayed
-     * @param monument The table for the monument
      */
     public void updateBoard(JSONObject data) {
         updateHand(skin, handTable, data.getJSONArray("handCards"));
@@ -80,6 +75,7 @@ public class DrawableBoard {
      * @param skin The skin to be used
      * @param monument The table for the monument
      * @param data The data to be displayed
+     * @param name The player name
      */
     private void updateMonument(Skin skin, Table monument, JSONObject data, String name) {
         monument.clear();
