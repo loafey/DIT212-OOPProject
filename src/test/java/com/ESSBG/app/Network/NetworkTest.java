@@ -1,10 +1,9 @@
 package com.ESSBG.app.Network;
 
+import org.json.*;
 import org.junit.*;
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.*;
 import static org.junit.Assert.*;
 
@@ -14,9 +13,8 @@ public class NetworkTest {
     final int SLEEP_TIME = 500;
     IServer s;
     IClient c;
-    LinkedBlockingQueue<HashMapWithTypes> serverMsgQueue;
-    LinkedBlockingQueue<HashMapWithTypes> clientMsgQueue;
-    ModelNetSerde serde = ModelNetSerde.getInstance();
+    LinkedBlockingQueue<JSONObject> serverMsgQueue;
+    LinkedBlockingQueue<JSONObject> clientMsgQueue;
 
     @Before
     public void setup() throws InterruptedException, IOException {
@@ -39,28 +37,28 @@ public class NetworkTest {
     @Test
     public void testConverterZero() {
         int v = 0;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(4, v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
     @Test
     public void testConverterMax() {
         int v = Integer.MAX_VALUE;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(4, v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
     @Test
     public void testConverterHalfMax() {
         int v = Integer.MAX_VALUE / 2;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(4, v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
     @Test
     public void testConverterTen() {
         int v = 10;
-        int n = Converter.byteArrayToInt(Converter.intToByteArray(4, v));
+        int n = Converter.byteArrayToInt(Converter.intToByteArray(4,v));
         assertTrue(v == n);
     }
 
@@ -70,7 +68,7 @@ public class NetworkTest {
         // Give it some chance for message to arrive, minimum value 10ms me(bjorn).
         Thread.sleep(SLEEP_TIME);
         if (serverMsgQueue.size() >= 1) {
-            HashMapWithTypes js = serverMsgQueue.take();
+            JSONObject js = serverMsgQueue.take();
             int i = js.getInt("id");
             b = ((Server) s).hasUserJoined(i);
             assertTrue(b);
@@ -133,7 +131,7 @@ public class NetworkTest {
     }
 
     @Test
-    public void twoConnectSendMessToOne() throws Exception {
+    public void twoConnectSendMessToOne() throws Exception{
         Server server = (Server) s;
         Thread.sleep(200);
         Client d = new Client();
@@ -143,12 +141,12 @@ public class NetworkTest {
         int s = clientMsgQueue.size();
         int c_id = serverMsgQueue.take().getInt("id");
         int b_id = serverMsgQueue.take().getInt("id");
-        server.sendData(c_id, new HashMapWithTypes());
+        server.sendData(c_id, new JSONObject());
         Thread.sleep(SLEEP_TIME);
 
         assertTrue(s + 1 == clientMsgQueue.size());
         assertTrue(d.getMsgQueue().size() == 1);
-        server.sendData(b_id, new HashMapWithTypes());
+        server.sendData(b_id, new JSONObject());
         Thread.sleep(SLEEP_TIME);
         assertTrue(d.getMsgQueue().size() == 2);
         assertTrue(s + 1 == clientMsgQueue.size());
@@ -160,15 +158,15 @@ public class NetworkTest {
         // Give it some chance for message to arrive, minimum value 10ms me(bjorn).
         Thread.sleep(SLEEP_TIME);
         if (serverMsgQueue.size() >= 1) {
-            HashMapWithTypes d = serverMsgQueue.take();
-            id = d.getInt("id");
-            s.sendData(id, new HashMapWithTypes());
+            JSONObject js = serverMsgQueue.take();
+            id = js.getInt("id");
+            s.sendData(id, new JSONObject());
             // Give it some time for msg to arrive to client.
             Thread.sleep(SLEEP_TIME);
             if (clientMsgQueue.size() >= 1) {
-                HashMapWithTypes o = clientMsgQueue.take();
+                JSONObject o = clientMsgQueue.take();
                 try {
-                    assertTrue(o.getHashMapWithTypes("data") instanceof HashMapWithTypes);
+                    assertTrue(o.getJSONObject("data") instanceof JSONObject);
                     return;
                 } catch (Exception e) {
                 }
@@ -182,16 +180,16 @@ public class NetworkTest {
         int id = 0;
         Thread.sleep(SLEEP_TIME);
         if (serverMsgQueue.size() >= 1) {
-            HashMapWithTypes d = serverMsgQueue.take();
-            id = d.getInt("id");
+            JSONObject js = serverMsgQueue.take();
+            id = js.getInt("id");
             // Send data to server
-            c.sendData(ReplyFactory.getGame(new HashMapWithTypes()));
+            c.sendData(JSONFactory.getGame(new JSONObject()));
             Thread.sleep(SLEEP_TIME);
             if (serverMsgQueue.size() >= 1) {
-                HashMapWithTypes o = serverMsgQueue.take();
+                JSONObject o = serverMsgQueue.take();
                 try {
                     assertTrue(id == o.getInt("id"));
-                    assertTrue(o.getHashMapWithTypes("data") instanceof HashMapWithTypes);
+                    assertTrue(o.getJSONObject("data") instanceof JSONObject);
                     return;
                 } catch (Exception e) {
                 }
@@ -207,14 +205,14 @@ public class NetworkTest {
             serverMsgQueue.take();
             // Send data to server
             for (int i = 0; i < 5; i++) {
-                c.sendData(new HashMapWithTypes("{\"" + String.valueOf(i) + "\":" + String.valueOf(i) + "}"));
+                c.sendData(new JSONObject("{\"" + String.valueOf(i) + "\":" + String.valueOf(i) + "}"));
             }
             Thread.sleep(SLEEP_TIME);
             if (serverMsgQueue.size() >= 1) {
                 try {
                     for (int i = 0; i < 5; i++) {
-                        HashMapWithTypes o = serverMsgQueue.take();
-                        assertTrue(o.getHashMapWithTypes("data").getInt(String.valueOf(i)) == i);
+                        JSONObject o = serverMsgQueue.take();
+                        assertTrue(o.getJSONObject("data").getInt(String.valueOf(i)) == i);
                     }
                     return;
                 } catch (Exception e) {
@@ -229,16 +227,16 @@ public class NetworkTest {
         int id = 0;
         Thread.sleep(SLEEP_TIME);
         if (serverMsgQueue.size() >= 1) {
-            HashMapWithTypes d = serverMsgQueue.take();
-            id = d.getInt("id");
+            JSONObject js = serverMsgQueue.take();
+            id = js.getInt("id");
             for (int i = 0; i < 5; i++) {
-                s.sendData(id, new HashMapWithTypes("{\"" + String.valueOf(i) + "\":" + String.valueOf(i) + "}"));
+                s.sendData(id, new JSONObject("{\"" + String.valueOf(i) + "\":" + String.valueOf(i) + "}"));
             }
             if (clientMsgQueue.size() >= 1) {
                 try {
                     for (int i = 0; i < 5; i++) {
-                        HashMapWithTypes o = clientMsgQueue.take();
-                        assertTrue(o.getHashMapWithTypes("data").getInt(String.valueOf(i)) == i);
+                        JSONObject o = clientMsgQueue.take();
+                        assertTrue(o.getJSONObject("data").getInt(String.valueOf(i)) == i);
                     }
                     return;
                 } catch (Exception e) {
@@ -255,13 +253,13 @@ public class NetworkTest {
         if (serverMsgQueue.size() == 0) {
             fail();
         }
-        HashMapWithTypes d = serverMsgQueue.take();
-        id = d.getInt("id");
+        JSONObject js = serverMsgQueue.take();
+        id = js.getInt("id");
 
-        s.sendData(id, new HashMapWithTypes());
-        c.sendData(new HashMapWithTypes());
-        c.sendData(new HashMapWithTypes());
-        s.sendData(id, new HashMapWithTypes());
+        s.sendData(id, new JSONObject());
+        c.sendData(new JSONObject());
+        c.sendData(new JSONObject());
+        s.sendData(id, new JSONObject());
         Thread.sleep(SLEEP_TIME);
 
         assertTrue(serverMsgQueue.size() == 2);
@@ -281,7 +279,7 @@ public class NetworkTest {
         assertFalse(((Client) c).isListenerRunning());
         assertFalse(clientMsgQueue.take().getBoolean("data"));
 
-        HashMapWithTypes o = serverMsgQueue.take();
+        JSONObject o = serverMsgQueue.take();
         assertFalse(o.getBoolean("data"));
         assertTrue(o.getInt("id") == i);
         assertFalse(((Server) s).hasUserJoined(i));

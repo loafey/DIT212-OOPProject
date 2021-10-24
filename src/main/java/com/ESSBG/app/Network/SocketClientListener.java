@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
+import org.json.JSONObject;
 
 /**
  * Author: Björn Rosengren
@@ -13,9 +14,7 @@ import java.util.concurrent.locks.Lock;
  * then there is the risk of 100% cpu or the entire program deadlocks.
  */
 public class SocketClientListener extends SocketBaseListener {
-    private static final ModelNetSerde serde = ModelNetSerde.getInstance();
-
-    protected SocketClientListener(Socket socket, Lock lock, LinkedBlockingQueue<HashMapWithTypes> msgQueue) {
+    protected SocketClientListener(Socket socket, Lock lock, LinkedBlockingQueue<JSONObject> msgQueue) {
         super(socket, lock, msgQueue);
     }
 
@@ -23,14 +22,14 @@ public class SocketClientListener extends SocketBaseListener {
     public void run() {
         try {
             // Write initial message to server.
-            if (!connectHandshake(serde.serialize(ReplyFactory.getNetwork(true)))) {
+            if (!connectHandshake(JSONFactory.getNetwork(true).toString())) {
                 // Tell client that connection failed.
-                msgQueue.add(ReplyFactory.getNetwork(false));
+                msgQueue.add(JSONFactory.getNetwork(false));
                 disconnectSocket();
                 return;
             }
             // Tell listener that connection was successful.
-            msgQueue.add(ReplyFactory.getNetwork(true));
+            msgQueue.add(JSONFactory.getNetwork(true));
             while (receiveDataPushToQueue()) {
             }
         } catch (Exception ignore_since_any_inception_here_is_a_disconnect) {
@@ -38,16 +37,16 @@ public class SocketClientListener extends SocketBaseListener {
     }
 
     private boolean receiveDataPushToQueue() {
-        HashMapWithTypes recvData = recvAll();
+        JSONObject recvData = recvAll();
         // Disconnect or any networking error.
         if (recvData == null) {
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.
-            msgQueue.add(ReplyFactory.getNetwork(false));
+            msgQueue.add(JSONFactory.getNetwork(false));
             disconnectSocket();
             return false;
         }
-        msgQueue.add(ReplyFactory.getGame(recvData));
+        msgQueue.add(JSONFactory.getGame(recvData));
         return true;
     }
 

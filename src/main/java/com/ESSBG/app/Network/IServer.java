@@ -2,6 +2,7 @@ package com.ESSBG.app.Network;
 
 import java.util.concurrent.*;
 import java.util.*;
+import org.json.*;
 import java.io.*;
 
 /**
@@ -25,7 +26,7 @@ public interface IServer {
 
     /**
      * Checks if socket is closed.
-     *
+     * 
      * @return
      */
     boolean isSocketClosed();
@@ -58,7 +59,7 @@ public interface IServer {
      *
      * @param id   the receiver id to send the data.
      *
-     * @param data the agreed structure between server and client of the dataobject.
+     * @param json the agreed structure between server and client of the jsonobject.
      * @return IF FALSE, something went very wrong with networking. Probably loss of
      *         connection, rip.
      * @throws IOException            if a socket accidentally disconnected. Threat
@@ -67,7 +68,7 @@ public interface IServer {
      * @throws NoSuchElementException Player disconnected from the server, you
      *                                should've known it by now. Fix!
      */
-    boolean sendData(int id, HashMapWithTypes data) throws IOException, NoSuchElementException;
+    boolean sendData(int id, JSONObject json) throws IOException, NoSuchElementException;
 
     /**
      * @return a BLOCKING Fifo-queue to enable a waiting thread to receive a message
@@ -77,5 +78,5 @@ public interface IServer {
      *         {"reason":"net", "id": int, "data": bool} <br>
      *         => bool ? "Connected or Want to connect" : "Disconnected"
      */
-    LinkedBlockingQueue<HashMapWithTypes> getMsgQueue();
+    LinkedBlockingQueue<JSONObject> getMsgQueue();
 }

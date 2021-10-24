@@ -6,7 +6,6 @@ import com.ESSBG.app.GameServer;
 import com.ESSBG.app.Model.Game;
 import com.ESSBG.app.Network.IClient;
 import com.ESSBG.app.Network.Client;
-import com.ESSBG.app.Network.HashMapWithTypes;
 import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.GameScene.GameScene;
 import com.badlogic.gdx.Gdx;
@@ -125,7 +124,7 @@ public class LobbyScreen implements Screen{
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                HashMapWithTypes data = new HashMapWithTypes("{\"start\": true}");
+                JSONObject data = new JSONObject("{\"start\": true}");
                 data.put("msgNum", 0);
                 try {
                     client.sendData(data);
@@ -138,7 +137,7 @@ public class LobbyScreen implements Screen{
         if (client != null){
             if (client.getMsgQueue().size() > 0){
                 try {
-                    HashMapWithTypes message = client.getMsgQueue().take();
+                    JSONObject message = client.getMsgQueue().take();
                     String reason = message.getString("reason");
                     if (reason.equals("net")){
                         if (message.getBoolean("data")){
@@ -147,7 +146,7 @@ public class LobbyScreen implements Screen{
                             System.out.println("Disconnected!");
                         }
                     } else if (reason.equals("game")) {
-                        if (message.getHashMapWithTypes("data").getBoolean("start")){
+                        if (message.getJSONObject("data").getBoolean("start")){
                             ScreenManager.getInstance().setScreen(new GameScene(client));
                         }
                     }

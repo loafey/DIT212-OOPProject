@@ -3,6 +3,7 @@ package com.ESSBG.app.Network;
 import java.net.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
+import org.json.JSONObject;
 
 /**
  * Author: Björn Rosengren
@@ -18,7 +19,7 @@ public class SocketServerListener extends SocketBaseListener {
     private int id = this.hashCode();
 
     protected SocketServerListener(Socket socket, Lock lock, ConcurrentHashMap<Integer, Socket> hashMap,
-            LinkedBlockingQueue<HashMapWithTypes> msgQueue, int[] maxplayersAtIndexZero) {
+            LinkedBlockingQueue<JSONObject> msgQueue, int[] maxplayersAtIndexZero) {
         super(socket, lock, msgQueue);
         this.hashMap = hashMap;
         this.maxplayersAtIndexZero = maxplayersAtIndexZero;
@@ -43,23 +44,23 @@ public class SocketServerListener extends SocketBaseListener {
         hashMap.put(this.hashCode(), socket);
         numberOfActiveThreads++;
         lock.unlock();
-        msgQueue.add(ReplyFactory.getNetworkWithID(id, true));
+        msgQueue.add(JSONFactory.getNetworkWithID(id, true));
 
         while (receiveDataPushToQueue()) {
         }
     }
 
     private boolean receiveDataPushToQueue() {
-        HashMapWithTypes recvData = recvAll();
+        JSONObject recvData = recvAll();
         // Disconnect or any networking error.
         if (recvData == null) {
             goodByeWorld();
             // Tell listener that a socket has been disconnected
             // and that we are dying. Send a last message.
-            msgQueue.add(ReplyFactory.getNetworkWithID(id, false));
+            msgQueue.add(JSONFactory.getNetworkWithID(id, false));
             return false;
         }
-        msgQueue.add(ReplyFactory.getGameWithID(id, recvData));
+        msgQueue.add(JSONFactory.getGameWithID(id, recvData));
         return true;
     }
 
@@ -75,11 +76,11 @@ public class SocketServerListener extends SocketBaseListener {
 
     private boolean connectHandshake() {
         // First get initial data, should be an net action.
-        HashMapWithTypes data = recvAll();
-        if (data != null) {
+        JSONObject js = recvAll();
+        if (js != null) {
             // Fails if client doesn't have correct connection handshake
             try {
-                if (data.getString("reason").equals("net") && data.getBoolean("data")) {
+                if (js.getString("reason").equals("net") && js.getBoolean("data")) {
                     return true;
                 }
             } catch (Exception ignore_but_warn_that_user_failed_handshake) {

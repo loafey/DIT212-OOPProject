@@ -1,7 +1,6 @@
 package com.ESSBG.app.Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.ESSBG.app.Model.Action.EitherResourceAction;
@@ -18,18 +17,14 @@ import com.ESSBG.app.Model.Monument.MonumentFactory;
 import com.ESSBG.app.Model.Player.InitializePlayers;
 import com.ESSBG.app.Model.Player.Player;
 import com.ESSBG.app.Model.Player.PlayerState;
-import com.ESSBG.app.Network.HashMapWithTypes;
-import com.ESSBG.app.Network.ModelNetSerde;
-import com.badlogic.gdx.utils.Array;
 
-// import org.json.JSONArray;
-// import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Author: Samuel Hammersberg, Sebastian Selander, Emmie Berger
  */
 public class Game {
-    private final static ModelNetSerde serde = ModelNetSerde.getInstance();
     public CircularList<Player> players = new CircularList<>();
     private List<List<Card>> currentPeriodCards;
     private Trashcan trash;
@@ -37,13 +32,13 @@ public class Game {
     private int age = 1;
     private final int handSize = 7;
 
+
     /**
      * "Starts" the game and adds the list of player ids as players.
-     *
      * @param playerIDS
      */
     public void startGame(ArrayList<Integer> playerIDS) {
-        for (Integer pid : playerIDS) {
+        for (Integer pid : playerIDS){
             players.add(new Player(pid, new PlayerState()));
         }
         init();
@@ -51,7 +46,6 @@ public class Game {
 
     /**
      * Puts a player's card into the trash can
-     *
      * @param playerIndex
      * @param cardIndex
      */
@@ -64,9 +58,8 @@ public class Game {
     }
 
     /**
-     * Upgrades a player's monument to the next stage, removes a card from their
-     * hand and upgrades their playerState, if the player has efficient resources to
-     * build the next stage of their monument.
+     * Upgrades a player's monument to the next stage, removes a card from their hand and upgrades their playerState,
+     * if the player has efficient resources to build the next stage of their monument.
      *
      * @param playerIndex
      * @param cardIndex
@@ -100,7 +93,6 @@ public class Game {
     /**
      * Assuming the player has efficient resources to build the structure of card,
      * add the resources given by that card to the player's list of resources
-     *
      * @param playerIndex
      * @param cardIndex
      */
@@ -141,8 +133,7 @@ public class Game {
     }
 
     /**
-     * Moves the game to the next age and changes the cardDeck to the correct cards
-     * for that specific age
+     * Moves the game to the next age and changes the cardDeck to the correct cards for that specific age
      */
     private void startNextAge() {
         giveWarTokens(age);
@@ -152,7 +143,6 @@ public class Game {
 
     /**
      * Gives a player war tokens according to the predefined rules in RAD
-     *
      * @param age
      */
     private void giveWarTokens(int age) {
@@ -179,17 +169,17 @@ public class Game {
 
     /**
      * Returns the current age
-     *
      * @return
      */
     public int getAge() {
         return age;
     }
 
-    /**
-     * Check if all decks have a size of 1 or less, and if so proceed to the next
-     * set of decks, otherwise do nothing.
-     */
+    /** 
+     * Check if all decks have a size of 1 or less, 
+     * and if so proceed to the next set of decks, otherwise
+     * do nothing.
+    */
     public void tryProgress() {
         int deckSize = 0;
         for (List<Card> cards : currentPeriodCards) {
@@ -204,116 +194,101 @@ public class Game {
 
     /**
      * Returns an unsorted list of all player names and their scores.
-     *
      * @return
      */
-    public HashMapWithTypes getScoreboard() {
-        HashMapWithTypes data = new HashMapWithTypes();
-        ArrayList<HashMapWithTypes> playerScore = new ArrayList<>();
+    public JSONObject getScoreboard() {
+        JSONObject data = new JSONObject();
         players.forEach(p -> {
-            HashMapWithTypes score = new HashMapWithTypes();
+            JSONObject score = new JSONObject();
             score.put("name", p.getName());
             score.put("score", p.getState().getTotalScore());
-            playerScore.add(score);
+            data.append("scores",score);
         });
-        data.put("scores", playerScore);
         return data;
     }
 
     /**
-     * Returns a JSONObject containing the data of player at said index. Requires
-     * the class holding the model to have their own list of players with matching
-     * indicies.
-     *
+     * Returns a JSONObject containing the data of player at said index.
+     * Requires the class holding the model to have their own list of players
+     * with matching indicies.
      * @param playerIndex
      * @return
      */
-    public HashMapWithTypes getPlayerData(int playerIndex) {
+    public JSONObject getPlayerData(int playerIndex) {
         Player p = players.get(playerIndex);
         PlayerState pState = p.getState();
 
-        HashMapWithTypes data = new HashMapWithTypes();
+        JSONObject data = new JSONObject();
         data.put("msgNum", 0);
 
-        data.put("handCards", new ArrayList<HashMapWithTypes>());
-
+        data.put("handCards", new JSONArray());
         // parse hand cards
-        for (Card c : currentPeriodCards.get(playerIndex)) {
-            HashMapWithTypes cardData = new HashMapWithTypes();
-            cardData.put("cost", new ArrayList<>());
-            c.getCost().forEach((ResourceEnum r) -> {
-                {
-                    cardData.getStringList("cost").add(r.toString());
-                }
-            });
-            cardData.put("resource", new ArrayList<>());
+        for (Card c :  currentPeriodCards.get(playerIndex)) {
+            JSONObject cardData = new JSONObject();
+            cardData.put("cost", new JSONArray());
+            c.getCost().forEach((ResourceEnum r) -> {{
+                cardData.append("cost", r.toString());
+            }});
+            cardData.put("resource", new JSONArray());
             c.getAction().getList().forEach((ResourceEnum r) -> {
-                cardData.getStringList("resource").add(r.toString());
+                cardData.append("resource", r.toString());
             });
             cardData.put("cardType", c.getCardTypeEnum());
 
             cardData.put("color", parseColor(c.getColor()));
-
-            data.getHashMapWithTypesList("handCards").add(cardData);
+            
+            data.append("handCards", cardData);
         }
-
-        data.put("placedCards", new ArrayList<>());
+        
+        data.put("placedCards", new JSONArray());
         // parse placed cards
         ArrayList<Card> allCards = new ArrayList<>();
         allCards.addAll(pState.getPlayedCards());
         for (Card c : allCards) {
-            HashMapWithTypes cardData = new HashMapWithTypes();
+            JSONObject cardData = new JSONObject();
+
             cardData.put("color", parseColor(c.getColor()));
 
-            cardData.put("cost", new ArrayList<>());
-            for (ResourceEnum r : c.getCost()) {
-                cardData.getStringList("cost").add(r.toString());
+            for (ResourceEnum r : c.getCost()){
+                cardData.append("cost", r.toString());
             }
-
-            cardData.put("cost", new ArrayList<>());
-            for (ResourceEnum r : c.getAction().getList()) {
-                cardData.getStringList("resource").add(r.toString());
+            for (ResourceEnum r : c.getAction().getList()){
+                cardData.append("resource", r.toString());
             }
             cardData.put("cardType", c.getCardTypeEnum().toString());
 
-            data.getHashMapWithTypesList("placedCards").add(cardData);
+            data.append("placedCards", cardData);
         }
 
+
         // parse resources
-        HashMapWithTypes resources = new HashMapWithTypes();
+        JSONObject resources = new JSONObject();
         resources.put("war", pState.getWinPoints());
         resources.put("coins", pState.getCoins());
         data.put("resources", resources);
 
-        HashMapWithTypes monument = new HashMapWithTypes();
+        JSONObject monument = new JSONObject();
         monument.put("unlocked", p.getMonument().getStageBuilt());
 
-        monument.put("upgradeCost", new ArrayList<>());
-        for (ResourceEnum re : p.getMonument().getCostToBuildNextStage()) {
-            monument.getStringList("upgradeCost").add(re.toString());
+        for(ResourceEnum re : p.getMonument().getCostToBuildNextStage()){
+            monument.append("upgradeCost", re.toString());
         }
 
-        ArrayList<String> list1 = new ArrayList<>();
-        for (ResourceEnum re : p.getMonument().getStage1Reward()) {
-            list1.add(re.toString());
+        JSONArray list1 = new JSONArray();
+        for(ResourceEnum re : p.getMonument().getStage1Reward()){
+            list1.put(re.toString());
         }
-        ArrayList<String> list2 = new ArrayList<>();
-        for (ResourceEnum re : p.getMonument().getStage2Reward()) {
-            list2.add(re.toString());
+        JSONArray list2 = new JSONArray();
+        for(ResourceEnum re : p.getMonument().getStage2Reward()){
+            list2.put(re.toString());
         }
-        ArrayList<String> list3 = new ArrayList<>();
-        for (ResourceEnum re : p.getMonument().getStage3Reward()) {
-            list3.add(re.toString());
+        JSONArray list3 = new JSONArray();
+        for(ResourceEnum re : p.getMonument().getStage3Reward()){
+            list3.put(re.toString());
         }
-
-        HashMapWithTypes cardMap = new HashMapWithTypes();
-        cardMap.put("firstStage", list1);
-        cardMap.put("secondStage", list2);
-        cardMap.put("thirdStage", list3);
-
-        // TODO - Put overwrites each list...? Changed so all list is in a hashmap
-        // instead... Björn, Confirm by remove the todo.
-        monument.put("cards", cardMap);
+        monument.append("cards", list1);
+        monument.append("cards", list2);
+        monument.append("cards", list3);
 
         data.put("monument", monument);
 
@@ -322,73 +297,70 @@ public class Game {
 
     /**
      * Parses a ColorEnum, returning a JSONObject with the rgba fields.
-     *
      * @param color
      * @return
      */
-    private HashMapWithTypes parseColor(ColorEnum color) {
-        HashMapWithTypes colorData = new HashMapWithTypes();
+    private JSONObject parseColor(ColorEnum color) {
+        JSONObject colorData = new JSONObject();
         switch (color) {
-        case BLUE:
-            colorData.put("r", 0);
-            colorData.put("g", 0);
-            colorData.put("b", 1);
-            colorData.put("a", 1);
+            case BLUE:   
+                colorData.put("r", 0);
+                colorData.put("g", 0);
+                colorData.put("b", 1);
+                colorData.put("a", 1);
             break;
-        case BROWN:
-            colorData.put("r", 150.0 / 255);
-            colorData.put("g", 116.0 / 255);
-            colorData.put("b", 5.0 / 255);
-            colorData.put("a", 1);
+            case BROWN:  
+                colorData.put("r", 150.0/255);
+                colorData.put("g", 116.0/255);
+                colorData.put("b", 5.0/255);
+                colorData.put("a", 1);
             break;
-        case GRAY:
-            colorData.put("r", 141.0 / 255);
-            colorData.put("g", 141.0 / 255);
-            colorData.put("b", 141.0 / 255);
-            colorData.put("a", 1);
+            case GRAY:   
+                colorData.put("r", 141.0/255);
+                colorData.put("g", 141.0/255);
+                colorData.put("b", 141.0/255);
+                colorData.put("a", 1);
             break;
-        case GREEN:
-            colorData.put("r", 141.0 / 255);
-            colorData.put("g", 141.0 / 255);
-            colorData.put("b", 141.0 / 255);
-            colorData.put("a", 1);
+            case GREEN:  
+                colorData.put("r", 141.0/255);
+                colorData.put("g", 141.0/255);
+                colorData.put("b", 141.0/255);
+                colorData.put("a", 1);
             break;
-        case PURPLE:
-            colorData.put("r", 0);
-            colorData.put("g", 1);
-            colorData.put("b", 0);
-            colorData.put("a", 1);
+            case PURPLE: 
+                colorData.put("r", 0);
+                colorData.put("g", 1);
+                colorData.put("b", 0);
+                colorData.put("a", 1);
             break;
-        case RED:
-            colorData.put("r", 1);
-            colorData.put("g", 0);
-            colorData.put("b", 0);
-            colorData.put("a", 1);
+            case RED:    
+                colorData.put("r", 1);
+                colorData.put("g", 0);
+                colorData.put("b", 0);
+                colorData.put("a", 1);
             break;
-        case YELLOW:
-            colorData.put("r", 255.0 / 255);
-            colorData.put("g", 187.0 / 255);
-            colorData.put("b", 0);
-            colorData.put("a", 1);
+            case YELLOW: 
+                colorData.put("r", 255.0/255);
+                colorData.put("g", 187.0/255);
+                colorData.put("b", 0);
+                colorData.put("a", 1);
             break;
-        default:
-            break;
+            default: break;
         }
         return colorData;
     }
 
     /**
      * Takes a list of list of cards and rotates them clockwise
-     *
      * @param cards the list of list of cards
      * @return a rotated copy of the list
      */
-    public List<List<Card>> getRotatedCardsClockWise(List<List<Card>> cards) {
+    public List<List<Card>> getRotatedCardsClockWise(List<List<Card>> cards){
         List<List<Card>> tmp = new ArrayList<>();
 
-        tmp.add(cards.get(cards.size() - 1));
+        tmp.add(cards.get(cards.size()-1));
 
-        for (int i = 0; i < cards.size() - 1; i++) {
+        for (int i=0; i<cards.size()-1; i++){
             tmp.add(cards.get(i));
         }
 
@@ -397,14 +369,13 @@ public class Game {
 
     /**
      * Takes a list of list of cards and rotates them counterclockwise
-     *
      * @param cards the list of list of cards
      * @return a rotated copy of the list
      */
-    public List<List<Card>> getRotatedCardsCounterClockWise(List<List<Card>> cards) {
+    public List<List<Card>> getRotatedCardsCounterClockWise(List<List<Card>> cards){
         List<List<Card>> tmp = new ArrayList<>();
 
-        for (int i = 1; i < cards.size(); i++) {
+        for (int i=1; i<cards.size(); i++){
             tmp.add(cards.get(i));
         }
 
@@ -414,13 +385,15 @@ public class Game {
     }
 
     /**
-     * Rotate all player hands to their neighbors. If the age is an odd number,
-     * rotate clockwise. If the age is an even number, rotate counterclockwise.
+     * Rotate all player hands to their neighbors.
+     * If the age is an odd number, rotate clockwise.
+     * If the age is an even number, rotate counterclockwise.
      */
-    public void movePeriodCardsToNextPlayer() {
+    public void movePeriodCardsToNextPlayer(){
         if (age % 2 != 0) {
             currentPeriodCards = getRotatedCardsClockWise(currentPeriodCards);
-        } else {
+        }
+        else {
             currentPeriodCards = getRotatedCardsCounterClockWise(currentPeriodCards);
         }
     }

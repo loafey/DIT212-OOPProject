@@ -1,5 +1,6 @@
 package com.ESSBG.app.Network;
 
+import org.json.*;
 import java.net.*;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +19,7 @@ import java.io.*;
  */
 public class Server extends Base implements IServer {
     private ConcurrentHashMap<Integer, Socket> hashMap;
-    private LinkedBlockingQueue<HashMapWithTypes> msgQueue;
+    private LinkedBlockingQueue<JSONObject> msgQueue;
     private ServerSocket socket;
     // This is to use first index as a remote controller of socketlistener.
     private volatile int[] maxplayersAtIndexZero = { Constants.MAXPLAYERS };
@@ -32,14 +33,14 @@ public class Server extends Base implements IServer {
         }
         // Reset "world"
         maxplayersAtIndexZero[0] = Constants.MAXPLAYERS;
-        msgQueue = new LinkedBlockingQueue<HashMapWithTypes>();
+        msgQueue = new LinkedBlockingQueue<JSONObject>();
         hashMap = new ConcurrentHashMap<Integer, Socket>();
         socket = new ServerSocket(Constants.PORT);
         (new Thread(new SocketServer(socket, hashMap, msgQueue, maxplayersAtIndexZero))).start();
     }
 
     @Override
-    public boolean sendData(int id, HashMapWithTypes data) throws IOException, NoSuchElementException {
+    public boolean sendData(int id, JSONObject jsonobj) throws IOException, NoSuchElementException {
         if (socket == null || socket.isClosed()) {
             return false;
         }
@@ -49,7 +50,7 @@ public class Server extends Base implements IServer {
             throw new NoSuchElementException("> User is disconnected.");
         }
         try {
-            super.sendData(clientSocket, data);
+            super.sendData(clientSocket, jsonobj);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -67,7 +68,7 @@ public class Server extends Base implements IServer {
     }
 
     @Override
-    public LinkedBlockingQueue<HashMapWithTypes> getMsgQueue() {
+    public LinkedBlockingQueue<JSONObject> getMsgQueue() {
         return this.msgQueue;
     }
 
@@ -76,27 +77,12 @@ public class Server extends Base implements IServer {
         hashMap.values().forEach(socket -> {
             try {
                 socket.close();
-            } catch (Exception e) {
-            }
+            } catch (Exception e) {}
         });
         try {
             socket.close();
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
     }
-
-    @Override
-    public boolean isSocketClosed() {
-        return socket.isClosed();
-    }
-
-    /**
-     * The reason for these methods are because that the server is "too" simple in a
-     * regard. These should be publicly accessed in a more advanced server where the
-     * operators/owners needs a higher degree of control. But since the project was
-     * to keep it simple for everyone to be able to use the class, then corners had
-     * to be cut.
-     */
 
     // Only for testing
     protected boolean hasUserJoined(int id) {
@@ -111,5 +97,10 @@ public class Server extends Base implements IServer {
     // Only for testing
     protected int getNumberOfUsers() {
         return hashMap.size();
+    }
+
+    @Override
+    public boolean isSocketClosed() {
+        return socket.isClosed();
     }
 }
