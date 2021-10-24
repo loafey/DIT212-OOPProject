@@ -20,15 +20,14 @@ public class DrawableBoard {
     private Table handTable;
     private Table placedCards;
     private Table monument;
+    private ArrayList<Button> cards;
 
-    private GameController controller;
 
-    public DrawableBoard(GameController controller, Skin skin, Table handTable, Table placedCards, Table monument){
+    public DrawableBoard(Skin skin, Table handTable, Table placedCards, Table monument){
         this.skin = skin;
         this.handTable = handTable;
         this.placedCards = placedCards;
         this.monument = monument;
-        this.controller = controller;
     }
     
     /**
@@ -41,7 +40,7 @@ public class DrawableBoard {
      * @param monument The table for the monument
      */
     public void updateBoard(JSONObject data) {
-        updateHand(skin, controller, handTable, data.getJSONArray("handCards"));
+        updateHand(skin, handTable, data.getJSONArray("handCards"));
         updatePlacedCards(skin, placedCards, data.getJSONArray("placedCards"));
         updateMonument(skin, monument, data.getJSONObject("monument"));
         updateResources(skin, monument, data.getJSONObject("resources"));
@@ -51,6 +50,29 @@ public class DrawableBoard {
 
     public void hideHandCards(){
         handTable.clear();
+    }
+
+    /**
+     * Updates the cards displayed in your hand
+     * @param skin The skin to be used
+     * @param gameController A GameController so the buttons can be linked up to appropriate actions when clicked.
+     * @param handTable The table to contain the cards
+     * @param handCards The card data to be displayed
+     */
+    private void updateHand(Skin skin, Table handTable, JSONArray handCards) {
+        handTable.clear();
+        int index = 0;
+
+        cards = new ArrayList<>();
+
+        for (Object cardData : handCards){
+            Button card = generateCard(skin, (JSONObject) cardData, -5f, true);
+            handTable.add(card).width(84).height(128);
+
+            cards.add(card);
+            index++;
+        }
+
     }
 
 
@@ -124,7 +146,7 @@ public class DrawableBoard {
         // placing them in the ArrayList that corresponds to their color.
         HashMap<Color, ArrayList<Button>> sortedCards = new HashMap<>();
         cards.forEach(cardData -> {
-            Button card = GenerateCard(skin, (JSONObject) cardData, 0f, false);
+            Button card = generateCard(skin, (JSONObject) cardData, 0f, false);
             Color color = card.getColor();
 
             if (!sortedCards.containsKey(color)) {
@@ -146,32 +168,13 @@ public class DrawableBoard {
     }
 
     /**
-     * Updates the cards displayed in your hand
-     * @param skin The skin to be used
-     * @param gameController A GameController so the buttons can be linked up to appropriate actions when clicked.
-     * @param handTable The table to contain the cards
-     * @param handCards The card data to be displayed
-     */
-    private void updateHand(Skin skin, GameController gameController, Table handTable, JSONArray handCards) {
-        handTable.clear();
-        int index = 0;
-        for (Object cardData : handCards){
-            Button card = GenerateCard(skin, (JSONObject) cardData, -5f, true);
-            handTable.add(card).width(84).height(128);
-
-            gameController.assignCardButton(card, index);
-            index++;
-        }
-    }
-
-    /**
      * Generates a card with fitting content.
      * @param skin The skin to be used
      * @param cardData The cards data
      * @param rotation The rotation of the card
      * @return
      */
-    private Button GenerateCard(Skin skin, JSONObject cardData, Float rotation, boolean displayCost) {
+    private Button generateCard(Skin skin, JSONObject cardData, Float rotation, boolean displayCost) {
         JSONObject colorString = cardData.getJSONObject("color");
         Color color = new Color(colorString.getFloat("r"), colorString.getFloat("g"), colorString.getFloat("b"),
                 colorString.getFloat("a"));
@@ -202,5 +205,9 @@ public class DrawableBoard {
         cardLabel.setFontScale(0.5f, 0.5f);
         card.add(cardLabel);
         return card;
+    }
+
+    public ArrayList<Button> getCards() {
+        return new ArrayList<>(cards);
     }
 }

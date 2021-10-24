@@ -131,6 +131,11 @@ public class GameController {
                     }
                     if (msg.has("placedCards")) {
                         board.updateBoard(msg);
+                        int i = 0;
+                        for (Button card : board.getCards()){
+                            assignCardButton(card, i); 
+                            i++;
+                        };
                     } 
                     if (msg.has("scores")){
                         displayScores(msg);

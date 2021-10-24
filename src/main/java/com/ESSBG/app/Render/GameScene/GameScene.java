@@ -29,10 +29,10 @@ public class GameScene implements Screen {
 
     private Table pauseMenu;
 
-    private IClient IClient;
+    private IClient client;
 
-    public GameScene(IClient IClient) {
-        this.IClient = IClient;
+    public GameScene(IClient client) {
+        this.client = client;
     }
 
     @Override
@@ -75,9 +75,8 @@ public class GameScene implements Screen {
         sceneTable.setVisible(true);
 
 
-        board = new DrawableBoard(gameController, skin, handCardContainer, placedCardContainer, monument);
-
-        gameController = new GameController(IClient, skin, board, sceneTable);
+        board = new DrawableBoard(skin, handCardContainer, placedCardContainer, monument);
+        gameController = new GameController(client, skin, board, sceneTable);
 
         stage.addActor(sceneTable);
     }
