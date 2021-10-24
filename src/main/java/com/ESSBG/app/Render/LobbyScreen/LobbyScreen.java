@@ -86,7 +86,7 @@ public class LobbyScreen implements Screen{
 
         sceneTable.add(lobbyTable).fill().expand();
 
-        lobbyScreenController = new LobbyScreenController(hostButton, startButton, leaveButton,startButton, ipField);
+        lobbyScreenController = new LobbyScreenController(hostButton, joinButton, leaveButton,startButton, ipField);
     }
 
     @Override
