@@ -77,6 +77,7 @@ public class Client extends Base implements IClient {
         }
     }
 
+    // Read last multiline comment at the bottom in Server.java
     // Only for testing!
     protected boolean isListenerRunning() {
         return thread.isAlive();
