@@ -1,6 +1,5 @@
 package com.ESSBG.app.Render.GameScene;
 
-import java.io.InterruptedIOException;
 
 import com.ESSBG.app.Network.IClient;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;

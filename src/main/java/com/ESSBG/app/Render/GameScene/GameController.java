@@ -3,7 +3,6 @@ package com.ESSBG.app.Render.GameScene;
 import java.io.IOException;
 
 import com.ESSBG.app.Network.IClient;
-import com.ESSBG.app.Render.MainScreen;
 import com.ESSBG.app.Render.ScreenManager;
 import com.ESSBG.app.Render.GameScene.Elements.DrawableBoard;
 import com.ESSBG.app.Render.StartMenu.StartMenu;
@@ -13,11 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
