@@ -63,7 +63,7 @@ public class GameScene implements Screen {
 
         pauseButton.setPosition(0, 0);
     
-        sceneTable.add(pauseButton);
+        //sceneTable.add(pauseButton);
         sceneTable.setVisible(true);
 
 

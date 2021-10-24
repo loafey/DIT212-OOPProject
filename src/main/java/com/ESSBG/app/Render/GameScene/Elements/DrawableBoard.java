@@ -93,7 +93,6 @@ public class DrawableBoard {
         
         int count = 0;
         for (var i : data.getJSONArray("cards")){
-
             JSONArray monumentContent = (JSONArray)i;
             HashMap<Object, Integer> algo = new HashMap<>();
 
@@ -121,6 +120,22 @@ public class DrawableBoard {
         }
         monument.add(cardTable);
         monument.row();
+
+        HashMap<String, Integer> algo = new HashMap<>();
+        for (Object i : data.getJSONArray("upgradeCost")) {
+            String s = (String)i;
+            if (algo.containsKey(s)) {
+                algo.replace(s, algo.get(s) + 1);
+            } else {
+                algo.put(s, 1);
+            }
+        }
+        String content = "";
+        for (Entry<String, Integer> val : algo.entrySet()) {
+            content += val.getKey() + ": " + val.getValue().toString() + " "; 
+        }
+        monument.add(new Label("Cost to upgrade: "+ content,skin));
+        monument.row();
         monument.add(new Label("ID: " + name, skin));
     }
 
@@ -132,9 +147,7 @@ public class DrawableBoard {
      */
     private void updateResources(Skin skin, Table monument, JSONObject data) {
         monument.row();
-        monument.add(new Label("Coins: " + data.getInt("coins"), skin));
-        monument.row();
-        monument.add(new Label("War: " + data.getInt("war"), skin));
+        monument.add(new Label("Coins: " + data.getInt("coins") + " War: " + data.getInt("war"), skin));
     }
 
     /**
