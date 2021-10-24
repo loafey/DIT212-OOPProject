@@ -33,10 +33,6 @@ public class GameScene implements Screen {
 
     public GameScene(IClient client) {
         this.client = client;
-    }
-
-    @Override
-    public void show() {
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
         skin = new Skin(Gdx.files.internal("Assets/Skins/GameScene/GameSceneSkin.json"));
@@ -48,10 +44,10 @@ public class GameScene implements Screen {
         playerTable = new Table();
         monument = new DrawableMonument(skin);
 
-        //pauseMenu = new PauseMenu(skin);
-        //pauseMenu.setFillParent(true);
-
         Gdx.input.setInputProcessor(stage);
+
+                //pauseMenu = new PauseMenu(skin);
+        //pauseMenu.setFillParent(true);
 
         sceneTable.setFillParent(true);
 
@@ -77,7 +73,10 @@ public class GameScene implements Screen {
 
         board = new DrawableBoard(skin, handCardContainer, placedCardContainer, monument);
         gameController = new GameController(client, skin, board, sceneTable);
+    }
 
+    @Override
+    public void show() {
         stage.addActor(sceneTable);
     }
 

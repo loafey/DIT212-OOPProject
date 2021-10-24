@@ -41,9 +41,7 @@ public class LobbyScreen implements Screen{
 
     private IClient client;
 
-
-    @Override
-    public void show() {
+    public LobbyScreen (){
         Viewport vp = new ScreenViewport();
         stage = new Stage(vp);
         skin = new Skin(Gdx.files.internal("Assets/Skins/LobbyScreen/LobbySceneSkin.json"));
@@ -55,7 +53,7 @@ public class LobbyScreen implements Screen{
         stage.addActor(sceneTable);
 
         Gdx.input.setInputProcessor(stage);
-        
+
         Table connectContainer = new Table();
         connectContainer.pad(10);
         connectContainer.top().left();
@@ -131,6 +129,10 @@ public class LobbyScreen implements Screen{
                 } catch (IOException e) {}
             }
         });
+    }
+
+    @Override
+    public void show() {
     }
 
     private void messageHandler(){
